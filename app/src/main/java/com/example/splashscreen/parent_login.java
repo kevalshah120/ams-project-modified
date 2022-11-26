@@ -14,7 +14,6 @@ public class parent_login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parent_login);
-        getSupportActionBar().hide();
         final String class_name = getLocalClassName();
         final EditText mobile_no = findViewById(R.id.mob_no);
         final EditText enr_no = findViewById(R.id.enr_no);

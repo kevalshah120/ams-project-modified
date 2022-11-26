@@ -23,6 +23,8 @@
     <string name="verify">Verify</string>
     <string name="didn_t_receive_the_otp">Didn\'t receive the OTP?</string>
     <string name="resend_otp">Resend OTP</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="student_home_fragment">student home fragment</string>
     <string name="student_attendance_fragment">student attendance fragment</string>
     <string name="student_leave_fragment">student leave fragment</string>

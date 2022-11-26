@@ -9,6 +9,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fontFamily="@font/poppins_semibold"
         android:text="@string/student_leave_fragment" />
 
 </FrameLayout>

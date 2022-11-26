@@ -17,7 +17,6 @@ public class teacher_login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_login);
-        getSupportActionBar().hide();
         final String class_name = getLocalClassName();
         final EditText login_id = findViewById(R.id.login_id);
         final EditText password_field = findViewById(R.id.password_field);

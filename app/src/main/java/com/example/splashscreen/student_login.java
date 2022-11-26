@@ -16,7 +16,6 @@ public class student_login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_login);
-        getSupportActionBar().hide();
         final String class_name = getLocalClassName();
         mobile_no = findViewById(R.id.mob_no);
         enr_no = findViewById(R.id.enr_no);

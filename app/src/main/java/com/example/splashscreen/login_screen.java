@@ -12,7 +12,6 @@ public class login_screen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
-        getSupportActionBar().hide();
         b1 = findViewById(R.id.button1);
         b2 = findViewById(R.id.button2);
         b3 = findViewById(R.id.button3);
