@@ -14,39 +14,64 @@
         android:id="@+id/navigationView"
         app:headerLayout="@layout/header_layout"
         app:menu="@menu/navigation_items"
+        app:itemTextColor="@drawable/item_selector"
+        app:itemIconTint="@drawable/item_selector"
         />
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/body_container">
-
+        android:id="@+id/relative_layout_1">
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="hello"/>
+            android:layout_alignParentStart="true"
+            app:contentInsetStart="0dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textview"
+                    android:layout_centerVertical="true"
+                    android:paddingTop="@dimen/_4sdp"
+                    android:text="@string/username_top"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_25sdp"
+                    />
+                <ImageView
+                    android:layout_width="@dimen/_44sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_toEndOf="@id/textview"
+                    android:src="@drawable/wave_emoji"
+                    />
+            </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_nav"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:layout_marginEnd="25dp"
-            android:layout_marginBottom="25dp"
+            android:layout_height="@dimen/_45sdp"
+            android:layout_marginStart="@dimen/_18sdp"
+            android:layout_marginEnd="@dimen/_18sdp"
+            android:layout_marginBottom="@dimen/_18sdp"
             android:background="@drawable/rounded_corners"
             android:elevation="2dp"
+            android:layout_alignParentBottom="true"
             app:itemIconSize="@dimen/_20sdp"
             app:itemIconTint="@drawable/item_selector"
             app:itemRippleColor="@android:color/transparent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:menu="@menu/student_bottom_nav" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/toolbar"
+            android:layout_above="@id/bottom_nav">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/body_container"/>
+        </ScrollView>
+    </RelativeLayout>
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -1,5 +1,6 @@
 package com.example.splashscreen;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -10,13 +11,15 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Objects;
 
-public class student_homescreen extends AppCompatActivity {
+public class student_homescreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     BottomNavigationView bottomNavigationView;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -30,8 +33,14 @@ public class student_homescreen extends AppCompatActivity {
         navigationView = findViewById(R.id.navigationView);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        navigationView.bringToFront();
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         bottomNavigationView = findViewById(R.id.bottom_nav);
+        bottomNavigationView.setSelectedItemId(R.id.home_menu);
+        stu_home_fragement fragement = new stu_home_fragement();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.body_container,fragement);
+        fragmentTransaction.commit();
         bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()){
                 case R.id.home_menu:
@@ -49,6 +58,7 @@ public class student_homescreen extends AppCompatActivity {
         toogle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toogle);
         toogle.syncState();
+        navigationView.setNavigationItemSelectedListener(this);
     }
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -65,5 +75,18 @@ public class student_homescreen extends AppCompatActivity {
         else{
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.contact_us:
+                Toast.makeText(this,"Contact Us",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.about_us:
+                Toast.makeText(this,"About Us",Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return true;
     }
 }
