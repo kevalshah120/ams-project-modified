@@ -37,10 +37,7 @@ public class student_homescreen extends AppCompatActivity implements NavigationV
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setSelectedItemId(R.id.home_menu);
-        stu_home_fragement fragement = new stu_home_fragement();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.body_container,fragement);
-        fragmentTransaction.commit();
+        replaceFragment(new stu_home_fragement());
         bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()){
                 case R.id.home_menu:

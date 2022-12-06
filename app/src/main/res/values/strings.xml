@@ -29,4 +29,5 @@
     <string name="student_attendance_fragment">student attendance fragment</string>
     <string name="student_leave_fragment">student leave fragment</string>
     <string name="username_top">Hi Keval</string>
+    <string name="leave_date_heading">August 2022</string>
 </resources>

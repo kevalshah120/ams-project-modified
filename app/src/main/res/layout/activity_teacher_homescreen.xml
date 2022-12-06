@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".teacher_homescreen">
+    tools:context=".teacher_homescreen"
+    android:background="@color/app_bg"
+    >
 
 </androidx.constraintlayout.widget.ConstraintLayout>

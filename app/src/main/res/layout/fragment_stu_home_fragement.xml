@@ -3,12 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".stu_home_fragement">
+    tools:context=".stu_home_fragement"
+    android:background="@color/app_bg"
+    >
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fontFamily="@font/poppins_bold"
         android:text="@string/student_home_fragment" />
 
 </FrameLayout>

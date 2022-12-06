@@ -39,6 +39,8 @@ public class otp_verification extends AppCompatActivity {
         mobile_val += i.getStringExtra("mobile");
         final TextView mobile_no = findViewById(R.id.mobile_num_text);
         mobile_no.setText(mobile_val);
+
+        //view binding
         otpET1 = findViewById(R.id.otpET1);
         otpET2 = findViewById(R.id.otpET2);
         otpET3 = findViewById(R.id.otpET3);
@@ -47,6 +49,7 @@ public class otp_verification extends AppCompatActivity {
         otpET6 = findViewById(R.id.otpET6);
         back_button = findViewById(R.id.back_button);
         mAuth = FirebaseAuth.getInstance();
+
 //        sendverificationcode(i.getStringExtra("mobile"));
         next_et();
         verify_otp_button.setOnClickListener(view -> {
@@ -126,10 +129,11 @@ public class otp_verification extends AppCompatActivity {
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationID,otp_generated);
         signinbyCredentials(credential);
     }
-
+//Code which is executed when user is verified
     private void signinbyCredentials(PhoneAuthCredential credential) {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            //code for redirecting user to their corresponding home screen after successful verification
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful())
@@ -160,6 +164,7 @@ public class otp_verification extends AppCompatActivity {
             }
         });
     }
+    //Code for automatically focusing next edittext while entering otp
     private void next_et() {
         otpET1.addTextChangedListener(new TextWatcher() {
             @Override
