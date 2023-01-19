@@ -25,15 +25,16 @@
                 app:iconGravity="top"
                 app:iconSize="@dimen/_25sdp"
                 app:iconTint="#000000" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/back_button"
                 android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/back_button"
                 android:fontFamily="@font/montserrat_semibold"
+                android:text="@string/login"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_20sdp"
-                android:text="@string/login" />
+                android:textSize="@dimen/_20sdp" />
         </RelativeLayout>
         <ImageView
             android:id="@+id/signin_illustrator"

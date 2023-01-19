@@ -72,7 +72,7 @@
         android:layout_marginTop="20dp"
         android:fontFamily="@font/roboto_slab"
         android:text="@string/leave_date_heading"
-        android:textColor="@color/txt_color"/>
+        android:textColor="@color/txt_color" />
     
     <ScrollView
         android:layout_width="match_parent"
