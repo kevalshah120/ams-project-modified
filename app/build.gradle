@@ -43,4 +43,5 @@ dependencies {
     implementation 'com.intuit.sdp:sdp-android:1.1.0'
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.25'
 //    implementation 'com.daimajia.androidanimations:library:2.4@aar'
+    implementation 'com.android.volley:volley:1.2.1'
 }
