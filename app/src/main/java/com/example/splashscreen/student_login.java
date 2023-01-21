@@ -40,7 +40,9 @@ public class student_login extends AppCompatActivity {
             finish();
         });
         /*
+        -------------------------------------------------------------------------------------------
         KEVAL DO NOT TOUCH THIS CODE
+        -------------------------------------------------------------------------------------------
          */
         login.setOnClickListener(view -> {
             final String  Mobile_No = mobile_no.getText().toString();
@@ -49,19 +51,25 @@ public class student_login extends AppCompatActivity {
             {
 //                presentInDataBase[0] = 0;
 //                ToastText[0] = "0";
+                //URL FOR FETCHING API DATA
                 String URL = "https://stocky-baud.000webhostapp.com/";
+                //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
                 RequestQueue queue = Volley.newRequestQueue(student_login.this);
+                //STRING REQUEST OBJECT INITIALIZATION
                 StringRequest stringRequest = new StringRequest(Request.Method.POST,URL ,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
                                 try {
                                     JSONObject Jobj = new JSONObject(response);
-
+                                    /*
+                                    IF RESULT IS 1 ThAT MEANS DATA IS PRESENT IN DATABASE
+                                     */
                                     if(Jobj.getString("result").equalsIgnoreCase("1"))
                                     {
                                         otp_verpage(Mobile_No,class_name);
                                     }
+                                    // ELSE THROW ERROR USING TOAST
                                     else
                                     {
                                         Toast.makeText(student_login.this,Jobj.getString("result"), Toast.LENGTH_LONG).show();
@@ -77,6 +85,7 @@ public class student_login extends AppCompatActivity {
                     }
                 }){
                     @Override
+                    //GIVING INPUT TO PHP API THROUGH MAP
                     protected Map<String,String> getParams(){
                         Map<String,String> params = new HashMap<String, String>();
                         params.put("enrollment",Enrollment_No);
@@ -107,7 +116,7 @@ public class student_login extends AppCompatActivity {
             }
         });
     }
-
+    //DIRECTING TO OTP VERIFICATION PAGE
     private void otp_verpage(String Mobile_No,String class_name) {
         Intent i = new Intent(student_login.this, otp_verification.class);
         i.putExtra("mobile", Mobile_No);
