@@ -8,6 +8,21 @@ import android.text.InputType;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class teacher_login extends AppCompatActivity {
     Button back,login;
@@ -28,10 +43,82 @@ public class teacher_login extends AppCompatActivity {
             finish();
         });
         login.setOnClickListener(view -> {
-            Intent i = new Intent(teacher_login.this,otp_verification.class);
-            i.putExtra("class_name", class_name);
-            startActivity(i);
-            finish();
+            final String ID = login_id.getText().toString();
+            final String PASS = login_id.getText().toString();
+            if(!(ID.trim().isEmpty()) && !(PASS.trim().isEmpty()))
+            {
+                //URL FOR FETCHING API DATA
+                String URL = "http://192.168.29.237/mysql/checkForTeacher.php";
+                //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
+                RequestQueue queue = Volley.newRequestQueue(teacher_login.this);
+                //STRING REQUEST OBJECT INITIALIZATION
+                StringRequest stringRequest = new StringRequest(Request.Method.POST,URL ,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    JSONObject Jobj = new JSONObject(response);
+                                    /*
+                                    IF RESULT IS 1 ThAT MEANS DATA IS PRESENT IN DATABASE
+                                     */
+                                    if(Jobj.getString("result").equalsIgnoreCase("1"))
+                                    {
+                                        teacher_HOME(class_name);
+                                    }
+                                    // ELSE THROW ERROR USING TOAST
+                                    else
+                                    {
+                                        Toast.makeText(teacher_login.this,Jobj.getString("result"), Toast.LENGTH_LONG).show();
+                                        if(Jobj.getString("result") == "Couldn't find ID")
+                                        {
+                                            login_id.setText("");
+                                            password_field.setText("");
+                                        }
+                                        else
+                                        {
+                                            password_field.setText("");
+                                        }
+                                    }
+                                } catch (JSONException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(teacher_login.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }){
+                    @Override
+                    //GIVING INPUT TO PHP API THROUGH MAP
+                    protected Map<String,String> getParams(){
+                        Map<String,String> params = new HashMap<String, String>();
+                        params.put("ID",ID);
+                        params.put("PASS",PASS);
+                        return params;
+                    }
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String,String> params = new HashMap<String, String>();
+                        params.put("Content-Type","application/x-www-form-urlencoded");
+                        return params;
+                    }
+                };
+                queue.add(stringRequest);
+            }
+            else{
+                if((ID.trim().isEmpty()) && (PASS.trim().isEmpty()))
+                {
+                    Toast.makeText(teacher_login.this,"Please enter ID and Password",Toast.LENGTH_LONG).show();
+                }
+                else if(ID.trim().isEmpty())
+                {
+                    Toast.makeText(teacher_login.this,"Please enter your ID",Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Toast.makeText(teacher_login.this,"Please enter the Password",Toast.LENGTH_LONG).show();
+                }
+            }
         });
         password_icon = findViewById(R.id.password_hide);
         password_icon.setOnClickListener(view -> {
@@ -47,5 +134,11 @@ public class teacher_login extends AppCompatActivity {
             }
             password_field.setSelection(password_field.length());
         });
+    }
+    private void teacher_HOME(String class_name) {
+        Intent i = new Intent(teacher_login.this, teacher_homescreen.class);
+        i.putExtra("class_name", class_name);
+        startActivity(i);
+        finish();
     }
 }

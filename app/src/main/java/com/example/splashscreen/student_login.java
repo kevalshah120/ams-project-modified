@@ -49,8 +49,6 @@ public class student_login extends AppCompatActivity {
             final String Enrollment_No = enr_no.getText().toString();
             if(Mobile_No.trim().length() == 10 && Enrollment_No.trim().length() == 12)
             {
-//                presentInDataBase[0] = 0;
-//                ToastText[0] = "0";
                 //URL FOR FETCHING API DATA
                 String URL = "https://stocky-baud.000webhostapp.com/";
                 //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
@@ -73,6 +71,15 @@ public class student_login extends AppCompatActivity {
                                     else
                                     {
                                         Toast.makeText(student_login.this,Jobj.getString("result"), Toast.LENGTH_LONG).show();
+                                        if(Jobj.getString("result") == "Enrollment not present.")
+                                        {
+                                            enr_no.setText("");
+                                            mobile_no.setText("");
+                                        }
+                                        else
+                                        {
+                                            mobile_no.setText("");
+                                        }
                                     }
                                 } catch (JSONException e) {
                                     throw new RuntimeException(e);
