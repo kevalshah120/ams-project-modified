@@ -39,6 +39,9 @@ public class student_login extends AppCompatActivity {
             startActivity(i);
             finish();
         });
+        /*
+        KEVAL DO NOT TOUCH THIS CODE
+         */
         login.setOnClickListener(view -> {
             final String  Mobile_No = mobile_no.getText().toString();
             final String Enrollment_No = enr_no.getText().toString();
@@ -46,7 +49,7 @@ public class student_login extends AppCompatActivity {
             {
 //                presentInDataBase[0] = 0;
 //                ToastText[0] = "0";
-                String URL = "http://192.168.29.237/mysql/CheckforStudent.php";
+                String URL = "https://stocky-baud.000webhostapp.com/";
                 RequestQueue queue = Volley.newRequestQueue(student_login.this);
                 StringRequest stringRequest = new StringRequest(Request.Method.POST,URL ,
                         new Response.Listener<String>() {
