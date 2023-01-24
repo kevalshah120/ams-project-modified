@@ -50,7 +50,7 @@ public class student_login extends AppCompatActivity {
             if(Mobile_No.trim().length() == 10 && Enrollment_No.trim().length() == 12)
             {
                 //URL FOR FETCHING API DATA
-                String URL = "https://stocky-baud.000webhostapp.com/";
+                String URL = "http://192.168.29.237/mysql/CheckforStudent.php";
                 //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
                 RequestQueue queue = Volley.newRequestQueue(student_login.this);
                 //STRING REQUEST OBJECT INITIALIZATION
