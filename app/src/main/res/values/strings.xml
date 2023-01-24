@@ -1,4 +1,4 @@
-<resources>
+        <resources>
     <string name="app_name">Attendance Management System</string>
     <string name="logo_image">logo</string>
     <string name="scroolview">scroolview</string>
@@ -30,4 +30,10 @@
     <string name="student_leave_fragment">student leave fragment</string>
     <string name="username_top">Hi Keval</string>
     <string name="leave_date_heading">August 2022</string>
-</resources>
+    <string name="leave_name">Leave Name</string>
+            <string name="to_date">To Date</string>
+            <string name="from_date">From Date</string>
+            <string name="staff_name">Staff Name</string>
+            <string name="submit">Submit</string>
+            <string name="leave_description">Leave Description</string>
+        </resources>

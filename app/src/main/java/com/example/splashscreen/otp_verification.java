@@ -62,9 +62,21 @@ public class otp_verification extends AppCompatActivity {
                 otp_entered += otpET5.getText().toString();
                 otp_entered += otpET6.getText().toString();
 //                verifycode(otp_entered);
-                Intent intent = new Intent(otp_verification.this,student_homescreen.class);
-                startActivity(intent);
-                finish();
+                if(class_name.equals("parent_login")){
+                    Intent intent = new Intent(otp_verification.this,parent_homescreen.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else if(class_name.equals("student_login")){
+                    Intent intent = new Intent(otp_verification.this,student_homescreen.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else  if(class_name.equals("teacher_login")){
+                    Intent intent = new Intent(otp_verification.this,teacher_homescreen.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
         back_button.setOnClickListener(view -> {

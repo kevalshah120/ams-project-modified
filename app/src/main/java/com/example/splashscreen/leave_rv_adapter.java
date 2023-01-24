@@ -47,7 +47,6 @@ public class leave_rv_adapter extends RecyclerView.Adapter<leave_rv_adapter.MyVi
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private final ImageView imageView_status_tag;
-        private final ImageView imageView2_desc_btn;
         private final ImageView imageView3_teacher_icon;
         private final TextView textView_leave_date;
         private final TextView textView2_leave_name;
@@ -55,7 +54,6 @@ public class leave_rv_adapter extends RecyclerView.Adapter<leave_rv_adapter.MyVi
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView_status_tag = itemView.findViewById(R.id.status_tag);
-            imageView2_desc_btn = itemView.findViewById(R.id.description_btn);
             imageView3_teacher_icon = itemView.findViewById(R.id.teacher_icon);
             textView_leave_date = itemView.findViewById(R.id.leave_date);
             textView2_leave_name = itemView.findViewById(R.id.leave_name);
@@ -65,7 +63,6 @@ public class leave_rv_adapter extends RecyclerView.Adapter<leave_rv_adapter.MyVi
 
         public void setData(int desc_img, int tag, int teacher_icon, String leave_name, String date, String prof_name) {
             imageView_status_tag.setImageResource(tag);
-            imageView2_desc_btn.setImageResource(desc_img);
             imageView3_teacher_icon.setImageResource(teacher_icon);
             textView_leave_date.setText(date);
             textView2_leave_name.setText(leave_name);

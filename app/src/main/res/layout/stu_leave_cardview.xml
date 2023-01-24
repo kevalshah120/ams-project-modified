@@ -28,16 +28,16 @@
                 android:textSize="@dimen/_12sdp"
                 android:textColor="@color/txt_color"
                 />
-
             <TextView
-                android:id="@+id/leave_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Mon 16 Aug - Wed 18 Aug"
+                android:id="@+id/leave_date"
                 android:layout_below="@id/leave_name"
                 android:fontFamily="@font/poppins_medium"
-                android:text="Mon 16 Aug - Wed 18 Aug"
+                android:textSize="@dimen/_14sdp"
                 android:textColor="#200745"
-                android:textSize="@dimen/_14sdp" />
+                />
             <ImageView
                 android:layout_width="wrap_content"
                 android:id="@+id/teacher_icon"
