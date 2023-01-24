@@ -35,7 +35,7 @@ public class otp_verification extends AppCompatActivity {
         verify_otp_button = findViewById(R.id.verify_button);
         Intent i = getIntent();
         class_name = i.getStringExtra("class_name");
-        String mobile_val = "+91 ";
+        String mobile_val = "+92 ";
         mobile_val += i.getStringExtra("mobile");
         final TextView mobile_no = findViewById(R.id.mobile_num_text);
         mobile_no.setText(mobile_val);
