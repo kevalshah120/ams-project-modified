@@ -3,8 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".stu_home_fragement"
-    android:background="@color/app_bg">
+    android:background="@color/app_bg"
+    tools:context=".stu_home_fragement">
+
     <LinearLayout
         android:id="@+id/linear_layout_1"
         android:layout_width="match_parent"
@@ -13,54 +14,58 @@
         android:layout_marginEnd="15dp"
         android:weightSum="4"
         tools:ignore="UselessParent">
+
         <TextView
-            android:layout_width="0dp"
             android:id="@+id/all_button"
-            android:text="All"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_weight="1"
+            android:background="@drawable/corner_left_focused"
             android:clickable="true"
-            android:textColor="@color/txt_color"
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackgroundBorderless"
             android:gravity="center"
-            android:layout_height="@dimen/_30sdp"
-            android:layout_weight="1"
-            android:background="@drawable/corner_left_focused" />
+            android:text="@string/all"
+            android:textColor="@color/txt_color" />
+
         <TextView
-            android:layout_width="0dp"
             android:id="@+id/pending_button"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_weight="1"
+            android:background="@drawable/pending_btn_bg"
             android:clickable="true"
             android:focusable="true"
-            android:gravity="center"
             android:foreground="?android:attr/selectableItemBackgroundBorderless"
-            android:layout_height="@dimen/_30sdp"
-            android:text="Pending"
-            android:layout_weight="1"
-            android:textColor="@color/txt_color"
-            android:background="@drawable/pending_btn_bg" />
+            android:gravity="center"
+            android:text="@string/pending"
+            android:textColor="@color/txt_color" />
+
         <TextView
-            android:text="Approved"
             android:id="@+id/approved_button"
-            android:clickable="true"
-            android:focusable="true"
-            android:gravity="center"
             android:layout_width="0dp"
-            android:foreground="?android:attr/selectableItemBackgroundBorderless"
             android:layout_height="@dimen/_30sdp"
             android:layout_weight="1"
-            android:textColor="@color/txt_color"
-            android:background="@drawable/approved_btn_bg" />
+            android:background="@drawable/approved_btn_bg"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackgroundBorderless"
+            android:gravity="center"
+            android:text="@string/approved"
+            android:textColor="@color/txt_color" />
+
         <TextView
-            android:text="Rejected"
             android:id="@+id/rejected_button"
-            android:clickable="true"
-            android:focusable="true"
-            android:gravity="center"
             android:layout_width="0dp"
-            android:foreground="?android:attr/selectableItemBackgroundBorderless"
             android:layout_height="@dimen/_30sdp"
             android:layout_weight="1"
-            android:textColor="@color/txt_color"
-            android:background="@drawable/corner_right" />
+            android:background="@drawable/corner_right"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackgroundBorderless"
+            android:gravity="center"
+            android:text="@string/rejected"
+            android:textColor="@color/txt_color" />
     </LinearLayout>
 
     <TextView
@@ -73,17 +78,11 @@
         android:fontFamily="@font/roboto_slab"
         android:text="@string/leave_date_heading"
         android:textColor="@color/txt_color" />
-    
-    <ScrollView
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/leave_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/date">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/leave_recyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
-    </ScrollView>
+        android:layout_below="@id/date" />
 
 </RelativeLayout>

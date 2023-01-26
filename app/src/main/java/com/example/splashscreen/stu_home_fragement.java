@@ -2,11 +2,18 @@ package com.example.splashscreen;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +21,10 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class stu_home_fragement extends Fragment {
+
+    int lecture_data_size;
+    List<stu_lecture_model> lecture_data;
+    private RecyclerView recyclerView;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -59,6 +70,23 @@ public class stu_home_fragement extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_stu_home_fragement, container, false);
+        View view = inflater.inflate(R.layout.fragment_stu_home_fragement, container, false);
+        return view;
+    }
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        dataInitialize();
+        recyclerView = view.findViewById(R.id.lecture_recyclerview);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setHasFixedSize(true);
+        stu_lecture_adapter lecture_adapter = new stu_lecture_adapter(getContext(),lecture_data);
+        recyclerView.setAdapter(lecture_adapter);
+        lecture_adapter.notifyDataSetChanged();
+    }
+
+    private void dataInitialize() {
+        lecture_data = new ArrayList<>();
+        lecture_data.add(new stu_lecture_model("PPUD (3360702)","Prof Pratik Parmar"));
+        lecture_data.add(new stu_lecture_model("Ad.Java (3360701)","Prof K. G. Patel"));
     }
 }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/attendance_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Code (Provided by teacher)"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:textSize="@dimen/_16sdp" />
+
+    <Button
+        android:id="@+id/submit_button"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:backgroundTint="#0065ff"
+        android:contentDescription="@string/submit"
+        android:fontFamily="@font/montserrat_semibold"
+        android:text="@string/submit"
+        android:textAllCaps="false"
+        android:textSize="@dimen/_14sdp" />
+</LinearLayout>

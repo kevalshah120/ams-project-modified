@@ -1,4 +1,4 @@
-        <resources>
+<resources>
     <string name="app_name">Attendance Management System</string>
     <string name="logo_image">logo</string>
     <string name="scroolview">scroolview</string>
@@ -31,9 +31,19 @@
     <string name="username_top">Hi Keval</string>
     <string name="leave_date_heading">August 2022</string>
     <string name="leave_name">Leave Name</string>
-            <string name="to_date">To Date</string>
-            <string name="from_date">From Date</string>
-            <string name="staff_name">Staff Name</string>
-            <string name="submit">Submit</string>
-            <string name="leave_description">Leave Description</string>
-        </resources>
+    <string name="to_date">To Date</string>
+    <string name="from_date">From Date</string>
+    <string name="staff_name">Staff Name</string>
+    <string name="submit">Submit</string>
+    <string name="leave_description">Leave Description</string>
+    <string name="leave_application_name">Leave Application Name</string>
+    <string name="sem_no">3SEM</string>
+    <string name="student_name">keval shah</string>
+    <string name="subject_name">DBMS (3360702)</string>
+    <string name="professor_name">Prof Sanjay Bhalgama</string>
+    <string name="mark">Mark</string>
+    <string name="rejected">Rejected</string>
+    <string name="approved">Approved</string>
+    <string name="pending">Pending</string>
+    <string name="all">All</string>
+</resources>
