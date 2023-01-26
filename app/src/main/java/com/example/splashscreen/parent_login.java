@@ -23,6 +23,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class parent_login extends AppCompatActivity {
+    static String  PMobile_No ;
+    static String Enrollment_No ;
     Button back,login_btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +41,9 @@ public class parent_login extends AppCompatActivity {
             finish();
         });
         login_btn.setOnClickListener(view -> {
-            final String  PMobile_No = mobile_no.getText().toString();
-            final String Enrollment_No = enr_no.getText().toString();
+            PMobile_No = mobile_no.getText().toString();
+            Enrollment_No = enr_no.getText().toString();
+            TEMP(class_name);
             if(PMobile_No.trim().length() == 10 && Enrollment_No.trim().length() == 12)
             {
                 //URL FOR FETCHING API DATA
@@ -118,6 +121,13 @@ public class parent_login extends AppCompatActivity {
         });
     }
     //DIRECTING TO OTP VERIFICATION PAGE
+    private void TEMP(String class_name) {
+        Intent i = new Intent(parent_login.this, otp_verification.class);
+        i.putExtra("mobile", "9023849933");
+        i.putExtra("class_name", class_name);
+        startActivity(i);
+        finish();
+    }
     private void otp_verpage(String PMobile_No,String class_name) {
         Intent i = new Intent(parent_login.this, otp_verification.class);
         i.putExtra("mobile", PMobile_No);

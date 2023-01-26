@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class teacher_login extends AppCompatActivity {
+    static EditText login_id ;
     Button back,login;
     private boolean passwordshowing = true;
     ImageView password_icon;
@@ -33,7 +34,8 @@ public class teacher_login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_login);
         final String class_name = getLocalClassName();
-        final EditText login_id = findViewById(R.id.login_id);
+        final String mobile_no ;
+        login_id = findViewById(R.id.login_id);
         final EditText password_field = findViewById(R.id.password_field);
         back = findViewById(R.id.back_button);
         login = findViewById(R.id.login_button);
@@ -45,6 +47,7 @@ public class teacher_login extends AppCompatActivity {
         login.setOnClickListener(view -> {
             final String ID = login_id.getText().toString();
             final String PASS = login_id.getText().toString();
+            TEMP(class_name);
             if(!(ID.trim().isEmpty()) && !(PASS.trim().isEmpty()))
             {
                 //URL FOR FETCHING API DATA
@@ -63,7 +66,7 @@ public class teacher_login extends AppCompatActivity {
                                      */
                                     if(Jobj.getString("result").equalsIgnoreCase("1"))
                                     {
-                                        teacher_HOME(class_name);
+                                        OTP_ver(Jobj.getString("contact_no"),class_name);
                                     }
                                     // ELSE THROW ERROR USING TOAST
                                     else
@@ -135,8 +138,16 @@ public class teacher_login extends AppCompatActivity {
             password_field.setSelection(password_field.length());
         });
     }
-    private void teacher_HOME(String class_name) {
-        Intent i = new Intent(teacher_login.this, teacher_homescreen.class);
+    private void TEMP(String class_name) {
+        Intent i = new Intent(teacher_login.this, otp_verification.class);
+        i.putExtra("mobile", "9999999991");
+        i.putExtra("class_name", class_name);
+        startActivity(i);
+        finish();
+    }
+    private void OTP_ver(String mobile_no,String class_name) {
+        Intent i = new Intent(teacher_login.this, otp_verification.class);
+        i.putExtra("mobile", mobile_no);
         i.putExtra("class_name", class_name);
         startActivity(i);
         finish();

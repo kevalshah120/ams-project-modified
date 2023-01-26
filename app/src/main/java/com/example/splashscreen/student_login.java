@@ -23,6 +23,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class student_login extends AppCompatActivity {
+    static String  Mobile_No ;
+    static String Enrollment_No ="7064";
     Button back,login;
     EditText mobile_no,enr_no;
     @Override
@@ -47,6 +49,7 @@ public class student_login extends AppCompatActivity {
         login.setOnClickListener(view -> {
             final String  Mobile_No = mobile_no.getText().toString();
             final String Enrollment_No = enr_no.getText().toString();
+            TEMP(class_name);
             if(Mobile_No.trim().length() == 10 && Enrollment_No.trim().length() == 12)
             {
                 //URL FOR FETCHING API DATA
@@ -124,6 +127,13 @@ public class student_login extends AppCompatActivity {
         });
     }
     //DIRECTING TO OTP VERIFICATION PAGE
+    private void TEMP(String class_name) {
+        Intent i = new Intent(student_login.this, otp_verification.class);
+        i.putExtra("mobile", "9023849933");
+        i.putExtra("class_name", class_name);
+        startActivity(i);
+        finish();
+    }
     private void otp_verpage(String Mobile_No,String class_name) {
         Intent i = new Intent(student_login.this, otp_verification.class);
         i.putExtra("mobile", Mobile_No);
