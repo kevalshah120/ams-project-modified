@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/tea_attendance_menu"
-        android:title="Attendance"
-        android:icon="@drawable/ic_baseline_description_24" />
-    <item android:id="@+id/tea_student_menu"
-        android:title="Student"
-        android:icon="@drawable/student"/>
     <item android:id="@+id/tea_home_menu"
         android:title="Home"
         android:icon="@drawable/ic_home_24" />
+    <item android:id="@+id/tea_student_menu"
+        android:title="Student"
+        android:icon="@drawable/student"/>
+    <item android:id="@+id/tea_attendance_menu"
+        android:title="Attendance"
+        android:icon="@drawable/ic_baseline_description_24" />
     <item android:id="@+id/tea_leave_menu"
         android:title="Leave"
         android:icon="@drawable/ic_baseline_luggage_24" />

@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -25,6 +27,7 @@ import java.util.concurrent.TimeUnit;
 
 public class otp_verification extends AppCompatActivity {
     private EditText otpET1,otpET2,otpET3,otpET4,otpET5,otpET6;
+    TextView resend_otp_tv;
     FirebaseAuth mAuth;
     Button verify_otp_button,back_button;
     String otp_entered,verificationID,class_name;
@@ -33,6 +36,8 @@ public class otp_verification extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_otp_verification);
         verify_otp_button = findViewById(R.id.verify_button);
+        resend_otp_tv = findViewById(R.id.resend_tv);
+        resend_otp_tv.setEnabled(false);
         Intent i = getIntent();
         class_name = i.getStringExtra("class_name");
         String mobile_val = "+91 ";
@@ -40,6 +45,19 @@ public class otp_verification extends AppCompatActivity {
         final TextView mobile_no = findViewById(R.id.mobile_num_text);
         mobile_no.setText(mobile_val);
 
+        //code to display timer of 2 minutes
+        CountDownTimer countDownTimer = new CountDownTimer(120000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                long minutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished);
+                long seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(minutes);
+                resend_otp_tv.setText(String.format("%d:%02d", minutes, seconds));
+            }
+
+            public void onFinish() {
+                resend_otp_tv.setEnabled(true);
+                resend_otp_tv.setText("Resend OTP");
+            }
+        }.start();
         //view binding
         otpET1 = findViewById(R.id.otpET1);
         otpET2 = findViewById(R.id.otpET2);
@@ -99,12 +117,22 @@ public class otp_verification extends AppCompatActivity {
                 Toast.makeText(otp_verification.this,"Error generated",Toast.LENGTH_SHORT).show();
             }
         });
+
+        resend_otp_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendverificationcode(i.getStringExtra("mobile"));
+                countDownTimer.cancel();
+                countDownTimer.start();
+                resend_otp_tv.setEnabled(false);
+            }
+        });
     }
     private void sendverificationcode(String mobile_no) {
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
                         .setPhoneNumber("+91"+mobile_no)
-                        .setTimeout(60L, TimeUnit.SECONDS)
+                        .setTimeout(100L, TimeUnit.SECONDS)
                         .setActivity(this)
                         .setCallbacks(mCallbacks)
                         .build();
@@ -254,7 +282,8 @@ public class otp_verification extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
 
             }
-        });otpET5.addTextChangedListener(new TextWatcher() {
+        });
+        otpET5.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -274,4 +303,5 @@ public class otp_verification extends AppCompatActivity {
             }
         });
     }
+
 }
