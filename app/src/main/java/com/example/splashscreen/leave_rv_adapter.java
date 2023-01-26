@@ -30,14 +30,13 @@ public class leave_rv_adapter extends RecyclerView.Adapter<leave_rv_adapter.MyVi
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        int desc_img = leave_data.get(position).getDesc_img();
         int tag = leave_data.get(position).getTag();
         int teacher_icon = leave_data.get(position).getTeacher_icon();
         String leave_name = leave_data.get(position).getLeave_name();
         String date = leave_data.get(position).getDate();
         String prof_name = leave_data.get(position).getProf_name();
 
-        holder.setData(desc_img,tag,teacher_icon,leave_name,date,prof_name);
+        holder.setData(tag,teacher_icon,leave_name,date,prof_name);
     }
 
     @Override
@@ -61,7 +60,7 @@ public class leave_rv_adapter extends RecyclerView.Adapter<leave_rv_adapter.MyVi
 
         }
 
-        public void setData(int desc_img, int tag, int teacher_icon, String leave_name, String date, String prof_name) {
+        public void setData(int tag, int teacher_icon, String leave_name, String date, String prof_name) {
             imageView_status_tag.setImageResource(tag);
             imageView3_teacher_icon.setImageResource(teacher_icon);
             textView_leave_date.setText(date);

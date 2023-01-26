@@ -1,6 +1,8 @@
 package com.example.splashscreen;
 //https://www.youtube.com/watch?v=UBgXVGgTaHk&ab_channel=Foxandroid reference taken for binding recyclerview in fragements
 //https://youtu.be/4cFL7CMd5QY recyclerview video
+
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -16,8 +18,26 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,8 +45,10 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class stu_leave_fragement extends Fragment {
-    private TextView b1,b2,b3,b4;
-    List<leave_model_class>leave_data;
+    int student_leave_req_size;
+    public static String Response = "yash";
+    private TextView b1, b2, b3, b4;
+    List<leave_model_class> leave_data;
     private RecyclerView recyclerView;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -73,7 +95,8 @@ public class stu_leave_fragement extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View view =  inflater.inflate(R.layout.fragment_stu_leave_fragement, container, false);
+        View view = inflater.inflate(R.layout.fragment_stu_leave_fragement, container, false);
+        recyclerView = view.findViewById(R.id.leave_recyclerview);
         TextView b1 = view.findViewById(R.id.all_button);
         TextView b2 = view.findViewById(R.id.pending_button);
         TextView b3 = view.findViewById(R.id.approved_button);
@@ -89,7 +112,11 @@ public class stu_leave_fragement extends Fragment {
                 b2.setTextColor(getResources().getColor(R.color.txt_color));
                 b3.setTextColor(getResources().getColor(R.color.txt_color));
                 b4.setTextColor(getResources().getColor(R.color.txt_color));
-                Toast.makeText(getActivity(),"All",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "All", Toast.LENGTH_SHORT).show();
+                recyclerView.setLayoutManager(null);
+                recyclerView.setAdapter(null);
+                leave_data.clear();
+                dataInitialize("all");
             }
         });
         b2.setOnClickListener(new View.OnClickListener() {
@@ -103,7 +130,11 @@ public class stu_leave_fragement extends Fragment {
                 b2.setTextColor(getResources().getColor(R.color.txt_color_focused));
                 b3.setTextColor(getResources().getColor(R.color.txt_color));
                 b4.setTextColor(getResources().getColor(R.color.txt_color));
-                Toast.makeText(getActivity(),"pending",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "pending", Toast.LENGTH_SHORT).show();
+                recyclerView.setLayoutManager(null);
+                recyclerView.setAdapter(null);
+                leave_data.clear();
+                dataInitialize("pen");
             }
         });
         b3.setOnClickListener(new View.OnClickListener() {
@@ -117,7 +148,11 @@ public class stu_leave_fragement extends Fragment {
                 b2.setTextColor(getResources().getColor(R.color.txt_color));
                 b3.setTextColor(getResources().getColor(R.color.txt_color_focused));
                 b4.setTextColor(getResources().getColor(R.color.txt_color));
-                Toast.makeText(getActivity(),"Approved",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Approved", Toast.LENGTH_SHORT).show();
+                recyclerView.setLayoutManager(null);
+                recyclerView.setAdapter(null);
+                leave_data.clear();
+                dataInitialize("app");
             }
         });
         b4.setOnClickListener(new View.OnClickListener() {
@@ -131,7 +166,11 @@ public class stu_leave_fragement extends Fragment {
                 b2.setTextColor(getResources().getColor(R.color.txt_color));
                 b3.setTextColor(getResources().getColor(R.color.txt_color));
                 b4.setTextColor(getResources().getColor(R.color.txt_color_focused));
-                Toast.makeText(getActivity(),"rejected",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "rejected", Toast.LENGTH_SHORT).show();
+                recyclerView.setLayoutManager(null);
+                recyclerView.setAdapter(null);
+                leave_data.clear();
+                dataInitialize("rej");
             }
         });
         return view;
@@ -140,19 +179,125 @@ public class stu_leave_fragement extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        dataInitialize();
-        recyclerView = view.findViewById(R.id.leave_recyclerview);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setHasFixedSize(true);
-        leave_rv_adapter leave_adapter = new leave_rv_adapter(getContext(),leave_data);
-        recyclerView.setAdapter(leave_adapter);
-        leave_adapter.notifyDataSetChanged();
+        dataInitialize("all");
     }
-//recyclerview data passing
-    private void dataInitialize() {
-        leave_data = new ArrayList<>();
-        leave_data.add(new leave_model_class(R.drawable.approved_tag,R.drawable.description_tag,"Leave Application Name","Mon 16 Aug - Wed 18 Aug","Prof Snajay Bhalgama",R.drawable.ic_teacher_24));
-        leave_data.add(new leave_model_class(R.drawable.pending_tag,R.drawable.description_tag,"Marriage Function","Wed 1 Aug - Fri 3 Aug","Prof Shakti Parmar",R.drawable.ic_teacher_24));
-        leave_data.add(new leave_model_class(R.drawable.rejected_tag,R.drawable.description_tag,"Out Of Station","Tue 16 Aug - Tue 22 Aug","Prof Bhailal Limbasiya",R.drawable.ic_teacher_24));
+
+    //recyclerview data passing
+    private void dataInitialize(String clickedBUTTON) {
+        //URL FOR FETCHING API DATA
+        String URL = "http://192.168.29.237/mysql/getLeaveData.php";
+        //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
+        RequestQueue queue = Volley.newRequestQueue(requireActivity());
+        //STRING REQUEST OBJECT INITIALIZATION
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        leave_data = new ArrayList<>();
+                        try {
+                            JSONArray array = new JSONArray(response);
+                            SimpleDateFormat formatter = new SimpleDateFormat("yyyy MM dd");
+                            String status[] = new String[array.length()];
+                            String Leave_name[] = new String[array.length()];
+                            String from_date[] = new String[array.length()];
+                            String To_date[] = new String[array.length()];
+                            String Proof_name[] = new String[array.length()];
+                            String finalDate[] = new String[array.length()];
+                            student_leave_req_size = array.length();
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject object = array.getJSONObject(i);
+                                if (object.has("status")) {
+                                    status[i] = object.getString("status");
+                                }
+                                if (object.has("leave_name")) {
+                                    Leave_name[i] = object.getString("leave_name");
+                                }
+                                if (object.has("from_date")) {
+                                    from_date[i] = object.getString("from_date");
+                                }
+                                if (object.has("to_date")) {
+                                    To_date[i] = object.getString("to_date");
+                                }
+                                if (object.has("staff_name")) {
+                                    Proof_name[i] = object.getString("staff_name");
+                                }
+//                              Date from = new SimpleDateFormat("yyyy-MM-dd").parse(from_date[i]);
+//                              finalDate[i] = from.toString() + " - ";
+//                              Date to = new SimpleDateFormat("yyyy-MM-dd").parse(To_date[i]);
+//                              finalDate[i] += to.toString();
+                            }
+                            if(clickedBUTTON=="all") {
+                                for (int i = 0; i < array.length(); i++) {
+                                    if (status[i].equals("approved")) {
+                                        leave_data.add(new leave_model_class(R.drawable.approved_tag, Leave_name[i],
+                                                finalDate[i], Proof_name[i], R.drawable.ic_teacher_24));
+                                    } else if (status[i].equals("rejected")) {
+                                        leave_data.add(new leave_model_class(R.drawable.rejected_tag, Leave_name[i],
+                                                finalDate[i], Proof_name[i], R.drawable.ic_teacher_24));
+                                    } else {
+                                        leave_data.add(new leave_model_class(R.drawable.pending_tag, Leave_name[i],
+                                                finalDate[i], Proof_name[i], R.drawable.ic_teacher_24));
+                                    }
+                                }
+                            }
+                            if(clickedBUTTON=="pen") {
+                                for (int i = 0; i < array.length(); i++) {
+                                    if (status[i].equals("pending")) {
+                                        leave_data.add(new leave_model_class(R.drawable.pending_tag, Leave_name[i],
+                                                finalDate[i], Proof_name[i], R.drawable.ic_teacher_24));
+                                    }
+                                }
+                            }
+                            if(clickedBUTTON=="app") {
+                                for (int i = 0; i < array.length(); i++) {
+                                    if (status[i].equals("approved")) {
+                                        leave_data.add(new leave_model_class(R.drawable.approved_tag, Leave_name[i],
+                                                finalDate[i], Proof_name[i], R.drawable.ic_teacher_24));
+                                    }
+                                }
+                            }
+                            if(clickedBUTTON=="rej") {
+                                for (int i = 0; i < array.length(); i++) {
+                                    if (status[i].equals("rejected")) {
+                                        leave_data.add(new leave_model_class(R.drawable.rejected_tag, Leave_name[i],
+                                                finalDate[i], Proof_name[i], R.drawable.ic_teacher_24));
+                                    }
+                                }
+                            }
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+//                      catch (ParseException e) {
+//                      throw new RuntimeException(e);
+//                      }
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                        recyclerView.setHasFixedSize(true);
+                        leave_rv_adapter leave_adapter = new leave_rv_adapter(getContext(), leave_data);
+                        recyclerView.setAdapter(leave_adapter);
+                        leave_adapter.notifyDataSetChanged();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(requireActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            //GIVING INPUT TO PHP API THROUGH MAP
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("enrollment", student_login.Enrollment_No);
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+        queue.add(stringRequest);
     }
+
 }
