@@ -54,7 +54,7 @@
                 android:textSize="@dimen/_13sdp" />
 
             <Button
-                android:id="@+id/mark_attend_button"
+                android:id="@+id/mark_button"
                 style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="@dimen/_65sdp"
                 android:layout_height="@dimen/_40sdp"
