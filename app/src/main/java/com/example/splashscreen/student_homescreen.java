@@ -75,7 +75,6 @@ public class student_homescreen extends AppCompatActivity implements NavigationV
                     replaceFragment(new stu_leave_fragement());
                     break;
             }
-            drawerLayout.closeDrawer(GravityCompat.START);
             return true;
         });
         toogle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
@@ -118,6 +117,7 @@ public class student_homescreen extends AppCompatActivity implements NavigationV
                 Toast.makeText(this,"About Us",Toast.LENGTH_SHORT).show();
                 break;
         }
+        drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 

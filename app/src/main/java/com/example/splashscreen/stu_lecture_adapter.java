@@ -32,8 +32,9 @@ public class stu_lecture_adapter extends RecyclerView.Adapter<stu_lecture_adapte
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.stu_lecture_cv, parent, false);
-        MyViewHolder viewHolder = new MyViewHolder(view);
-        return viewHolder;
+//        MyViewHolder viewHolder = new MyViewHolder(view);
+//        return viewHolder;
+        return new MyViewHolder(view);
     }
 
     @Override

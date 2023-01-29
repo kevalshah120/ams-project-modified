@@ -29,16 +29,17 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="@dimen/_45sdp"
-                    android:layout_height="@dimen/_35sdp"
-                    android:layout_alignParentEnd="true"
-                    app:civ_border_width="1dp"
-                    android:clickable="true"
-                    app:civ_border_color="@color/black"
-                    android:layout_margin="5dp"
-                    android:id="@+id/profile_image"
-                    android:src="@drawable/profile_pic" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/toolbar_text"
+                    android:layout_centerVertical="true"
+                    android:paddingTop="@dimen/_4sdp"
+                    android:text="Home"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_25sdp"
+                    />
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
         <FrameLayout
