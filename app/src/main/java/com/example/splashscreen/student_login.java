@@ -48,7 +48,7 @@ public class student_login extends AppCompatActivity {
          */
         login.setOnClickListener(view -> {
             final String  Mobile_No = mobile_no.getText().toString();
-            final String Enrollment_No = enr_no.getText().toString();
+            Enrollment_No = enr_no.getText().toString();
             TEMP(class_name);
             if(Mobile_No.trim().length() == 10 && Enrollment_No.trim().length() == 12)
             {

@@ -167,7 +167,7 @@ public class stu_leave_fragement extends Fragment {
     //recyclerview data passing
     private void dataInitialize(String clickedBUTTON) {
         //URL FOR FETCHING API DATA
-        String URL = "http://192.168.29.237/mysql/getLeaveData.php";
+        String URL = "http://192.168.29.237/mysql/getLeaveDataForStudent.php";
         if (leave_data != null) {
             recyclerView.setLayoutManager(null);
             recyclerView.setAdapter(null);
@@ -183,7 +183,6 @@ public class stu_leave_fragement extends Fragment {
                         leave_data = new ArrayList<>();
                         try {
                             JSONArray array = new JSONArray(response);
-                            SimpleDateFormat formatter = new SimpleDateFormat("yyyy MM dd");
                             String status[] = new String[array.length()];
                             String Leave_name[] = new String[array.length()];
                             String from_date[] = new String[array.length()];
@@ -250,9 +249,6 @@ public class stu_leave_fragement extends Fragment {
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
-//                      catch (ParseException e) {
-//                      throw new RuntimeException(e);
-//                      }
                         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                         recyclerView.setHasFixedSize(true);
                         leave_rv_adapter leave_adapter = new leave_rv_adapter(getContext(), leave_data);
@@ -283,7 +279,7 @@ public class stu_leave_fragement extends Fragment {
         queue.add(stringRequest);
     }
 
-    String dateConversion(String from, String to) {
+    public static String dateConversion(String from, String to) {
         String finalSTR ;
         String to_year ="";
         String from_month="" ;
@@ -349,7 +345,7 @@ public class stu_leave_fragement extends Fragment {
         return finalSTR;
     }
 
-    String monNumToWord(String date) {
+    static String monNumToWord(String date) {
         if (date.equals("01")) {
             date = "Jan";
         } else if (date.equals("02")) {

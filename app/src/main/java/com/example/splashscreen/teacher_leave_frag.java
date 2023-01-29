@@ -11,9 +11,25 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -73,18 +89,80 @@ public class teacher_leave_frag extends Fragment {
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        dataInitialize();
         recyclerView = view.findViewById(R.id.teacher_leave_recyclerview);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setHasFixedSize(true);
-        teacher_leave_adapter teacher_leave_adapter = new teacher_leave_adapter(getContext(),tea_leave_data);
-        recyclerView.setAdapter(teacher_leave_adapter);
-        teacher_leave_adapter.notifyDataSetChanged();
+        dataInitialize();
     }
 
     private void dataInitialize() {
         tea_leave_data = new ArrayList<>();
-        tea_leave_data.add(new teacher_leave_model("Leave application name","26 Jan 2023 - 28 JAN 2023","Keval Shah","3SEM"));
-        tea_leave_data.add(new teacher_leave_model("Kidney Attack","26 Jan 2023 - 28 JAN 2023","Yash Matariya","3SEM"));
+        //URL FOR FETCHING API DATA
+        String URL = "http://192.168.29.237/mysql/getLeaveDataForTeacher.php";
+        //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
+        RequestQueue queue = Volley.newRequestQueue(requireActivity());
+        //STRING REQUEST OBJECT INITIALIZATION
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONArray array = new JSONArray(response);
+                            String semester[] = new String[array.length()];
+                            String Leave_name[] = new String[array.length()];
+                            String from_date[] = new String[array.length()];
+                            String to_date[] = new String[array.length()];
+                            String std_name[] = new String[array.length()];
+                            String finalDate[] = new String[array.length()];
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject object = array.getJSONObject(i);
+                                if (object.has("semester")) {
+                                    semester[i] = object.getString("semester");
+                                }
+                                if (object.has("leave_name")) {
+                                    Leave_name[i] = object.getString("leave_name");
+                                }
+                                if (object.has("from_date")) {
+                                    from_date[i] = object.getString("from_date");
+                                }
+                                if (object.has("to_date")) {
+                                    to_date[i] = object.getString("to_date");
+                                }
+                                if (object.has("std_name")) {
+                                    std_name[i] = object.getString("std_name");
+                                }
+                                finalDate[i] = stu_leave_fragement.dateConversion(from_date[i], to_date[i]);
+                                tea_leave_data.add(new teacher_leave_model(Leave_name[i],finalDate[i],std_name[i] ,semester[i]+" SEM"));
+                            }
+                            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                            recyclerView.setHasFixedSize(true);
+                            teacher_leave_adapter teacher_leave_adapter = new teacher_leave_adapter(getContext(), tea_leave_data);
+                            recyclerView.setAdapter(teacher_leave_adapter);
+                            teacher_leave_adapter.notifyDataSetChanged();
+                        } catch (
+                                JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(requireActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            //GIVING INPUT TO PHP API THROUGH MAP
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("tID", teacher_login.ID);
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+        queue.add(stringRequest);
     }
 }
