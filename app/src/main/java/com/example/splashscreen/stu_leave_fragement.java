@@ -2,8 +2,6 @@ package com.example.splashscreen;
 //https://www.youtube.com/watch?v=UBgXVGgTaHk&ab_channel=Foxandroid reference taken for binding recyclerview in fragements
 //https://youtu.be/4cFL7CMd5QY recyclerview video
 
-import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -30,14 +28,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,7 +40,6 @@ import java.util.Objects;
  * create an instance of this fragment.
  */
 public class stu_leave_fragement extends Fragment {
-    int student_leave_req_size;
     public static String Response = "yash";
     private TextView b1, b2, b3, b4;
     List<leave_model_class> leave_data;
@@ -113,9 +107,6 @@ public class stu_leave_fragement extends Fragment {
                 b3.setTextColor(getResources().getColor(R.color.txt_color));
                 b4.setTextColor(getResources().getColor(R.color.txt_color));
                 Toast.makeText(getActivity(), "All", Toast.LENGTH_SHORT).show();
-                recyclerView.setLayoutManager(null);
-                recyclerView.setAdapter(null);
-                leave_data.clear();
                 dataInitialize("all");
             }
         });
@@ -131,9 +122,6 @@ public class stu_leave_fragement extends Fragment {
                 b3.setTextColor(getResources().getColor(R.color.txt_color));
                 b4.setTextColor(getResources().getColor(R.color.txt_color));
                 Toast.makeText(getActivity(), "pending", Toast.LENGTH_SHORT).show();
-                recyclerView.setLayoutManager(null);
-                recyclerView.setAdapter(null);
-                leave_data.clear();
                 dataInitialize("pen");
             }
         });
@@ -149,9 +137,6 @@ public class stu_leave_fragement extends Fragment {
                 b3.setTextColor(getResources().getColor(R.color.txt_color_focused));
                 b4.setTextColor(getResources().getColor(R.color.txt_color));
                 Toast.makeText(getActivity(), "Approved", Toast.LENGTH_SHORT).show();
-                recyclerView.setLayoutManager(null);
-                recyclerView.setAdapter(null);
-                leave_data.clear();
                 dataInitialize("app");
             }
         });
@@ -167,9 +152,6 @@ public class stu_leave_fragement extends Fragment {
                 b3.setTextColor(getResources().getColor(R.color.txt_color));
                 b4.setTextColor(getResources().getColor(R.color.txt_color_focused));
                 Toast.makeText(getActivity(), "rejected", Toast.LENGTH_SHORT).show();
-                recyclerView.setLayoutManager(null);
-                recyclerView.setAdapter(null);
-                leave_data.clear();
                 dataInitialize("rej");
             }
         });
@@ -186,6 +168,11 @@ public class stu_leave_fragement extends Fragment {
     private void dataInitialize(String clickedBUTTON) {
         //URL FOR FETCHING API DATA
         String URL = "http://192.168.29.237/mysql/getLeaveData.php";
+        if (leave_data != null) {
+            recyclerView.setLayoutManager(null);
+            recyclerView.setAdapter(null);
+            leave_data.clear();
+        }
         //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
         RequestQueue queue = Volley.newRequestQueue(requireActivity());
         //STRING REQUEST OBJECT INITIALIZATION
@@ -200,10 +187,9 @@ public class stu_leave_fragement extends Fragment {
                             String status[] = new String[array.length()];
                             String Leave_name[] = new String[array.length()];
                             String from_date[] = new String[array.length()];
-                            String To_date[] = new String[array.length()];
+                            String to_date[] = new String[array.length()];
                             String Proof_name[] = new String[array.length()];
                             String finalDate[] = new String[array.length()];
-                            student_leave_req_size = array.length();
                             for (int i = 0; i < array.length(); i++) {
                                 JSONObject object = array.getJSONObject(i);
                                 if (object.has("status")) {
@@ -216,17 +202,14 @@ public class stu_leave_fragement extends Fragment {
                                     from_date[i] = object.getString("from_date");
                                 }
                                 if (object.has("to_date")) {
-                                    To_date[i] = object.getString("to_date");
+                                    to_date[i] = object.getString("to_date");
                                 }
                                 if (object.has("staff_name")) {
                                     Proof_name[i] = object.getString("staff_name");
                                 }
-//                              Date from = new SimpleDateFormat("yyyy-MM-dd").parse(from_date[i]);
-//                              finalDate[i] = from.toString() + " - ";
-//                              Date to = new SimpleDateFormat("yyyy-MM-dd").parse(To_date[i]);
-//                              finalDate[i] += to.toString();
+                                finalDate[i] = dateConversion(from_date[i], to_date[i] );
                             }
-                            if(clickedBUTTON=="all") {
+                            if (clickedBUTTON == "all") {
                                 for (int i = 0; i < array.length(); i++) {
                                     if (status[i].equals("approved")) {
                                         leave_data.add(new leave_model_class(R.drawable.approved_tag, Leave_name[i],
@@ -240,7 +223,7 @@ public class stu_leave_fragement extends Fragment {
                                     }
                                 }
                             }
-                            if(clickedBUTTON=="pen") {
+                            if (clickedBUTTON == "pen") {
                                 for (int i = 0; i < array.length(); i++) {
                                     if (status[i].equals("pending")) {
                                         leave_data.add(new leave_model_class(R.drawable.pending_tag, Leave_name[i],
@@ -248,7 +231,7 @@ public class stu_leave_fragement extends Fragment {
                                     }
                                 }
                             }
-                            if(clickedBUTTON=="app") {
+                            if (clickedBUTTON == "app") {
                                 for (int i = 0; i < array.length(); i++) {
                                     if (status[i].equals("approved")) {
                                         leave_data.add(new leave_model_class(R.drawable.approved_tag, Leave_name[i],
@@ -256,7 +239,7 @@ public class stu_leave_fragement extends Fragment {
                                     }
                                 }
                             }
-                            if(clickedBUTTON=="rej") {
+                            if (clickedBUTTON == "rej") {
                                 for (int i = 0; i < array.length(); i++) {
                                     if (status[i].equals("rejected")) {
                                         leave_data.add(new leave_model_class(R.drawable.rejected_tag, Leave_name[i],
@@ -300,4 +283,98 @@ public class stu_leave_fragement extends Fragment {
         queue.add(stringRequest);
     }
 
+    String dateConversion(String from, String to) {
+        String finalSTR ;
+        String to_year ="";
+        String from_month="" ;
+        String from_date="";
+        String from_year="";
+        String to_date ="";
+        String to_month ="";
+        int dashFOUND = 0;
+        int fromSize = from.length();
+        int toSize = to.length();
+        int i = 0;
+        while (i < fromSize) {
+            if (dashFOUND == 0) {
+                if (from.charAt(i) == '-') {
+                    dashFOUND++;
+                } else  {
+                    from_year += from.charAt(i);
+                }
+            } else if (dashFOUND == 1) {
+                if (from.charAt(i) == '-') {
+                    dashFOUND++;
+                } else  {
+                    from_month += from.charAt(i);
+                }
+            } else {
+                if (from.charAt(i) == '-') {
+                    dashFOUND++;
+                } else  {
+                    from_date += from.charAt(i);
+                }
+            }
+            i++;
+        }
+        i = 0;
+        dashFOUND = 0;
+        while (i < toSize) {
+            if (dashFOUND == 0) {
+                if (to.charAt(i) == '-') {
+                    dashFOUND++;
+                } else  {
+                    to_year += to.charAt(i);
+                }
+            } else if (dashFOUND == 1) {
+                if (to.charAt(i) == '-') {
+                    dashFOUND++;
+                } else {
+                    to_month += to.charAt(i);
+                }
+            } else {
+                if (to.charAt(i) == '-') {
+                    dashFOUND++;
+                } else  {
+                    to_date += to.charAt(i);
+                }
+            }
+            i++;
+        }
+        from_month = monNumToWord(from_month);
+        to_month = monNumToWord(to_month);
+        from = from_date + " " + from_month + " " + from_year;
+        to = to_date + " " + to_month + " " + to_year;
+        finalSTR = from +" - "+to;
+        return finalSTR;
+    }
+
+    String monNumToWord(String date) {
+        if (date.equals("01")) {
+            date = "Jan";
+        } else if (date.equals("02")) {
+            date = "Feb";
+        } else if (date.equals("03")) {
+            date = "Mar";
+        } else if (date.equals("04")) {
+            date = "Apr";
+        } else if (date.equals("05")) {
+            date = "May";
+        } else if (date.equals("06")) {
+            date = "Jun";
+        } else if (date.equals("07")) {
+            date = "Jul";
+        } else if (date.equals("08")) {
+            date = "Aug";
+        } else if (date.equals("09")) {
+            date = "Sep";
+        } else if (date.equals("10")) {
+            date = "Oct";
+        } else if (date.equals("11")) {
+            date = "Nov";
+        } else if (date.equals("12")) {
+            date = "Dec";
+        }
+        return date;
+    }
 }

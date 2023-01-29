@@ -94,15 +94,17 @@
                 android:layout_marginBottom="@dimen/_70sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_5sdp">
+
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/Leave_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/textfield_rounded_corner"
-                    android:textSize="@dimen/_14sdp"
-                    android:lines="12"
                     android:fontFamily="@font/poppins_medium"
+                    android:gravity="top"
+                    android:lines="12"
                     android:maxLength="256"
-                    android:gravity="top" />
+                    android:textSize="@dimen/_14sdp" />
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
         <Button
