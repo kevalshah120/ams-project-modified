@@ -24,7 +24,7 @@ import java.util.Map;
 
 public class student_login extends AppCompatActivity {
     static String  Mobile_No ;
-    static String Enrollment_No ="7064";
+    static String Enrollment_No ="206090307064";
     Button back,login;
     EditText mobile_no,enr_no;
     @Override

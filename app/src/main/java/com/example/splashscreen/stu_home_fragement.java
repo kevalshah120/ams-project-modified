@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,8 +12,23 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -73,18 +89,65 @@ public class stu_home_fragement extends Fragment {
     }
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        dataInitialize();
         recyclerView = view.findViewById(R.id.lecture_recyclerview);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setHasFixedSize(true);
-        stu_lecture_adapter lecture_adapter = new stu_lecture_adapter(getContext(),lecture_data);
-        recyclerView.setAdapter(lecture_adapter);
-        lecture_adapter.notifyDataSetChanged();
+        dataInitialize();
     }
 
     private void dataInitialize() {
-        lecture_data = new ArrayList<>();
-        lecture_data.add(new stu_lecture_model("PPUD (3360702)","Prof Pratik Parmar"));
-        lecture_data.add(new stu_lecture_model("Ad.Java (3360701)","Prof K. G. Patel"));
+        //URL FOR FETCHING API DATA
+        String URL = "http://192.168.29.237/mysql/getAttendacneData.php";
+        if (lecture_data != null) {
+            recyclerView.setLayoutManager(null);
+            recyclerView.setAdapter(null);
+            lecture_data.clear();
+        }
+        //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
+        RequestQueue queue = Volley.newRequestQueue(requireActivity());
+        //STRING REQUEST OBJECT INITIALIZATION
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        lecture_data = new ArrayList<>();
+                        try {
+                            JSONArray array = new JSONArray(response);
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject object = array.getJSONObject(i);
+                                String subject_code = object.getString("subject_code");
+                                String subject_name = object.getString("subject_name");
+                                String staff_name = object.getString("staff_name");
+                                lecture_data.add(new stu_lecture_model(subject_name+" ("+subject_code+")","Prof "+staff_name));
+                            }
+                            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                            recyclerView.setHasFixedSize(true);
+                            stu_lecture_adapter lecture_adapter = new stu_lecture_adapter(getContext(),lecture_data);
+                            recyclerView.setAdapter(lecture_adapter);
+                            lecture_adapter.notifyDataSetChanged();
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(requireActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            //GIVING INPUT TO PHP API THROUGH MAP
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("enrollment", student_login.Enrollment_No);
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+        queue.add(stringRequest);
     }
 }
