@@ -96,7 +96,7 @@ public class teacher_leave_frag extends Fragment {
     private void dataInitialize() {
         tea_leave_data = new ArrayList<>();
         //URL FOR FETCHING API DATA
-        String URL = "http://192.168.29.237/mysql/getLeaveDataForTeacher.php";
+        String URL = "https://stocky-baud.000webhostapp.com/getLeaveDataForTeacher.php";
         //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
         RequestQueue queue = Volley.newRequestQueue(requireActivity());
         //STRING REQUEST OBJECT INITIALIZATION

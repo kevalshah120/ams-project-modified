@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class leave_rv_adapter extends RecyclerView.Adapter<leave_rv_adapter.MyViewHolder> {
+public class    leave_rv_adapter extends RecyclerView.Adapter<leave_rv_adapter.MyViewHolder> {
     private List<leave_model_class> leave_data;
     Context context;
     public leave_rv_adapter(Context context,List<leave_model_class>leave_data)

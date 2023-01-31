@@ -2,8 +2,11 @@ package com.example.splashscreen;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.InputType;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,7 +31,7 @@ public class teacher_login extends AppCompatActivity {
     static EditText login_id ;
     Button back,login;
     private boolean passwordshowing = true;
-    static String ID ="san12";
+    public static String ID ;
     ImageView password_icon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +50,12 @@ public class teacher_login extends AppCompatActivity {
         });
         login.setOnClickListener(view -> {
             ID = login_id.getText().toString();
-            final String PASS = login_id.getText().toString();
-            TEMP(class_name);
+            final String PASS = password_field.getText().toString();
+//            TEMP(class_name);
             if(!(ID.trim().isEmpty()) && !(PASS.trim().isEmpty()))
             {
                 //URL FOR FETCHING API DATA
-                String URL = "http://192.168.29.237/mysql/checkForTeacher.php";
+                String URL = "https://stocky-baud.000webhostapp.com/checkForTeacher.php";
                 //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
                 RequestQueue queue = Volley.newRequestQueue(teacher_login.this);
                 //STRING REQUEST OBJECT INITIALIZATION

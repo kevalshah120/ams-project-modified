@@ -24,7 +24,7 @@ import java.util.Map;
 
 public class student_login extends AppCompatActivity {
     static String  Mobile_No ;
-    static String Enrollment_No ="206090307064";
+    static String Enrollment_No ;
     Button back,login;
     EditText mobile_no,enr_no;
     @Override
@@ -49,11 +49,11 @@ public class student_login extends AppCompatActivity {
         login.setOnClickListener(view -> {
             final String  Mobile_No = mobile_no.getText().toString();
             Enrollment_No = enr_no.getText().toString();
-            TEMP(class_name);
+//            TEMP(class_name);
             if(Mobile_No.trim().length() == 10 && Enrollment_No.trim().length() == 12)
             {
                 //URL FOR FETCHING API DATA
-                String URL = "http://192.168.29.237/mysql/CheckforStudent.php";
+                String URL = "https://stocky-baud.000webhostapp.com/CheckforStudent.php";
                 //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
                 RequestQueue queue = Volley.newRequestQueue(student_login.this);
                 //STRING REQUEST OBJECT INITIALIZATION

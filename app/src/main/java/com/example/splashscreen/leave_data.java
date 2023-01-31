@@ -59,7 +59,7 @@ public class leave_data extends AppCompatActivity {
         submit = findViewById(R.id.submit_button);
         leave_desc = findViewById(R.id.Leave_description);
         //-----------------------------------GETTING STAFF NAME BELOW----------------------------------
-        String URL = "http://192.168.29.237/mysql/getStaffName.php";
+        String URL = "https://stocky-baud.000webhostapp.com/getStaffName.php";
         //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
         RequestQueue queue = Volley.newRequestQueue(leave_data.this);
         //STRING REQUEST OBJECT INITIALIZATION
@@ -184,7 +184,7 @@ public class leave_data extends AppCompatActivity {
                     }
                     from_DATE = from_year + "-" + from_month + "-" + from_date;
                     to_DATE = to_year + "-" + to_month + "-" + to_date;
-                    String URL = "http://192.168.29.237/mysql/setLeavetbDATA.php";
+                    String URL = "https://stocky-baud.000webhostapp.com/setLeavetbDATA.php";
                     //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
                     RequestQueue queue = Volley.newRequestQueue(leave_data.this);
                     //STRING REQUEST OBJECT INITIALIZATION

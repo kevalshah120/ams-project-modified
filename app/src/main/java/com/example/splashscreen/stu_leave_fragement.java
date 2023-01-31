@@ -167,7 +167,7 @@ public class stu_leave_fragement extends Fragment {
     //recyclerview data passing
     private void dataInitialize(String clickedBUTTON) {
         //URL FOR FETCHING API DATA
-        String URL = "http://192.168.29.237/mysql/getLeaveDataForStudent.php";
+        String URL = "https://stocky-baud.000webhostapp.com/getLeaveDataForStudent.php";
         if (leave_data != null) {
             recyclerView.setLayoutManager(null);
             recyclerView.setAdapter(null);

@@ -95,7 +95,7 @@ public class stu_home_fragement extends Fragment {
 
     private void dataInitialize() {
         //URL FOR FETCHING API DATA
-        String URL = "http://192.168.29.237/mysql/getAttendacneData.php";
+        String URL = "https://stocky-baud.000webhostapp.com/getAttendacneData.php";
         if (lecture_data != null) {
             recyclerView.setLayoutManager(null);
             recyclerView.setAdapter(null);
