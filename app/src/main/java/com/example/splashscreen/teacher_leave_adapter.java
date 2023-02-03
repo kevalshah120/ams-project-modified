@@ -59,14 +59,14 @@ public class teacher_leave_adapter extends RecyclerView.Adapter<teacher_leave_ad
         });
 
         holder.reject_button.setOnClickListener(view -> {
-
+            aORr(false, holder.approve_button.getContext(), leave_id);
         });
     }
 
     private boolean aORr(boolean action, Context ct, String lID) {
         boolean result = false;
         //URL FOR FETCHING API DATA
-        String URL = "http://192.168.29.237/mysql/leaveAppOrRej.php";
+        String URL = "https://stocky-baud.000webhostapp.com/leaveAppOrRej.php";
         //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
         RequestQueue queue = Volley.newRequestQueue(ct);
         //STRING REQUEST OBJECT INITIALIZATION
@@ -75,11 +75,12 @@ public class teacher_leave_adapter extends RecyclerView.Adapter<teacher_leave_ad
                     @Override
                     public void onResponse(String response) {
                         try {
-                            String res = new JSONObject(response).getString("res");
-                            if (res == "1") {
+                            JSONObject Jobj = new JSONObject(response);
+                            String res = Jobj.getString("result");
+                            if (res.equals("1")) {
                                 Toast.makeText(ct, "APPROVED", Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(ct, "REJECTED", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ct, res + lID , Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             Toast.makeText(ct, "JSON ERROR", Toast.LENGTH_SHORT).show();
@@ -88,7 +89,7 @@ public class teacher_leave_adapter extends RecyclerView.Adapter<teacher_leave_ad
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(ct, error.getMessage(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(ct, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override

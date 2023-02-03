@@ -30,6 +30,6 @@ public class teacher_leave_model {
         return stu_name;
     }
     public String getLeave_id() {
-        return stu_name;
+        return leave_id;
     }
 }
