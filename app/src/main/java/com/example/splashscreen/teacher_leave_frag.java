@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -112,6 +113,7 @@ public class teacher_leave_frag extends Fragment {
                             String to_date[] = new String[array.length()];
                             String std_name[] = new String[array.length()];
                             String finalDate[] = new String[array.length()];
+                            String leave_id[] = new String[array.length()];
                             for (int i = 0; i < array.length(); i++) {
                                 JSONObject object = array.getJSONObject(i);
                                 if (object.has("semester")) {
@@ -129,8 +131,9 @@ public class teacher_leave_frag extends Fragment {
                                 if (object.has("std_name")) {
                                     std_name[i] = object.getString("std_name");
                                 }
+                                leave_id[i]= object.getString("leave_id");
                                 finalDate[i] = stu_leave_fragement.dateConversion(from_date[i], to_date[i]);
-                                tea_leave_data.add(new teacher_leave_model(Leave_name[i],finalDate[i],std_name[i] ,semester[i]+" SEM"));
+                                tea_leave_data.add(new teacher_leave_model(Leave_name[i],finalDate[i],std_name[i] ,semester[i]+" SEM",leave_id[i]));
                             }
                             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                             recyclerView.setHasFixedSize(true);
