@@ -2,17 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <EditText
         android:id="@+id/attendance_code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/background"
         android:hint="Enter Code (Provided by teacher)"
         android:importantForAutofill="no"
         android:inputType="text"
         android:maxLength="15"
+        android:padding="10dp"
         android:textSize="@dimen/_16sdp" />
 
     <Button
@@ -21,6 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
+        android:layout_marginTop="5dp"
         android:backgroundTint="#0065ff"
         android:contentDescription="@string/submit"
         android:fontFamily="@font/montserrat_semibold"

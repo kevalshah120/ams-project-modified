@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/attendance_menu"
         android:title="Attendance"
-        android:icon="@drawable/ic_baseline_description_24" />
+        android:icon="@drawable/attendance_icon" />
     <item android:id="@+id/home_menu"
         android:title="Home"
         android:icon="@drawable/ic_home_24" />

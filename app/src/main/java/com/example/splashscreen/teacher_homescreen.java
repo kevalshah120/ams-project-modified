@@ -1,5 +1,6 @@
 package com.example.splashscreen;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -82,7 +83,8 @@ public class teacher_homescreen extends AppCompatActivity {
             return true;
         });
         float_new_attend_btn.setOnClickListener(view -> {
-            //code after clicking on add button
+            Intent i = new Intent(teacher_homescreen.this,teacher_attend_details.class);
+            startActivity(i);
         });
     }
     @Override
