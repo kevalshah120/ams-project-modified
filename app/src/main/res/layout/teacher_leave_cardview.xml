@@ -1,96 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/app_bg"
-    android:orientation="vertical">
+    android:id="@+id/teacher_leave_cardview"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="8dp"
+    app:cardUseCompatPadding="true">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/teacher_leave_cardview"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="8dp"
-        app:cardUseCompatPadding="true">
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="15dp">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/leave_name"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="15dp">
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:fontFamily="@font/poppins_medium"
+            android:maxLength="30"
+            android:text="@string/leave_application_name"
+            android:textColor="@color/txt_color"
+            android:textSize="@dimen/_12sdp" />
 
-            <TextView
-                android:id="@+id/leave_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:fontFamily="@font/poppins_medium"
-                android:maxLength="30"
-                android:text="@string/leave_application_name"
-                android:textColor="@color/txt_color"
-                android:textSize="@dimen/_12sdp" />
+        <TextView
+            android:id="@+id/student_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/leave_name"
+            android:layout_alignParentStart="true"
+            android:fontFamily="@font/poppins_medium"
+            android:maxLength="20"
+            android:text="@string/student_name"
+            android:textAllCaps="true"
+            android:textColor="#200745"
+            android:textSize="@dimen/_14sdp" />
 
-            <TextView
-                android:id="@+id/student_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/leave_name"
-                android:layout_alignParentStart="true"
-                android:fontFamily="@font/poppins_medium"
-                android:maxLength="20"
-                android:text="@string/student_name"
-                android:textAllCaps="true"
-                android:textColor="#200745"
-                android:textSize="@dimen/_14sdp" />
+        <TextView
+            android:id="@+id/sem_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@id/student_name"
+            android:background="#DDD7D7"
+            android:fontFamily="@font/poppins_medium"
+            android:text="@string/sem_no"
+            android:textColor="#3C3B3C"
+            android:textSize="@dimen/_14sdp" />
 
-            <TextView
-                android:id="@+id/sem_no"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="5dp"
-                android:layout_toEndOf="@id/student_name"
-                android:background="#DDD7D7"
-                android:fontFamily="@font/poppins_medium"
-                android:text="@string/sem_no"
-                android:textColor="#3C3B3C"
-                android:textSize="@dimen/_14sdp" />
+        <TextView
+            android:id="@+id/leave_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/student_name"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="1dp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Mon 16 Aug - Wed 18 Aug"
+            android:textColor="#3C3B3C"
+            android:textSize="@dimen/_12sdp" />
 
-            <TextView
-                android:id="@+id/leave_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/student_name"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="1dp"
-                android:fontFamily="@font/poppins_medium"
-                android:text="Mon 16 Aug - Wed 18 Aug"
-                android:textColor="#3C3B3C"
-                android:textSize="@dimen/_12sdp" />
+        <ImageButton
+            android:id="@+id/reject_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@android:color/transparent"
+            android:src="@drawable/reject_icon" />
 
-            <ImageButton
-                android:id="@+id/reject_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:background="@android:color/transparent"
-                android:src="@drawable/reject_icon" />
-
-            <ImageButton
-                android:id="@+id/approve_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="7dp"
-                android:layout_toStartOf="@id/reject_icon"
-                android:background="@android:color/transparent"
-                android:src="@drawable/accept_icon" />
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
-</LinearLayout>
+        <ImageButton
+            android:id="@+id/approve_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="7dp"
+            android:layout_toStartOf="@id/reject_icon"
+            android:background="@android:color/transparent"
+            android:src="@drawable/accept_icon" />
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

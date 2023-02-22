@@ -1,7 +1,9 @@
 package com.example.splashscreen;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
@@ -27,6 +29,7 @@ public class teacher_attend_details extends AppCompatActivity {
     boolean smart_attend_bol,loc_check_bol;
     ArrayList<Integer> div_selected_pos = new ArrayList<>();
     String subject_selected;
+    Button take_attend_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,7 @@ public class teacher_attend_details extends AppCompatActivity {
         seekbar_layout.setVisibility(View.GONE);
         loc_check_layout.setVisibility(View.GONE);
         checked_divs = new boolean[div_list.length];
+        take_attend_button = findViewById(R.id.take_attend_btn);
         sub_name_tv.setOnClickListener(view -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(teacher_attend_details.this);
             builder.setTitle("Subjects");
@@ -116,6 +120,15 @@ public class teacher_attend_details extends AppCompatActivity {
             else
             {
                 loc_check_bol = false;
+            }
+        });
+
+        take_attend_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(teacher_attend_details.this,teacher_mark_Attendance.class);
+                startActivity(i);
+                finish();
             }
         });
     }

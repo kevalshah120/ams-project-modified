@@ -48,4 +48,8 @@
     <string name="all">All</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="all_absent">ALL ABSENT</string>
+    <string name="all_present">ALL PRESENT</string>
+    <string name="attendance_code_val">HJI18L</string>
+    <string name="attendance_code_label">ATTENDANCE CODE :</string>
 </resources>
