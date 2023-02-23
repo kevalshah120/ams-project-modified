@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/teacher_markattend_cv"
+    app:cardCornerRadius="10dp"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="5dp">
+        <TextView
+            android:id="@+id/student_enr_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:fontFamily="@font/poppins_medium"
+            android:maxLength="12"
+            android:text="206090307004"
+            android:textAllCaps="true"
+            android:textColor="#200745"
+            android:textSize="@dimen/_17sdp" />
+        <TextView
+            android:id="@+id/student_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/student_enr_no"
+            android:layout_alignParentStart="true"
+            android:fontFamily="@font/poppins_medium"
+            android:maxLength="20"
+            android:text="@string/student_name"
+            android:textAllCaps="true"
+            android:textColor="#3C3B3C"
+            android:textSize="@dimen/_15sdp" />
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

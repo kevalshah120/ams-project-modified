@@ -113,20 +113,15 @@ public class teacher_attend_details extends AppCompatActivity {
             }
         });
         loc_check_swi.setOnClickListener(view -> {
-            if(loc_check_swi.isChecked())
-            {
-                loc_check_bol = true;
-            }
-            else
-            {
-                loc_check_bol = false;
-            }
+            loc_check_bol = loc_check_swi.isChecked();
         });
 
         take_attend_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(teacher_attend_details.this,teacher_mark_Attendance.class);
+                i.putExtra("expiry_time", String.valueOf(expiry_time_tv.getText()));
+                i.putExtra("smart_attend_switch",smart_attend_bol);
                 startActivity(i);
                 finish();
             }
