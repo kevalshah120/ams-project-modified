@@ -97,6 +97,24 @@
         android:id="@+id/teacher_mark_attend_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@id/attend_save_btn"
         android:layout_below="@id/relative_lay_id"
         android:scrollbars="vertical" />
+    <Button
+        android:id="@+id/attend_save_btn"
+        android:layout_alignParentBottom="true"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_marginLeft="@dimen/_12sdp"
+        android:layout_marginRight="@dimen/_12sdp"
+        android:backgroundTint="#0065ff"
+        android:contentDescription="save"
+        android:fontFamily="@font/montserrat_semibold"
+        android:text="Save"
+        android:textAllCaps="false"
+        android:textSize="@dimen/_17sdp"
+        app:cornerRadius="@dimen/_8sdp"
+        />
 </RelativeLayout>
