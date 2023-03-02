@@ -78,11 +78,28 @@
         android:fontFamily="@font/roboto_slab"
         android:text="@string/leave_date_heading"
         android:textColor="@color/txt_color" />
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/date"
+        android:id="@+id/shimmer_layout">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/shimmer_layout" />
+            <include layout="@layout/shimmer_layout" />
+
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/leave_recyclerview"
         android:layout_width="match_parent"
         android:scrollbars="vertical"
+        android:visibility="gone"
         android:layout_height="match_parent"
         android:layout_below="@id/date" />
 

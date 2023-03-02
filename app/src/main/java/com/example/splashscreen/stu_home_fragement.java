@@ -19,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,6 +39,7 @@ import java.util.Map;
 public class stu_home_fragement extends Fragment {
 
     List<stu_lecture_model> lecture_data;
+    ShimmerFrameLayout shimmerFrameLayout;
     private RecyclerView recyclerView;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -90,6 +92,8 @@ public class stu_home_fragement extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.lecture_recyclerview);
+        shimmerFrameLayout = view.findViewById(R.id.shimmer_layout);
+        shimmerFrameLayout.startShimmer();
         dataInitialize();
     }
 
@@ -122,6 +126,9 @@ public class stu_home_fragement extends Fragment {
                             recyclerView.setHasFixedSize(true);
                             stu_lecture_adapter lecture_adapter = new stu_lecture_adapter(getContext(),lecture_data);
                             recyclerView.setAdapter(lecture_adapter);
+                            shimmerFrameLayout.stopShimmer();
+                            shimmerFrameLayout.setVisibility(View.GONE);
+                            recyclerView.setVisibility(View.VISIBLE);
                             lecture_adapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             throw new RuntimeException(e);

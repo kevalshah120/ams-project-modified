@@ -23,6 +23,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,6 +44,8 @@ public class stu_leave_fragement extends Fragment {
     public static String Response = "yash";
     private TextView b1, b2, b3, b4;
     List<leave_model_class> leave_data;
+    ShimmerFrameLayout shimmerFrameLayout;
+
     private RecyclerView recyclerView;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -161,6 +164,8 @@ public class stu_leave_fragement extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        shimmerFrameLayout = view.findViewById(R.id.shimmer_layout);
+        shimmerFrameLayout.startShimmer();
         dataInitialize("all");
     }
 
@@ -253,6 +258,9 @@ public class stu_leave_fragement extends Fragment {
                         recyclerView.setHasFixedSize(true);
                         leave_rv_adapter leave_adapter = new leave_rv_adapter(getContext(), leave_data);
                         recyclerView.setAdapter(leave_adapter);
+                        shimmerFrameLayout.stopShimmer();
+                        shimmerFrameLayout.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
                         leave_adapter.notifyDataSetChanged();
                     }
                 }, new Response.ErrorListener() {
