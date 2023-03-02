@@ -9,12 +9,28 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class teacher_student_frag extends Fragment{
     List<teacher_mark_attend_model> mark_attend_models;
@@ -65,13 +81,7 @@ public class teacher_student_frag extends Fragment{
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.student_list_rv);
         student_searchView = view.findViewById(R.id.searchview);
-        mark_attend_models = new ArrayList<>();
         dataInitialize();
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setHasFixedSize(true);
-        student_list_adapter = new student_list_adapter(getContext(), mark_attend_models);
-        recyclerView.setAdapter(student_list_adapter);
-        student_list_adapter.notifyDataSetChanged();
         student_searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -104,9 +114,65 @@ public class teacher_student_frag extends Fragment{
     }
 
     private void dataInitialize() {
-        mark_attend_models.add(new teacher_mark_attend_model("206090307004", "Keval Shah"));
-        mark_attend_models.add(new teacher_mark_attend_model("206090307034", "Henarth Agravat"));
-        mark_attend_models.add(new teacher_mark_attend_model("206090307014", "Harsh Shah"));
-        mark_attend_models.add(new teacher_mark_attend_model("206090307064", "Yash Matariya"));
+//        mark_attend_models.add(new teacher_mark_attend_model("206090307004", "Keval Shah"));
+//        mark_attend_models.add(new teacher_mark_attend_model("206090307034", "Henarth Agravat"));
+//        mark_attend_models.add(new teacher_mark_attend_model("206090307014", "Harsh Shah"));
+//        mark_attend_models.add(new teacher_mark_attend_model("206090307064", "Yash Matariya"));
+        String URL = "https://stocky-baud.000webhostapp.com/getStudentDetailsForTeacher.php";
+        if (mark_attend_models != null) {
+            recyclerView.setLayoutManager(null);
+            recyclerView.setAdapter(null);
+            mark_attend_models.clear();
+        }
+        //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
+        RequestQueue queue = Volley.newRequestQueue(requireActivity());
+        //STRING REQUEST OBJECT INITIALIZATION
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        mark_attend_models = new ArrayList<>();
+                        String enr;
+                        String name;
+                        try {
+                            JSONArray array = new JSONArray(response);
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject object = array.getJSONObject(i);
+                                name = object.getString("std_name");
+                                enr = object.getString("enr_no");
+                                mark_attend_models.add(new teacher_mark_attend_model(enr,name));
+                            }
+
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                        recyclerView.setHasFixedSize(true);
+                        student_list_adapter = new student_list_adapter(getContext(), mark_attend_models);
+                        recyclerView.setAdapter(student_list_adapter);
+                        student_list_adapter.notifyDataSetChanged();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(requireActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            //GIVING INPUT TO PHP API THROUGH MAP
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("T_ID", teacher_login.ID);
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+        queue.add(stringRequest);
     }
 }
