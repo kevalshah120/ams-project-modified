@@ -88,7 +88,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toEndOf="@id/student_icon"
-            android:text="2 / 55"
+            android:id="@+id/student_Count"
+            android:text="0/0"
             android:textSize="@dimen/_16sdp"
             android:textStyle="bold" />
     </RelativeLayout>
