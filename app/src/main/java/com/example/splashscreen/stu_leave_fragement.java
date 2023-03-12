@@ -266,7 +266,7 @@ public class stu_leave_fragement extends Fragment {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(requireActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireActivity(), "Connectivity Error", Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override

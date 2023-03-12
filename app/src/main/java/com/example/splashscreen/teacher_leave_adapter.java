@@ -89,7 +89,7 @@ public class teacher_leave_adapter extends RecyclerView.Adapter<teacher_leave_ad
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-//                Toast.makeText(ct, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ct, "Connectivity Error", Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override

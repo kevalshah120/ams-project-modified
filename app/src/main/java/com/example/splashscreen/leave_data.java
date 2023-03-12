@@ -212,7 +212,7 @@ public class leave_data extends AppCompatActivity {
                             }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(leave_data.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(leave_data.this, "Connectivity Error", Toast.LENGTH_SHORT).show();
                         }
                     }) {
                         @Override

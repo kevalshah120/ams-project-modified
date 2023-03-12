@@ -91,7 +91,7 @@ public class student_login extends AppCompatActivity {
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(student_login.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(student_login.this, "Connectivity Error", Toast.LENGTH_SHORT).show();
                     }
                 }){
                     @Override

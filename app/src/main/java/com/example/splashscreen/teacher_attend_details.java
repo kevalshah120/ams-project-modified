@@ -9,17 +9,32 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class teacher_attend_details extends AppCompatActivity {
     TextView sub_name_tv;
     TextView div_tv;
-    String[] sub_name = {"Ad java","DBMS","DBMS Lab"};
-    String[] div_list = new String[]{"5A","5B"};
+    String[] sub_name ;
+    String[] div_list ;
     boolean[] checked_divs;
     SeekBar expiry_time_slider;
     TextView expiry_time_tv;
@@ -47,6 +62,49 @@ public class teacher_attend_details extends AppCompatActivity {
         loc_check_layout.setVisibility(View.GONE);
         checked_divs = new boolean[div_list.length];
         take_attend_button = findViewById(R.id.take_attend_btn);
+        // FETCHING DATA FOR SUBJECT NAMES AND DIVISIONS
+        String URL = "https://stocky-baud.000webhostapp.com/getSubjectsForTeacher.php";
+        //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
+        RequestQueue queue = Volley.newRequestQueue(teacher_attend_details.this);
+        //STRING REQUEST OBJECT INITIALIZATION
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,URL ,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONArray array = new JSONArray(response);
+                            sub_name=new String[array.length()];
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject object = array.getJSONObject(i);
+                                object.getString("divcount");
+                                sub_name[i]=object.getString("sub_name");
+                            }
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(teacher_attend_details.this, "Connectivity Error", Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            //GIVING INPUT TO PHP API THROUGH MAP
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("T_ID",teacher_login.ID);
+                return params;
+            }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("Content-Type","application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+        queue.add(stringRequest);
+        // FETCHING DATA FOR SUBJECT NAMES AND DIVISIONS
         sub_name_tv.setOnClickListener(view -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(teacher_attend_details.this);
             builder.setTitle("Subjects");

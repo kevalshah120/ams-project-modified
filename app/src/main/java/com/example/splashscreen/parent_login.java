@@ -85,7 +85,7 @@ public class parent_login extends AppCompatActivity {
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(parent_login.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(parent_login.this, "Connectivity Error", Toast.LENGTH_SHORT).show();
                     }
                 }){
                     @Override
