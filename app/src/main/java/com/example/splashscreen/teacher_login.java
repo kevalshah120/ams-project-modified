@@ -31,7 +31,7 @@ public class teacher_login extends AppCompatActivity {
     static EditText login_id ;
     Button back,login;
     private boolean passwordshowing = true;
-    public static String ID ;
+    public static String ID ="san12";
     ImageView password_icon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,7 @@ public class teacher_login extends AppCompatActivity {
         login.setOnClickListener(view -> {
             ID = login_id.getText().toString();
             final String PASS = password_field.getText().toString();
-//            TEMP(class_name);
+            TEMP(class_name);
             if(!(ID.trim().isEmpty()) && !(PASS.trim().isEmpty()))
             {
                 //URL FOR FETCHING API DATA

@@ -6,8 +6,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +37,7 @@ public class teacher_mark_Attendance extends AppCompatActivity {
     ImageView timer_icon;
     RecyclerView recyclerView;
     TextView studentCount;
+    String[] div_list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +49,18 @@ public class teacher_mark_Attendance extends AppCompatActivity {
         timer_icon = findViewById(R.id.timer_icon);
         recyclerView = findViewById(R.id.teacher_mark_attend_rv);
         studentCount = findViewById(R.id.student_Count);
+        String temp_div = getIntent().getStringExtra("division");
+        div_list = new String[((int) Math.floor(temp_div.length()/2))+1];
+        int i =0 , j = 0;
+        while(i<temp_div.length())
+        {
+            if(i+2 <= temp_div.length()) {
+                div_list[j] = temp_div.substring(i, i + 2);
+            }
+            i += 3;
+            j++;
+        }
+        div_list[div_list.length-1] = getIntent().getStringExtra("subject");
         if(!smart_attend_switch){
             timer_icon.setVisibility(View.GONE);
             timer_tv.setVisibility(View.GONE);
@@ -61,17 +75,12 @@ public class teacher_mark_Attendance extends AppCompatActivity {
                     timer_tv.setText(String.format("%d:%02d", minutes, seconds));
                 }
                 public void onFinish() {
-
                 }
             }.start();
         }
         dataInitialize();
     }
     private void dataInitialize() {
-//        mark_attend_models.add(new teacher_mark_attend_model("206090307004", "Keval Shah"));
-//        mark_attend_models.add(new teacher_mark_attend_model("206090307034", "Henarth Agravat"));
-//        mark_attend_models.add(new teacher_mark_attend_model("206090307014", "Harsh Shah"));
-//        mark_attend_models.add(new teacher_mark_attend_model("206090307064", "Yash Matariya"));
         String URL = "https://stocky-baud.000webhostapp.com/getStudentDetailsForTeacher.php";
         if (mark_attend_models != null) {
             recyclerView.setLayoutManager(null);
@@ -118,8 +127,15 @@ public class teacher_mark_Attendance extends AppCompatActivity {
             @Override
             //GIVING INPUT TO PHP API THROUGH MAP
             protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("T_ID", teacher_login.ID);
+                Map<String, String> params = new HashMap<>();
+                int i = 0;
+                while(i<div_list.length-1)
+                {
+                    params.put("div"+String.valueOf(i+1),div_list[i]);
+                    i++;
+                }
+                params.put("subject",div_list[i]);
+                params.put("sizeOfDiv",String.valueOf(div_list.length-1));
                 return params;
             }
 
