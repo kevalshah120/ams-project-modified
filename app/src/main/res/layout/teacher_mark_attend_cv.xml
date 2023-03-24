@@ -19,7 +19,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:fontFamily="@font/poppins_medium"
+                android:fontFamily="@font/muli_bold"
                 android:maxLength="12"
                 android:text="206090307004"
                 android:textAllCaps="true"
@@ -31,7 +31,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/student_enr_no"
                 android:layout_alignParentStart="true"
-                android:fontFamily="@font/poppins_medium"
+                android:fontFamily="@font/muli_bold"
+
                 android:maxLength="20"
                 android:text="@string/student_name"
                 android:textAllCaps="true"

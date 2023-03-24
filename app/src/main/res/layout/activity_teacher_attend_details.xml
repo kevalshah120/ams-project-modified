@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/background"
+        android:fontFamily="@font/muli"
         android:hint="Select Subject"
         android:padding="10dp"
         android:textSize="@dimen/_16sdp"
@@ -22,6 +23,7 @@
         android:id="@+id/div_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/muli"
         android:layout_marginTop="20dp"
         android:background="@drawable/background"
         android:hint="Select Division"
@@ -39,6 +41,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/muli"
             android:text="Smart Attendance"
             android:textSize="@dimen/_16sdp" />
 
@@ -63,6 +66,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/muli"
             android:text="Location Check"
             android:textSize="@dimen/_16sdp" />
 
@@ -90,6 +94,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:text="Expiry Time"
+            android:fontFamily="@font/muli"
             android:textSize="@dimen/_16sdp" />
 
         <SeekBar

@@ -109,7 +109,7 @@ public class stu_leave_fragement extends Fragment {
                 b2.setTextColor(getResources().getColor(R.color.txt_color));
                 b3.setTextColor(getResources().getColor(R.color.txt_color));
                 b4.setTextColor(getResources().getColor(R.color.txt_color));
-                Toast.makeText(getActivity(), "All", Toast.LENGTH_SHORT).show();
+
                 dataInitialize("all");
             }
         });
@@ -124,7 +124,7 @@ public class stu_leave_fragement extends Fragment {
                 b2.setTextColor(getResources().getColor(R.color.txt_color_focused));
                 b3.setTextColor(getResources().getColor(R.color.txt_color));
                 b4.setTextColor(getResources().getColor(R.color.txt_color));
-                Toast.makeText(getActivity(), "pending", Toast.LENGTH_SHORT).show();
+
                 dataInitialize("pen");
             }
         });
@@ -139,7 +139,7 @@ public class stu_leave_fragement extends Fragment {
                 b2.setTextColor(getResources().getColor(R.color.txt_color));
                 b3.setTextColor(getResources().getColor(R.color.txt_color_focused));
                 b4.setTextColor(getResources().getColor(R.color.txt_color));
-                Toast.makeText(getActivity(), "Approved", Toast.LENGTH_SHORT).show();
+
                 dataInitialize("app");
             }
         });
@@ -154,7 +154,7 @@ public class stu_leave_fragement extends Fragment {
                 b2.setTextColor(getResources().getColor(R.color.txt_color));
                 b3.setTextColor(getResources().getColor(R.color.txt_color));
                 b4.setTextColor(getResources().getColor(R.color.txt_color_focused));
-                Toast.makeText(getActivity(), "rejected", Toast.LENGTH_SHORT).show();
+
                 dataInitialize("rej");
             }
         });

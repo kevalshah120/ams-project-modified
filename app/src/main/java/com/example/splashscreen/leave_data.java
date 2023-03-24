@@ -35,9 +35,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class leave_data extends AppCompatActivity {
-
-    EditText leave_name, from_Date, to_Date;
-    TextInputEditText leave_desc;
+    TextInputEditText leave_desc,leave_name, from_Date, to_Date;
     Calendar calendar = Calendar.getInstance();
     int year = calendar.get(Calendar.YEAR);
     int day = calendar.get(Calendar.DAY_OF_MONTH);

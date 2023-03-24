@@ -4,124 +4,126 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
     android:background="@color/app_bg"
+    android:fillViewport="true"
     tools:context=".leave_data">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <LinearLayout
+            android:id="@+id/line_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/line_layout"
             android:orientation="vertical">
-            <EditText
-                android:id="@+id/leave_name"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:fontFamily="@font/poppins_medium"
-                android:layout_marginRight="@dimen/_5sdp"
-                android:background="@drawable/textfield_rounded_corner"
-                android:hint="@string/leave_name"
-                android:inputType="text"
-                android:maxLength="20"
-                android:paddingStart="@dimen/_7sdp"
-                android:paddingEnd="@dimen/_7sdp" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_50sdp"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_5sdp"
-                android:background="@drawable/textfield_rounded_corner"
-                android:fontFamily="@font/poppins_medium"
-                android:hint="@string/staff_name"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu">
-                <AutoCompleteTextView
-                    android:fontFamily="@font/poppins_medium"
-                    android:id="@+id/auto_complete_txt"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_50sdp"
-                    android:paddingStart="@dimen/_7sdp"
-                    android:paddingEnd="@dimen/_7sdp"
-                    android:background="@drawable/textfield_rounded_corner"
-                    android:inputType="none"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-            <EditText
-                android:id="@+id/from_date"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_5sdp"
-                android:background="@drawable/textfield_rounded_corner"
-                android:fontFamily="@font/poppins_medium"
-                android:drawableStart="@drawable/ic_calendar"
-                android:drawablePadding="@dimen/_14sdp"
-                android:hint="@string/from_date"
-                android:importantForAutofill="no"
-                android:inputType="none"
-                android:paddingStart="@dimen/_10sdp"
-                android:paddingEnd="@dimen/_10sdp"
-                tools:ignore="TextFields" />
-            <EditText
-                android:id="@+id/to_date"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:fontFamily="@font/poppins_medium"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_5sdp"
-                android:background="@drawable/textfield_rounded_corner"
-                android:drawableStart="@drawable/ic_calendar"
-                android:drawablePadding="@dimen/_14sdp"
-                android:hint="@string/to_date"
-                android:importantForAutofill="no"
-                android:inputType="none"
-                android:paddingStart="@dimen/_10sdp"
-                android:paddingEnd="@dimen/_10sdp"
-                tools:ignore="TextFields" />
-            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/leave_description"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:background="@drawable/textfield_rounded_corner"
-                android:layout_marginBottom="@dimen/_70sdp"
+                android:layout_marginHorizontal="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_5sdp">
+                android:background="@color/white"
+                android:hint="@string/leave_name"
+                app:endIconMode="clear_text">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/leave_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text"
+                    android:maxLength="25" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@color/white"
+                android:hint="@string/staff_name">
+
+                <AutoCompleteTextView
+                    android:id="@+id/auto_complete_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@color/white"
+                android:hint="@string/from_date"
+                app:endIconMode="clear_text"
+                app:startIconDrawable="@drawable/ic_calendar">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/from_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@color/white"
+                android:hint="@string/to_date"
+                app:endIconMode="clear_text"
+                app:startIconDrawable="@drawable/ic_calendar">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/to_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_70sdp"
+                android:background="@color/white"
+                android:hint="@string/leave_description">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/Leave_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/textfield_rounded_corner"
-                    android:fontFamily="@font/poppins_medium"
                     android:gravity="top"
                     android:lines="12"
                     android:maxLength="256"
                     android:textSize="@dimen/_14sdp" />
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
+
         <Button
             android:id="@+id/submit_button"
-            android:layout_alignParentBottom="true"
             style="@style/Widget.MaterialComponents.Button"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_50sdp"
-            android:layout_marginLeft="@dimen/_5sdp"
-            android:layout_marginRight="@dimen/_5sdp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginHorizontal="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_25sdp"
             android:backgroundTint="#0065ff"
             android:contentDescription="@string/submit"
             android:fontFamily="@font/montserrat_semibold"
             android:text="@string/submit"
             android:textAllCaps="false"
             android:textSize="@dimen/_17sdp"
-            android:layout_marginBottom="@dimen/_25sdp"
             app:cornerRadius="@dimen/_8sdp" />
     </RelativeLayout>
 </ScrollView>

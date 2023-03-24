@@ -31,6 +31,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
@@ -45,10 +46,11 @@ import java.util.Map;
 public class teacher_student_frag extends Fragment{
     List<teacher_mark_attend_model> mark_attend_models;
     private RecyclerView recyclerView;
+    ShimmerFrameLayout shimmerFrameLayout;
     List<teacher_mark_attend_model> filteredList;
     private SearchView student_searchView;
     private student_list_adapter student_list_adapter;
-    FloatingActionButton bulk_upload_fab;
+    FloatingActionButton bulk_upload_fab,add_student_fab;
     ActivityResultLauncher<Intent> resultLauncher;
 
 
@@ -91,6 +93,8 @@ public class teacher_student_frag extends Fragment{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        shimmerFrameLayout = view.findViewById(R.id.shimmer_layout);
+        shimmerFrameLayout.startShimmer();
         recyclerView = view.findViewById(R.id.student_list_rv);
         student_searchView = view.findViewById(R.id.searchview);
         dataInitialize();
@@ -124,7 +128,14 @@ public class teacher_student_frag extends Fragment{
             }
         });
         bulk_upload_fab = view.findViewById(R.id.bulk_upload_fab);
-
+        add_student_fab = view.findViewById(R.id.add_student_fab);
+        add_student_fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(),student_add.class);
+                startActivity(i);
+            }
+        });
         bulk_upload_fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -208,6 +219,9 @@ public class teacher_student_frag extends Fragment{
                         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                         recyclerView.setHasFixedSize(true);
                         student_list_adapter = new student_list_adapter(getContext(), mark_attend_models);
+                        shimmerFrameLayout.stopShimmer();
+                        shimmerFrameLayout.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
                         recyclerView.setAdapter(student_list_adapter);
                         student_list_adapter.notifyDataSetChanged();
                     }

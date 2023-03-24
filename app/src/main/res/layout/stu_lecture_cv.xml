@@ -25,7 +25,7 @@
                 android:id="@+id/subject_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_semibold"
+                android:fontFamily="@font/muli_bold"
                 android:text="@string/subject_name"
                 android:textAllCaps="true"
                 android:layout_alignParentStart="true"
@@ -48,7 +48,8 @@
                 android:layout_below="@id/subject_name"
                 android:layout_marginStart="5dp"
                 android:layout_toEndOf="@id/teacher_icon"
-                android:fontFamily="@font/poppins_medium"
+                android:fontFamily="@font/muli_semibold"
+
                 android:text="@string/professor_name"
                 android:textColor="#3C3B3C"
                 android:textSize="@dimen/_13sdp" />

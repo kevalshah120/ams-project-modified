@@ -68,7 +68,7 @@ public class otp_verification extends AppCompatActivity {
         back_button = findViewById(R.id.back_button);
         mAuth = FirebaseAuth.getInstance();
 
-//        sendverificationcode(i.getStringExtra("mobile"));
+//        sendverificatsioncode(i.getStringExtra("mobile"));
         next_et();
         verify_otp_button.setOnClickListener(view -> {
             if(true)

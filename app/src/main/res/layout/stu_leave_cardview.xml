@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:fontFamily="@font/poppins_medium"
+                android:fontFamily="@font/muli_semibold"
                 android:text="@string/leave_application_name"
                 android:textColor="@color/txt_color"
                 android:textSize="@dimen/_12sdp" />
@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/leave_name"
                 android:layout_alignParentStart="true"
-                android:fontFamily="@font/poppins_medium"
+                android:fontFamily="@font/muli_bold"
                 android:text="Mon 16 Aug - Wed 18 Aug"
                 android:textColor="#200745"
                 android:textSize="@dimen/_14sdp" />
@@ -59,7 +59,8 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="1dp"
                 android:layout_toEndOf="@id/teacher_icon"
-                android:fontFamily="@font/poppins_medium"
+                android:fontFamily="@font/muli_semibold"
+
                 android:text="@string/professor_name"
                 android:textColor="#3C3B3C"
                 android:textSize="@dimen/_12sdp" />

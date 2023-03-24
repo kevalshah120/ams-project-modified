@@ -10,7 +10,11 @@
         android:id="@+id/attendance_code_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="@font/muli_bold"
         android:text="@string/attendance_code_label"
         android:textColor="@color/black"
         android:textSize="@dimen/_13sdp"
@@ -20,9 +24,13 @@
         android:id="@+id/attendance_code_val"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
         android:layout_toEndOf="@id/attendance_code_label"
         android:letterSpacing="0.1"
+        android:fontFamily="@font/muli"
         android:text="@string/attendance_code_val"
         android:textColor="@color/black"
         android:textSize="@dimen/_13sdp" />
@@ -61,13 +69,13 @@
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_medium"
+                android:fontFamily="@font/muli_semibold"
                 android:text="@string/all_absent" />
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_medium"
+                android:fontFamily="@font/muli_semibold"
                 android:text="@string/all_present" />
         </RadioGroup>
 
