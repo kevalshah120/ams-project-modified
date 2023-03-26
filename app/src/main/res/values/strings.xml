@@ -51,5 +51,5 @@
     <string name="all_absent">ALL ABSENT</string>
     <string name="all_present">ALL PRESENT</string>
     <string name="attendance_code_val">HJI18L</string>
-    <string name="attendance_code_label">ATTENDANCE CODE :</string>
+    <string name="attendance_code_label">Attendance Code :</string>
 </resources>

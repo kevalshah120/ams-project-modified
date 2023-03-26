@@ -49,9 +49,8 @@
                 android:layout_marginStart="5dp"
                 android:layout_toEndOf="@id/teacher_icon"
                 android:fontFamily="@font/muli_semibold"
-
                 android:text="@string/professor_name"
-                android:textColor="#3C3B3C"
+                android:textColor="@color/black"
                 android:textSize="@dimen/_13sdp" />
 
             <Button

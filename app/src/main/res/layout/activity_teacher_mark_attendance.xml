@@ -14,7 +14,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
-        android:fontFamily="@font/muli_bold"
+        android:fontFamily="@font/muli_semibold"
         android:text="@string/attendance_code_label"
         android:textColor="@color/black"
         android:textSize="@dimen/_13sdp"
@@ -24,10 +24,7 @@
         android:id="@+id/attendance_code_val"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="5dp"
+        android:layout_margin="5dp"
         android:layout_toEndOf="@id/attendance_code_label"
         android:letterSpacing="0.1"
         android:fontFamily="@font/muli"
@@ -39,10 +36,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
+        android:textColor="@color/black"
+        android:fontFamily="@font/muli_semibold"
         android:text="02:00"
         android:layout_margin="5dp"
-        android:textSize="@dimen/_13sdp"
-        android:textStyle="bold" />
+        android:textSize="@dimen/_13sdp" />
 
     <ImageView
         android:id="@+id/timer_icon"
@@ -97,9 +95,10 @@
             android:layout_centerVertical="true"
             android:layout_toEndOf="@id/student_icon"
             android:id="@+id/student_Count"
-            android:text="0/0"
-            android:textSize="@dimen/_16sdp"
-            android:textStyle="bold" />
+            android:text="0 / 0"
+            android:textColor="@color/black"
+            android:fontFamily="@font/muli_semibold"
+            android:textSize="@dimen/_16sdp"/>
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView

@@ -25,7 +25,7 @@
             android:fontFamily="@font/muli_semibold"
             android:maxLength="30"
             android:text="@string/leave_application_name"
-            android:textColor="@color/txt_color"
+            android:textColor="@color/black"
             android:textSize="@dimen/_12sdp" />
 
         <TextView
@@ -49,9 +49,9 @@
             android:layout_marginStart="5dp"
             android:layout_toEndOf="@id/student_name"
             android:background="#DDD7D7"
-            android:fontFamily="@font/muli_bold"
+            android:fontFamily="@font/muli_semibold"
             android:text="@string/sem_no"
-            android:textColor="#3C3B3C"
+            android:textColor="@color/black"
             android:textSize="@dimen/_14sdp" />
 
         <TextView
@@ -63,7 +63,7 @@
             android:layout_marginTop="1dp"
             android:fontFamily="@font/muli_semibold"
             android:text="Mon 16 Aug - Wed 18 Aug"
-            android:textColor="#3C3B3C"
+            android:textColor="@color/black"
             android:textSize="@dimen/_12sdp" />
 
         <ImageButton

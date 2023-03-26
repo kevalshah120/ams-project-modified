@@ -31,11 +31,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/student_enr_no"
             android:layout_alignParentStart="true"
-            android:fontFamily="@font/muli_bold"
+            android:fontFamily="@font/muli_semibold"
             android:maxLength="20"
             android:text="@string/student_name"
             android:textAllCaps="true"
-            android:textColor="#3C3B3C"
+            android:textColor="@color/black"
             android:textSize="@dimen/_15sdp" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
