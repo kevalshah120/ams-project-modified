@@ -73,6 +73,8 @@ public class teacher_mark_attend_adapter extends RecyclerView.Adapter<teacher_ma
         public void setData(String student_name, String enr_no) {
             textView1_stu_name.setText(student_name);
             textView2_enr_no.setText(enr_no);
+            absent_button.setSelected(true);
+            absent_button.setImageResource(R.drawable.abs_imgbtn_state);
         }
     }
 }
