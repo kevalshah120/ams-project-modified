@@ -1,9 +1,11 @@
 package com.example.splashscreen;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -38,20 +40,49 @@ public class teacher_mark_Attendance extends AppCompatActivity {
     RecyclerView recyclerView;
     TextView studentCount;
     String[] div_list;
+    TextView OTP_code;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_mark_attendance);
-        int expiry_time = Integer.parseInt(getIntent().getStringExtra("expiry_time"));
+        //DECLARATION AND DEFINITION (START)
+        int expiry_time = Integer.parseInt(getIntent().getStringExtra("expiry_time")),i = 0;
         boolean smart_attend_switch = getIntent().getBooleanExtra("smart_attend_switch", false);
         String booleanString = Boolean.toString(smart_attend_switch);
         timer_tv = findViewById(R.id.timer_tv);
         timer_icon = findViewById(R.id.timer_icon);
         recyclerView = findViewById(R.id.teacher_mark_attend_rv);
         studentCount = findViewById(R.id.student_Count);
+        OTP_code = findViewById(R.id.attendance_code_val);
+        //DECLARATION AND DEFINITION (END)
+        //GENERATING OTP (START)
+        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                + "0123456789"
+                + "abcdefghijklmnopqrstuvxyz";
+        // create StringBuffer size of AlphaNumericString
+        StringBuilder sb = new StringBuilder(6);
+        for (i = 0; i < 6; i++) {
+
+            // generate a random number between
+            // 0 to AlphaNumericString variable length
+            int index = (int)(AlphaNumericString.length() * Math.random());
+
+            // add Character one by one in end of sb
+            sb.append(AlphaNumericString.charAt(index));
+        }
+        String OTPCODE = sb.toString();
+        //GENERATING OTP (END)
+        //GETTING DIVISIONS FROM PREVIOUS PAGE (START)
         String temp_div = getIntent().getStringExtra("division");
-        div_list = new String[((int) Math.floor(temp_div.length()/2))+1];
-        int i =0 , j = 0;
+        if(temp_div.length() % 2 == 0)
+        {
+            div_list = new String[((int) Math.floor((temp_div.length()-1) / 2)) + 1];
+        }
+        else {
+            div_list = new String[((int) Math.floor(temp_div.length() / 2)) + 1];
+        }
+        i=0;
+        int  j = 0;
         while(i<temp_div.length())
         {
             if(i+2 <= temp_div.length()) {
@@ -61,6 +92,8 @@ public class teacher_mark_Attendance extends AppCompatActivity {
             j++;
         }
         div_list[div_list.length-1] = getIntent().getStringExtra("subject");
+        //GETTING DIVISIONS FROM PREVIOUS PAGE (END)
+        //GUI RELATED CODE (START)
         if(!smart_attend_switch){
             timer_icon.setVisibility(View.GONE);
             timer_tv.setVisibility(View.GONE);
@@ -78,7 +111,54 @@ public class teacher_mark_Attendance extends AppCompatActivity {
                 }
             }.start();
         }
-        dataInitialize();
+        //GUI RELATED CODE (END)
+        dataInitialize(); //THIS FUNCTION WILL GET ALL THE STUDENT DATA IN THE PAGE
+        createAttendenceSession(OTPCODE);
+    }
+    private void createAttendenceSession(String OTP)
+    {
+        String URL = "https://stocky-baud.000webhostapp.com/createAttendenceSession.php";
+        //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
+        RequestQueue queue = Volley.newRequestQueue(teacher_mark_Attendance.this);
+        //STRING REQUEST OBJECT INITIALIZATION
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(teacher_mark_Attendance.this, "Connectivity Error", Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            //GIVING INPUT TO PHP API THROUGH MAP
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                int i = 0;
+                while(i<div_list.length-1)
+                {
+                    params.put("div"+String.valueOf(i+1),div_list[i]);
+                    i++;
+                }
+                params.put("OTP",OTP);
+                params.put("staff_login_id", teacher_login.ID);
+                //LAST ELEMENT OF DIV_LIST CONTAINS SUBJECT NAME
+                params.put("subject",div_list[i]);
+                params.put("sizeOfDiv",String.valueOf(div_list.length-1));
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+        queue.add(stringRequest);
     }
     private void dataInitialize() {
         String URL = "https://stocky-baud.000webhostapp.com/getStudentDetailsForTeacher.php";
@@ -99,7 +179,7 @@ public class teacher_mark_Attendance extends AppCompatActivity {
                         String name;
                         try {
                             JSONArray array = new JSONArray(response);
-                            for (int i = 0; i < array.length(); i++) {
+                            for (int i = 0; i < array.length()-1; i++) {
                                 JSONObject object = array.getJSONObject(i);
                                 name = object.getString("std_name");
                                 enr = object.getString("enr_no");
@@ -134,7 +214,6 @@ public class teacher_mark_Attendance extends AppCompatActivity {
                     params.put("div"+String.valueOf(i+1),div_list[i]);
                     i++;
                 }
-                params.put("subject",div_list[i]);
                 params.put("sizeOfDiv",String.valueOf(div_list.length-1));
                 return params;
             }
@@ -147,5 +226,26 @@ public class teacher_mark_Attendance extends AppCompatActivity {
             }
         };
         queue.add(stringRequest);
+    }
+    public void onBackPressed() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(teacher_mark_Attendance.this);
+        builder.setTitle(R.string.app_name);
+        builder.setIcon(R.mipmap.ic_launcher);
+        builder.setMessage("Do you want to exit?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+
     }
 }
