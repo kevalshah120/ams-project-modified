@@ -1,15 +1,13 @@
 package com.example.splashscreen;
 
-public class teacher_mark_attend_model {
+public class teacher_student_model {
     private String enr_no;
     private String stu_name;
-    private Boolean atdStatus;
 
-    teacher_mark_attend_model(String enr_no,String stu_name,Boolean atdStatus)
+    teacher_student_model(String enr_no,String stu_name)
     {
         this.enr_no = enr_no;
         this.stu_name = stu_name;
-        this.atdStatus = atdStatus;
     }
     public String getStu_name() {
         return stu_name;
@@ -17,5 +15,4 @@ public class teacher_mark_attend_model {
     public String getEnr_no() {
         return enr_no;
     }
-    public Boolean getAtdStatus() {return atdStatus;}
 }

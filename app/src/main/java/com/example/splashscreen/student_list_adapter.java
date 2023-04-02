@@ -12,10 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class student_list_adapter extends RecyclerView.Adapter<student_list_adapter.MyViewHolder>{
-    private List<teacher_mark_attend_model> teacher_mark_attend_models;
+    private List<teacher_student_model> teacher_mark_attend_models;
     Context context;
 
-    public student_list_adapter(Context context, List<teacher_mark_attend_model> teacher_mark_attend_models) {
+    public student_list_adapter(Context context, List<teacher_student_model> teacher_mark_attend_models) {
         this.context = context;
         this.teacher_mark_attend_models = teacher_mark_attend_models;
     }

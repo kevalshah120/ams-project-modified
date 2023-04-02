@@ -44,10 +44,10 @@ import java.util.List;
 import java.util.Map;
 
 public class teacher_student_frag extends Fragment{
-    List<teacher_mark_attend_model> mark_attend_models;
+    List<teacher_student_model> student_model;
     private RecyclerView recyclerView;
     ShimmerFrameLayout shimmerFrameLayout;
-    List<teacher_mark_attend_model> filteredList;
+    List<teacher_student_model> filteredList;
     private SearchView student_searchView;
     private student_list_adapter student_list_adapter;
     FloatingActionButton bulk_upload_fab,add_student_fab;
@@ -105,15 +105,15 @@ public class teacher_student_frag extends Fragment{
             }
             @Override
             public boolean onQueryTextChange(String newText) {
-                filteredList = new ArrayList<>();
+                filteredList = new ArrayList<teacher_student_model>();
                 if (newText.length() > 0) {
-                    for (int i = 0;i < mark_attend_models.size() ; i++) {
-                        if (mark_attend_models.get(i).getStu_name().toUpperCase().contains(newText.toUpperCase()) || mark_attend_models.get(i).getEnr_no().contains(newText.toUpperCase())) {
-                            filteredList.add(mark_attend_models.get(i));
+                    for (int i = 0; i < student_model.size() ; i++) {
+                        if (student_model.get(i).getStu_name().toUpperCase().contains(newText.toUpperCase()) || student_model.get(i).getEnr_no().contains(newText.toUpperCase())) {
+                            filteredList.add(student_model.get(i));
                         }
                     }
                 } else {
-                    filteredList.addAll(mark_attend_models);
+                    filteredList.addAll(student_model);
                 }
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 student_list_adapter = new student_list_adapter(getContext(), filteredList);
@@ -189,10 +189,10 @@ public class teacher_student_frag extends Fragment{
 //        mark_attend_models.add(new teacher_mark_attend_model("206090307014", "Harsh Shah"));
 //        mark_attend_models.add(new teacher_mark_attend_model("206090307064", "Yash Matariya"));
         String URL = "https://stocky-baud.000webhostapp.com/getStudentDetailsForTeacher.php";
-        if (mark_attend_models != null) {
+        if (student_model != null) {
             recyclerView.setLayoutManager(null);
             recyclerView.setAdapter(null);
-            mark_attend_models.clear();
+            student_model.clear();
         }
         //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
         RequestQueue queue = Volley.newRequestQueue(requireActivity());
@@ -201,7 +201,7 @@ public class teacher_student_frag extends Fragment{
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        mark_attend_models = new ArrayList<>();
+                        student_model = new ArrayList<teacher_student_model>();
                         String enr;
                         String name;
                         try {
@@ -210,7 +210,7 @@ public class teacher_student_frag extends Fragment{
                                 JSONObject object = array.getJSONObject(i);
                                 name = object.getString("std_name");
                                 enr = object.getString("enr_no");
-                                mark_attend_models.add(new teacher_mark_attend_model(enr,name));
+                                student_model.add(new teacher_student_model(enr,name));
                             }
 
                         } catch (JSONException e) {
@@ -218,7 +218,7 @@ public class teacher_student_frag extends Fragment{
                         }
                         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                         recyclerView.setHasFixedSize(true);
-                        student_list_adapter = new student_list_adapter(getContext(), mark_attend_models);
+                        student_list_adapter = new student_list_adapter(getContext(), student_model);
                         shimmerFrameLayout.stopShimmer();
                         shimmerFrameLayout.setVisibility(View.GONE);
                         recyclerView.setVisibility(View.VISIBLE);

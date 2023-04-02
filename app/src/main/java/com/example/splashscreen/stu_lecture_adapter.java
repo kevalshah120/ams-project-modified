@@ -2,6 +2,7 @@ package com.example.splashscreen;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +15,26 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class stu_lecture_adapter extends RecyclerView.Adapter<stu_lecture_adapter.MyViewHolder> {
     private List<stu_lecture_model> lecture_data;
     Dialog dialog;
-    private String attend_code;
+    public String attend_code;
     Context context;
 
     public stu_lecture_adapter(Context context, List<stu_lecture_model> lecture_data) {
@@ -41,6 +56,8 @@ public class stu_lecture_adapter extends RecyclerView.Adapter<stu_lecture_adapte
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         String subject_name = lecture_data.get(position).getSubject_name();
         String prof_name = lecture_data.get(position).getProf_name();
+        int staff_id = lecture_data.get(position).getStaff_id();
+        String subject_code = lecture_data.get(position).getSubject_code();
         holder.setData(subject_name, prof_name);
         holder.markButton.setOnClickListener(view -> {
             LayoutInflater inflater = LayoutInflater.from(context);
@@ -54,8 +71,49 @@ public class stu_lecture_adapter extends RecyclerView.Adapter<stu_lecture_adapte
             dialog.show();
             submit.setOnClickListener(view1 -> {
                 attend_code = attendance_code.getText().toString();
-                Toast.makeText(context, attend_code, Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
+                String URL = "https://stocky-baud.000webhostapp.com/markAttendanceWithOTP.php";
+                //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
+                RequestQueue queue = Volley.newRequestQueue(context.getApplicationContext());
+                //STRING REQUEST OBJECT INITIALIZATION
+                StringRequest stringRequest = new StringRequest(Request.Method.POST,URL ,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    JSONArray Jarry = new JSONArray(response);
+                                    JSONObject Jobj = Jarry.getJSONObject(0);
+//                                    Log.d("RESULT",response);
+                                    String RESULT = Jobj.getString("RESULT");
+                                    Toast.makeText(context, RESULT, Toast.LENGTH_LONG).show();
+                                    dialog.dismiss();
+                                } catch (JSONException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(context.getApplicationContext(), "Connectivity Error", Toast.LENGTH_SHORT).show();
+                    }
+                }){
+                    @Override
+                    //GIVING INPUT TO PHP API THROUGH MAP
+                    protected Map<String,String> getParams(){
+                        Map<String,String> params = new HashMap<String, String>();
+                        params.put("enrollment",student_login.Enrollment_No);
+                        params.put("staff_id",String.valueOf(staff_id));
+                        params.put("sub_code",subject_code);
+                        params.put("OTP",attendance_code.getText().toString());
+                        return params;
+                    }
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String,String> params = new HashMap<String, String>();
+                        params.put("Content-Type","application/x-www-form-urlencoded");
+                        return params;
+                    }
+                };
+                queue.add(stringRequest);
             });
 
         });

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,7 +33,8 @@ public class teacher_mark_attend_adapter extends RecyclerView.Adapter<teacher_ma
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         String stu_name = teacher_mark_attend_models.get(position).getStu_name();
         String enr_no = teacher_mark_attend_models.get(position).getEnr_no();
-        holder.setData(stu_name,enr_no);
+        boolean status = teacher_mark_attend_models.get(position).getAtdStatus();
+        holder.setData(stu_name,enr_no,status);
         holder.absent_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,7 +70,7 @@ public class teacher_mark_attend_adapter extends RecyclerView.Adapter<teacher_ma
             absent_button = itemView.findViewById(R.id.absent_icon);
         }
 
-        public void setData(String student_name, String enr_no) {
+        public void setData(String student_name, String enr_no, boolean status) {
             textView1_stu_name.setText(student_name);
             textView2_enr_no.setText(enr_no);
             absent_button.setSelected(true);

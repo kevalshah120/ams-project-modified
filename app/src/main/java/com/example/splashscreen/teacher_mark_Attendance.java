@@ -71,16 +71,18 @@ public class teacher_mark_Attendance extends AppCompatActivity {
             sb.append(AlphaNumericString.charAt(index));
         }
         String OTPCODE = sb.toString();
+        if(smart_attend_switch == true)
+        {
+            OTP_code.setText(OTPCODE);
+        }
+        else
+        {
+            OTP_code.setVisibility(View.INVISIBLE);
+        }
         //GENERATING OTP (END)
         //GETTING DIVISIONS FROM PREVIOUS PAGE (START)
         String temp_div = getIntent().getStringExtra("division");
-        if(temp_div.length() % 2 == 0)
-        {
-            div_list = new String[((int) Math.floor((temp_div.length()-1) / 2)) + 1];
-        }
-        else {
-            div_list = new String[((int) Math.floor(temp_div.length() / 2)) + 1];
-        }
+        div_list = new String[((int) Math.floor(temp_div.length() / 3)) + 2];
         i=0;
         int  j = 0;
         while(i<temp_div.length())
@@ -113,7 +115,7 @@ public class teacher_mark_Attendance extends AppCompatActivity {
         }
         //GUI RELATED CODE (END)
         dataInitialize(); //THIS FUNCTION WILL GET ALL THE STUDENT DATA IN THE PAGE
-        createAttendenceSession(OTPCODE);
+        createAttendenceSession(OTPCODE); //THIS WILL CREATE SESSION
     }
     private void createAttendenceSession(String OTP)
     {
@@ -125,7 +127,7 @@ public class teacher_mark_Attendance extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
+                        Log.d("createAttendenceSession",response);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -137,15 +139,15 @@ public class teacher_mark_Attendance extends AppCompatActivity {
             //GIVING INPUT TO PHP API THROUGH MAP
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
+                params.put("OTP",OTP);
+                params.put("staff_login_id", teacher_login.ID);
+//                Log.d("abc",teacher_login.ID);
                 int i = 0;
                 while(i<div_list.length-1)
                 {
                     params.put("div"+String.valueOf(i+1),div_list[i]);
                     i++;
                 }
-                params.put("OTP",OTP);
-                params.put("staff_login_id", teacher_login.ID);
-                //LAST ELEMENT OF DIV_LIST CONTAINS SUBJECT NAME
                 params.put("subject",div_list[i]);
                 params.put("sizeOfDiv",String.valueOf(div_list.length-1));
                 return params;
@@ -174,6 +176,7 @@ public class teacher_mark_Attendance extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        Log.d("dataInitialize",response);
                         mark_attend_models = new ArrayList<>();
                         String enr;
                         String name;
@@ -183,7 +186,7 @@ public class teacher_mark_Attendance extends AppCompatActivity {
                                 JSONObject object = array.getJSONObject(i);
                                 name = object.getString("std_name");
                                 enr = object.getString("enr_no");
-                                mark_attend_models.add(new teacher_mark_attend_model(enr,name));
+                                mark_attend_models.add(new teacher_mark_attend_model(enr,name,false));
                             }
 
                         } catch (JSONException e) {
@@ -214,6 +217,7 @@ public class teacher_mark_Attendance extends AppCompatActivity {
                     params.put("div"+String.valueOf(i+1),div_list[i]);
                     i++;
                 }
+                params.put("subject",div_list[i]);
                 params.put("sizeOfDiv",String.valueOf(div_list.length-1));
                 return params;
             }
@@ -236,6 +240,7 @@ public class teacher_mark_Attendance extends AppCompatActivity {
                 .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+
                         finish();
                     }
                 })

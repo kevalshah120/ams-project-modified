@@ -1,6 +1,7 @@
 package com.example.splashscreen;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -115,12 +116,17 @@ public class stu_home_fragement extends Fragment {
                         lecture_data = new ArrayList<>();
                         try {
                             JSONArray array = new JSONArray(response);
+                            String subject_code;
+                            String subject_name;
+                            String staff_name;
+                            int staff_id;
                             for (int i = 0; i < array.length(); i++) {
                                 JSONObject object = array.getJSONObject(i);
-                                String subject_code = object.getString("subject_code");
-                                String subject_name = object.getString("subject_name");
-                                String staff_name = object.getString("staff_name");
-                                lecture_data.add(new stu_lecture_model(subject_name+" ("+subject_code+")","Prof "+staff_name));
+                                subject_code= object.getString("sub_code");
+                                subject_name= object.getString("sub_name");
+                                staff_name= object.getString("staff_name");
+                                staff_id = Integer.parseInt(object.getString("staff_id"));
+                                lecture_data.add(new stu_lecture_model(subject_name+" ("+subject_code+")","Prof "+staff_name,staff_id,subject_code));
                             }
                             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                             recyclerView.setHasFixedSize(true);
