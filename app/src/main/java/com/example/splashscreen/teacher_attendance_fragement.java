@@ -1,7 +1,9 @@
 package com.example.splashscreen;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -14,6 +16,7 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class teacher_attendance_fragement extends Fragment {
+    CardView student_attend,class_attend;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -59,6 +62,24 @@ public class teacher_attendance_fragement extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_teacher_attendance_fragement, container, false);
+        View view = inflater.inflate(R.layout.fragment_teacher_attendance_fragement, container, false);
+        student_attend = view.findViewById(R.id.student_attendance);
+        class_attend = view.findViewById(R.id.class_attendance);
+        student_attend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(),teacher_student_attendance_view.class);
+                startActivity(i);
+            }
+        });
+        class_attend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(),teacher_class_attendance.class);
+                startActivity(i);
+            }
+        });
+        return view;
+
     }
 }

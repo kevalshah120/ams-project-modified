@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg"
+    android:fillViewport="true"
+    tools:context=".teacher_student_attendance_view">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/sem_auto_comp_lay"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginHorizontal="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@color/white"
+            android:hint="@string/student_semester">
+
+            <AutoCompleteTextView
+                android:id="@+id/sem_auto_comp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:inputType="none" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/stu_auto_comp_lay"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sem_auto_comp_lay"
+            android:layout_marginHorizontal="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@color/white"
+            android:hint="@string/student_name_lab">
+
+            <AutoCompleteTextView
+                android:id="@+id/stu_auto_comp"
+                android:layout_width="match_parent"
+                android:dropDownHeight="@dimen/_300sdp"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:inputType="none" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/sub_et_lay"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/stu_auto_comp_lay"
+            android:layout_marginHorizontal="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@color/white"
+            android:hint="@string/subject">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/sub_et"
+                app:drawableEndCompat="@drawable/baseline_arrow_drop_down_24"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/from_date_lay"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sub_et_lay"
+            android:layout_marginHorizontal="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@color/white"
+            android:hint="@string/from_date"
+            app:endIconMode="clear_text"
+            app:startIconDrawable="@drawable/ic_calendar">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/from_date"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@color/white"
+            android:hint="@string/to_date"
+            android:layout_below="@id/from_date_lay"
+            app:endIconMode="clear_text"
+            app:startIconDrawable="@drawable/ic_calendar">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/to_date"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <Button
+            android:id="@+id/generate_button"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginHorizontal="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_25sdp"
+            android:backgroundTint="#0065ff"
+            android:contentDescription="@string/generate"
+            android:fontFamily="@font/montserrat_semibold"
+            android:text="@string/generate"
+            android:textAllCaps="false"
+            android:textSize="@dimen/_17sdp"
+            app:cornerRadius="@dimen/_8sdp" />
+    </RelativeLayout>
+</ScrollView>

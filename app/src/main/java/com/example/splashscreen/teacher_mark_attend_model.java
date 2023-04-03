@@ -18,4 +18,7 @@ public class teacher_mark_attend_model {
         return enr_no;
     }
     public boolean getAtdStatus() {return atdStatus;}
+
+    public void setAtdStatus(boolean atdStatus) {this.atdStatus = atdStatus;}
+
 }

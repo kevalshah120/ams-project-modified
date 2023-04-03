@@ -18,6 +18,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".attendance_display_wv"
+            android:exported="false" />
+        <activity
+            android:name=".teacher_class_attendance"
+            android:exported="false" />
+        <activity
+            android:name=".teacher_student_attendance_view"
+            android:exported="false" />
+        <activity
             android:name=".student_add"
             android:exported="false" />
         <activity

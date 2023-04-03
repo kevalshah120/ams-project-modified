@@ -46,34 +46,35 @@ public class teacher_mark_attend_adapter extends RecyclerView.Adapter<teacher_ma
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        String stu_name = teacher_mark_attend_models.get(position).getStu_name();
-        String enr_no = teacher_mark_attend_models.get(position).getEnr_no();
-        boolean status = teacher_mark_attend_models.get(position).getAtdStatus();
+        String stu_name = teacher_mark_attend_models.get(holder.getAdapterPosition()).getStu_name();
+        String enr_no = teacher_mark_attend_models.get(holder.getAdapterPosition()).getEnr_no();
+        Boolean status = teacher_mark_attend_models.get(holder.getAdapterPosition()).getAtdStatus();
         String subject_name = teacher_mark_Attendance.subject_name;
         holder.setData(stu_name,enr_no,status);
         holder.absent_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(context, "absent", Toast.LENGTH_SHORT).show();
+                holder.absent_button.setImageResource(R.drawable.absent_focused);
+                holder.present_button.setImageResource(R.drawable.present);
+                teacher_mark_attend_models.get(holder.getAdapterPosition()).setAtdStatus(false);
                 if(!holder.absent_button.isSelected())
                 {
                     setAbsent(subject_name, enr_no, holder);
                 }
-//                Toast.makeText(context,"absent",Toast.LENGTH_SHORT).show();
-//                holder.absent_button.setImageResource(R.drawable.absent_focused);
-//                holder.present_button.setImageResource(R.drawable.present);
             }
         });
         holder.present_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(context, "present", Toast.LENGTH_SHORT).show();
+                holder.absent_button.setImageResource(R.drawable.absent);
+                holder.present_button.setImageResource(R.drawable.present_focused);
+                teacher_mark_attend_models.get(holder.getAdapterPosition()).setAtdStatus(true);
                 if(!holder.present_button.isSelected())
                 {
                     setPresent(subject_name,enr_no,holder);
                 }
-
-//                Toast.makeText(context,"present",Toast.LENGTH_SHORT).show();
-//                holder.absent_button.setImageResource(R.drawable.absent);
-//                holder.present_button.setImageResource(R.drawable.present_focused);
             }
         });
     }
@@ -230,7 +231,7 @@ public class teacher_mark_attend_adapter extends RecyclerView.Adapter<teacher_ma
         public void setData(String student_name, String enr_no, boolean status) {
             textView1_stu_name.setText(student_name);
             textView2_enr_no.setText(enr_no);
-            if(status == true)
+            if(status)
             {
                 absent_button.setSelected(false);
                 absent_button.setImageResource(R.drawable.absent);

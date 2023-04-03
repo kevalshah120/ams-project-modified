@@ -52,4 +52,10 @@
     <string name="all_present">ALL PRESENT</string>
     <string name="attendance_code_val">HJI18L</string>
     <string name="attendance_code_label">Attendance Code :</string>
+    <string name="semester">Semester</string>
+    <string name="student_name_lab">Student Name</string>
+    <string name="subject">Subject</string>
+    <string name="generate">Generate</string>
+    <string name="student_semester">Student Semester</string>
+    <string name="month_amp_year"><![CDATA[Month & Year]]></string>
 </resources>
