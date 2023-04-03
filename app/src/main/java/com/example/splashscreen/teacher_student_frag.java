@@ -184,11 +184,7 @@ public class teacher_student_frag extends Fragment{
     }
 
     private void dataInitialize() {
-//        mark_attend_models.add(new teacher_mark_attend_model("206090307004", "Keval Shah"));
-//        mark_attend_models.add(new teacher_mark_attend_model("206090307034", "Henarth Agravat"));
-//        mark_attend_models.add(new teacher_mark_attend_model("206090307014", "Harsh Shah"));
-//        mark_attend_models.add(new teacher_mark_attend_model("206090307064", "Yash Matariya"));
-        String URL = "https://stocky-baud.000webhostapp.com/getStudentDetailsForTeacher.php";
+        String URL = "https://stocky-baud.000webhostapp.com/fetchStudentProfile.php";
         if (student_model != null) {
             recyclerView.setLayoutManager(null);
             recyclerView.setAdapter(null);

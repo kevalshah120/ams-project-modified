@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -35,17 +36,22 @@ import java.util.concurrent.TimeUnit;
 
 public class teacher_mark_Attendance extends AppCompatActivity {
     List<teacher_mark_attend_model> mark_attend_models = new ArrayList<>();
+    Button Save;
     TextView timer_tv;
     ImageView timer_icon;
     RecyclerView recyclerView;
-    TextView studentCount;
+    public static TextView studentCount;
     String[] div_list;
     TextView OTP_code;
+    public static int TotalStudents;
+    public static String subject_name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_mark_attendance);
+        //--------------------------------------------------------------------------------------------------------------------------------------------
         //DECLARATION AND DEFINITION (START)
+        Save = findViewById(R.id.attend_save_btn);
         int expiry_time = Integer.parseInt(getIntent().getStringExtra("expiry_time")),i = 0;
         boolean smart_attend_switch = getIntent().getBooleanExtra("smart_attend_switch", false);
         String booleanString = Boolean.toString(smart_attend_switch);
@@ -55,6 +61,7 @@ public class teacher_mark_Attendance extends AppCompatActivity {
         studentCount = findViewById(R.id.student_Count);
         OTP_code = findViewById(R.id.attendance_code_val);
         //DECLARATION AND DEFINITION (END)
+        //--------------------------------------------------------------------------------------------------------------------------------------------
         //GENERATING OTP (START)
         String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 + "0123456789"
@@ -80,6 +87,7 @@ public class teacher_mark_Attendance extends AppCompatActivity {
             OTP_code.setVisibility(View.INVISIBLE);
         }
         //GENERATING OTP (END)
+        //--------------------------------------------------------------------------------------------------------------------------------------------
         //GETTING DIVISIONS FROM PREVIOUS PAGE (START)
         String temp_div = getIntent().getStringExtra("division");
         div_list = new String[((int) Math.floor(temp_div.length() / 3)) + 2];
@@ -93,8 +101,10 @@ public class teacher_mark_Attendance extends AppCompatActivity {
             i += 3;
             j++;
         }
+        subject_name = getIntent().getStringExtra("subject");
         div_list[div_list.length-1] = getIntent().getStringExtra("subject");
         //GETTING DIVISIONS FROM PREVIOUS PAGE (END)
+        //--------------------------------------------------------------------------------------------------------------------------------------------
         //GUI RELATED CODE (START)
         if(!smart_attend_switch){
             timer_icon.setVisibility(View.GONE);
@@ -114,9 +124,65 @@ public class teacher_mark_Attendance extends AppCompatActivity {
             }.start();
         }
         //GUI RELATED CODE (END)
+        //--------------------------------------------------------------------------------------------------------------------------------------------
         dataInitialize(); //THIS FUNCTION WILL GET ALL THE STUDENT DATA IN THE PAGE
         createAttendenceSession(OTPCODE); //THIS WILL CREATE SESSION
+        //--------------------------------------------------------------------------------------------------------------------------------------------
+        Save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String URL = "https://stocky-baud.000webhostapp.com/saveTempAtdToAtdTb.php";
+                //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
+                RequestQueue queue = Volley.newRequestQueue(teacher_mark_Attendance.this);
+                //STRING REQUEST OBJECT INITIALIZATION
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                Log.d("createAttendenceSession",response);
+                                try {
+                                    String result = new JSONObject(response).getString("result");
+                                    if(result.equals("1"))
+                                    {
+                                        Intent intent = new Intent(teacher_mark_Attendance.this,teacher_homescreen.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                    else
+                                    {
+                                        Toast.makeText(teacher_mark_Attendance.this, result, Toast.LENGTH_SHORT).show();
+                                    }
+                                } catch (JSONException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(teacher_mark_Attendance.this, "Connectivity Error", Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+                    @Override
+                    //GIVING INPUT TO PHP API THROUGH MAP
+                    protected Map<String, String> getParams() {
+                        Map<String, String> params = new HashMap<>();
+                        params.put("subject",subject_name);
+                        params.put("staff_login",teacher_login.ID);
+                        return params;
+                    }
+
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("Content-Type", "application/x-www-form-urlencoded");
+                        return params;
+                    }
+                };
+                queue.add(stringRequest);
+            }
+        });
     }
+    //--------------------------------------------------------------------------------------------------------------------------------------------
     private void createAttendenceSession(String OTP)
     {
         String URL = "https://stocky-baud.000webhostapp.com/createAttendenceSession.php";
@@ -162,6 +228,7 @@ public class teacher_mark_Attendance extends AppCompatActivity {
         };
         queue.add(stringRequest);
     }
+    //--------------------------------------------------------------------------------------------------------------------------------------------
     private void dataInitialize() {
         String URL = "https://stocky-baud.000webhostapp.com/getStudentDetailsForTeacher.php";
         if (mark_attend_models != null) {
@@ -192,6 +259,7 @@ public class teacher_mark_Attendance extends AppCompatActivity {
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
+                        TotalStudents = mark_attend_models.size();
                         String SC = String.valueOf(mark_attend_models.size());
                         studentCount.setText("0/"+SC);
                         recyclerView.setLayoutManager(new LinearLayoutManager(teacher_mark_Attendance.this));
@@ -231,6 +299,7 @@ public class teacher_mark_Attendance extends AppCompatActivity {
         };
         queue.add(stringRequest);
     }
+    //--------------------------------------------------------------------------------------------------------------------------------------------
     public void onBackPressed() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(teacher_mark_Attendance.this);
@@ -240,8 +309,53 @@ public class teacher_mark_Attendance extends AppCompatActivity {
                 .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        String URL = "https://stocky-baud.000webhostapp.com/deleteSessionAndTempAtd.php";
+                        //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
+                        RequestQueue queue = Volley.newRequestQueue(teacher_mark_Attendance.this);
+                        //STRING REQUEST OBJECT INITIALIZATION
+                        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
+                                new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        Log.d("BackButton",response);
+                                        try {
+                                            String result = new JSONObject(response).getString("result");
+                                            if(result.equals("1"))
+                                            {
+                                                finish();
+                                            }
+                                            else
+                                            {
+                                                Toast.makeText(teacher_mark_Attendance.this, result, Toast.LENGTH_SHORT).show();
+                                            }
+                                        } catch (JSONException e) {
+                                            throw new RuntimeException(e);
+                                        }
+                                    }
+                                }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(teacher_mark_Attendance.this, "Connectivity Error", Toast.LENGTH_SHORT).show();
+                            }
+                        }) {
+                            @Override
+                            //GIVING INPUT TO PHP API THROUGH MAP
+                            protected Map<String, String> getParams() {
+                                Map<String, String> params = new HashMap<>();
+                                params.put("subject",subject_name);
+                                params.put("staff_login",teacher_login.ID);
+                                return params;
+                            }
 
-                        finish();
+                            @Override
+                            public Map<String, String> getHeaders() throws AuthFailureError {
+                                Map<String, String> params = new HashMap<String, String>();
+                                params.put("Content-Type", "application/x-www-form-urlencoded");
+                                return params;
+                            }
+                        };
+                        queue.add(stringRequest);
+//                        finish();
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
