@@ -75,9 +75,13 @@ public class teacher_homescreen extends AppCompatActivity {
             if(id==R.id.contact_us){
                 Toast.makeText(getApplicationContext(),"Contact Us",Toast.LENGTH_SHORT).show();
             }
-            else
+            else if(id==R.id.about_us)
             {
                 Toast.makeText(getApplicationContext(),"About Us",Toast.LENGTH_SHORT).show();
+            }
+            else if(id==R.id.logout)
+            {
+                Toast.makeText(getApplicationContext(),"Logout",Toast.LENGTH_SHORT).show();
             }
             drawerLayout.closeDrawer(GravityCompat.START);
             return true;

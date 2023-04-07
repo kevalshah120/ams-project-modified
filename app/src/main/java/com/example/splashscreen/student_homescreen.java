@@ -24,7 +24,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.Objects;
 
-public class student_homescreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class student_homescreen extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -80,7 +80,22 @@ public class student_homescreen extends AppCompatActivity implements NavigationV
         toogle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toogle);
         toogle.syncState();
-        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setNavigationItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if(id==R.id.contact_us){
+                Toast.makeText(getApplicationContext(),"Contact Us",Toast.LENGTH_SHORT).show();
+            }
+            else if(id==R.id.about_us)
+            {
+                Toast.makeText(getApplicationContext(),"About Us",Toast.LENGTH_SHORT).show();
+            }
+            else if(id==R.id.logout)
+            {
+                Toast.makeText(getApplicationContext(),"Logout",Toast.LENGTH_SHORT).show();
+            }
+            drawerLayout.closeDrawer(GravityCompat.START);
+            return true;
+        });
 
         float_add_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,20 +120,6 @@ public class student_homescreen extends AppCompatActivity implements NavigationV
         else{
             super.onBackPressed();
         }
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.contact_us:
-                Toast.makeText(this,"Contact Us",Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.about_us:
-                Toast.makeText(this,"About Us",Toast.LENGTH_SHORT).show();
-                break;
-        }
-        drawerLayout.closeDrawer(GravityCompat.START);
-        return true;
     }
 
 }
