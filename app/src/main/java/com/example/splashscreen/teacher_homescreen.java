@@ -1,12 +1,15 @@
 package com.example.splashscreen;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -15,9 +18,22 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class teacher_homescreen extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
@@ -27,6 +43,7 @@ public class teacher_homescreen extends AppCompatActivity {
     Toolbar toolbar;
     TextView toolbar_textview;
     ActionBarDrawerToggle toogle;
+    sessionForT SFT;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +98,29 @@ public class teacher_homescreen extends AppCompatActivity {
             }
             else if(id==R.id.logout)
             {
-                Toast.makeText(getApplicationContext(),"Logout",Toast.LENGTH_SHORT).show();
+                //LOGOUT (START)
+                AlertDialog.Builder builder = new AlertDialog.Builder(teacher_homescreen.this);
+                builder.setTitle(R.string.app_name);
+                builder.setIcon(R.mipmap.ic_launcher);
+                builder.setMessage("Do you want to exit?")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                SFT = new sessionForT(getApplication());
+                                SFT.setPass("");
+                                SFT.setLogin("");
+                                startActivity(new Intent(getApplicationContext(),login_screen.class));
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+                //LOGOUT (END)
             }
             drawerLayout.closeDrawer(GravityCompat.START);
             return true;

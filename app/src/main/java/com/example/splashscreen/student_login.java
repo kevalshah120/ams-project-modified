@@ -23,8 +23,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class student_login extends AppCompatActivity {
-    static String  Mobile_No ;
-    static String Enrollment_No ;
+    private static String  Mobile_No ;
+    private static String Enrollment_No ;
     Button back,login;
     EditText mobile_no,enr_no;
     @Override
@@ -47,10 +47,10 @@ public class student_login extends AppCompatActivity {
         -------------------------------------------------------------------------------------------
          */
         login.setOnClickListener(view -> {
-            final String  Mobile_No = mobile_no.getText().toString();
+            Mobile_No = mobile_no.getText().toString();
             Enrollment_No = enr_no.getText().toString();
-            Enrollment_No="206090307064";
-            TEMP(class_name);
+//            Enrollment_No="206090307064";
+//            TEMP(class_name);
             if(Mobile_No.trim().length() == 10 && Enrollment_No.trim().length() == 12)
             {
                 //URL FOR FETCHING API DATA
@@ -69,7 +69,7 @@ public class student_login extends AppCompatActivity {
                                      */
                                     if(Jobj.getString("result").equalsIgnoreCase("1"))
                                     {
-                                        otp_verpage(Mobile_No,class_name);
+                                        otp_verpage(Enrollment_No,Mobile_No,class_name);
                                     }
                                     // ELSE THROW ERROR USING TOAST
                                     else
@@ -135,9 +135,10 @@ public class student_login extends AppCompatActivity {
         startActivity(i);
         finish();
     }
-    private void otp_verpage(String Mobile_No,String class_name) {
+    private void otp_verpage(String ENRNO,String Mobile_No,String class_name) {
         Intent i = new Intent(student_login.this, otp_verification.class);
-        i.putExtra("mobile", Mobile_No);
+        i.putExtra("ENROLLMENT",ENRNO);
+        i.putExtra("MOBILE", Mobile_No);
         i.putExtra("class_name", class_name);
         startActivity(i);
         finish();

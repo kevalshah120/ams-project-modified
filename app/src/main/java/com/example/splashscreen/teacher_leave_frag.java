@@ -1,5 +1,6 @@
 package com.example.splashscreen;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -49,6 +50,8 @@ public class teacher_leave_frag extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    sessionForT SFT;
+    private static String ID;
 
     public teacher_leave_frag() {
         // Required empty public constructor
@@ -75,6 +78,8 @@ public class teacher_leave_frag extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SFT = new sessionForT(requireActivity());
+        ID = SFT.getLogin();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -155,7 +160,7 @@ public class teacher_leave_frag extends Fragment {
             //GIVING INPUT TO PHP API THROUGH MAP
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("tID", teacher_login.ID);
+                params.put("tID", ID);
                 return params;
             }
 

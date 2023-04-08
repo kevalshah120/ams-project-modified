@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -45,6 +46,9 @@ public class teacher_mark_Attendance extends AppCompatActivity {
     TextView OTP_code;
     public static int TotalStudents;
     public static String subject_name;
+    boolean firstTime = true;
+    sessionForT SFT;
+    private static String ID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +64,8 @@ public class teacher_mark_Attendance extends AppCompatActivity {
         recyclerView = findViewById(R.id.teacher_mark_attend_rv);
         studentCount = findViewById(R.id.student_Count);
         OTP_code = findViewById(R.id.attendance_code_val);
+        SFT = new sessionForT(getApplication());
+        ID = SFT.getLogin();
         //DECLARATION AND DEFINITION (END)
         //--------------------------------------------------------------------------------------------------------------------------------------------
         //GENERATING OTP (START)
@@ -126,6 +132,16 @@ public class teacher_mark_Attendance extends AppCompatActivity {
         //GUI RELATED CODE (END)
         //--------------------------------------------------------------------------------------------------------------------------------------------
         dataInitialize(); //THIS FUNCTION WILL GET ALL THE STUDENT DATA IN THE PAGE
+        //CREATING HANDLE TO MAKE A THREAD THAT EXECUTES A dataRefesh() EVERY 10 SECONDS (START)
+        Handler x = new Handler();
+        x.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dataInitialize();
+                x.postDelayed(this,10000);
+            }
+        },10000);
+        //CREATING HANDLE TO MAKE A THREAD THAT EXECUTES A dataRefesh() EVERY 10 SECONDS (END)
         createAttendenceSession(OTPCODE); //THIS WILL CREATE SESSION
         //--------------------------------------------------------------------------------------------------------------------------------------------
         Save.setOnClickListener(new View.OnClickListener() {
@@ -139,7 +155,6 @@ public class teacher_mark_Attendance extends AppCompatActivity {
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                                Log.d("createAttendenceSession",response);
                                 try {
                                     String result = new JSONObject(response).getString("result");
                                     if(result.equals("1"))
@@ -167,7 +182,7 @@ public class teacher_mark_Attendance extends AppCompatActivity {
                     protected Map<String, String> getParams() {
                         Map<String, String> params = new HashMap<>();
                         params.put("subject",subject_name);
-                        params.put("staff_login",teacher_login.ID);
+                        params.put("staff_login",ID);
                         return params;
                     }
 
@@ -182,6 +197,80 @@ public class teacher_mark_Attendance extends AppCompatActivity {
             }
         });
     }
+    //--------------------------------------------------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------------------------------------------------
+    private void dataRefresh() {
+        String URL = "https://stocky-baud.000webhostapp.com/periodicUpdates.php";
+        if (mark_attend_models != null) {
+            recyclerView.setLayoutManager(null);
+            recyclerView.setAdapter(null);
+            mark_attend_models.clear();
+        }
+        //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
+        RequestQueue queue = Volley.newRequestQueue(teacher_mark_Attendance.this);
+        //STRING REQUEST OBJECT INITIALIZATION
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("dataInitialize",response);
+                        mark_attend_models = new ArrayList<>();
+                        String enr;
+                        String name;
+                        int atdCount = 0;
+                        try {
+                            JSONArray array = new JSONArray(response);
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject object = array.getJSONObject(i);
+                                name = object.getString("std_name");
+                                enr = object.getString("enr_no");
+                                if(object.getString("attendance_status").equals("1"))
+                                {
+                                    atdCount++;
+                                    mark_attend_models.add(new teacher_mark_attend_model(enr, name, true));
+                                }
+                                else {
+                                    mark_attend_models.add(new teacher_mark_attend_model(enr, name, false));
+                                }
+                            }
+
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                        TotalStudents = mark_attend_models.size();
+                        String SC = String.valueOf(mark_attend_models.size());
+                        studentCount.setText(String.valueOf(atdCount)+"/"+SC);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(teacher_mark_Attendance.this));
+                        recyclerView.setHasFixedSize(true);
+                        teacher_mark_attend_adapter mark_attend_adapter = new teacher_mark_attend_adapter(teacher_mark_Attendance.this, mark_attend_models);
+                        recyclerView.setAdapter(mark_attend_adapter);
+                        mark_attend_adapter.notifyDataSetChanged();
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(teacher_mark_Attendance.this, "Connectivity Error", Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            //GIVING INPUT TO PHP API THROUGH MAP
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("subject",subject_name);
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+        queue.add(stringRequest);
+    }
+
     //--------------------------------------------------------------------------------------------------------------------------------------------
     private void createAttendenceSession(String OTP)
     {
@@ -206,7 +295,7 @@ public class teacher_mark_Attendance extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("OTP",OTP);
-                params.put("staff_login_id", teacher_login.ID);
+                params.put("staff_login_id", ID);
 //                Log.d("abc",teacher_login.ID);
                 int i = 0;
                 while(i<div_list.length-1)
@@ -230,74 +319,79 @@ public class teacher_mark_Attendance extends AppCompatActivity {
     }
     //--------------------------------------------------------------------------------------------------------------------------------------------
     private void dataInitialize() {
-        String URL = "https://stocky-baud.000webhostapp.com/getStudentDetailsForTeacher.php";
-        if (mark_attend_models != null) {
-            recyclerView.setLayoutManager(null);
-            recyclerView.setAdapter(null);
-            mark_attend_models.clear();
-        }
-        //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
-        RequestQueue queue = Volley.newRequestQueue(teacher_mark_Attendance.this);
-        //STRING REQUEST OBJECT INITIALIZATION
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("dataInitialize",response);
-                        mark_attend_models = new ArrayList<>();
-                        String enr;
-                        String name;
-                        try {
-                            JSONArray array = new JSONArray(response);
-                            for (int i = 0; i < array.length()-1; i++) {
-                                JSONObject object = array.getJSONObject(i);
-                                name = object.getString("std_name");
-                                enr = object.getString("enr_no");
-                                mark_attend_models.add(new teacher_mark_attend_model(enr,name,false));
+        if(firstTime == true) {
+            firstTime = false;
+            String URL = "https://stocky-baud.000webhostapp.com/getStudentDetailsForTeacher.php";
+            if (mark_attend_models != null) {
+                recyclerView.setLayoutManager(null);
+                recyclerView.setAdapter(null);
+                mark_attend_models.clear();
+            }
+            //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
+            RequestQueue queue = Volley.newRequestQueue(teacher_mark_Attendance.this);
+            //STRING REQUEST OBJECT INITIALIZATION
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            mark_attend_models = new ArrayList<>();
+                            String enr;
+                            String name;
+                            try {
+                                JSONArray array = new JSONArray(response);
+                                for (int i = 0; i < array.length() - 1; i++) {
+                                    JSONObject object = array.getJSONObject(i);
+                                    name = object.getString("std_name");
+                                    enr = object.getString("enr_no");
+                                    mark_attend_models.add(new teacher_mark_attend_model(enr, name, false));
+                                }
+
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
                             }
+                            TotalStudents = mark_attend_models.size();
+                            String SC = String.valueOf(mark_attend_models.size());
+                            studentCount.setText("0/" + SC);
+                            recyclerView.setLayoutManager(new LinearLayoutManager(teacher_mark_Attendance.this));
+                            recyclerView.setHasFixedSize(true);
+                            teacher_mark_attend_adapter mark_attend_adapter = new teacher_mark_attend_adapter(teacher_mark_Attendance.this, mark_attend_models);
+                            recyclerView.setAdapter(mark_attend_adapter);
+                            mark_attend_adapter.notifyDataSetChanged();
 
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
                         }
-                        TotalStudents = mark_attend_models.size();
-                        String SC = String.valueOf(mark_attend_models.size());
-                        studentCount.setText("0/"+SC);
-                        recyclerView.setLayoutManager(new LinearLayoutManager(teacher_mark_Attendance.this));
-                        recyclerView.setHasFixedSize(true);
-                        teacher_mark_attend_adapter mark_attend_adapter = new teacher_mark_attend_adapter(teacher_mark_Attendance.this, mark_attend_models);
-                        recyclerView.setAdapter(mark_attend_adapter);
-                        mark_attend_adapter.notifyDataSetChanged();
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(teacher_mark_Attendance.this, "Connectivity Error", Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            //GIVING INPUT TO PHP API THROUGH MAP
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                int i = 0;
-                while(i<div_list.length-1)
-                {
-                    params.put("div"+String.valueOf(i+1),div_list[i]);
-                    i++;
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(teacher_mark_Attendance.this, "Connectivity Error", Toast.LENGTH_SHORT).show();
                 }
-                params.put("subject",div_list[i]);
-                params.put("sizeOfDiv",String.valueOf(div_list.length-1));
-                return params;
-            }
+            }) {
+                @Override
+                //GIVING INPUT TO PHP API THROUGH MAP
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<>();
+                    int i = 0;
+                    while (i < div_list.length - 1) {
+                        params.put("div" + String.valueOf(i + 1), div_list[i]);
+                        i++;
+                    }
+                    params.put("subject", div_list[i]);
+                    params.put("sizeOfDiv", String.valueOf(div_list.length - 1));
+                    return params;
+                }
 
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("Content-Type", "application/x-www-form-urlencoded");
-                return params;
-            }
-        };
-        queue.add(stringRequest);
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("Content-Type", "application/x-www-form-urlencoded");
+                    return params;
+                }
+            };
+            queue.add(stringRequest);
+        }
+        else
+        {
+            dataRefresh();
+        }
     }
     //--------------------------------------------------------------------------------------------------------------------------------------------
     public void onBackPressed() {
@@ -343,7 +437,7 @@ public class teacher_mark_Attendance extends AppCompatActivity {
                             protected Map<String, String> getParams() {
                                 Map<String, String> params = new HashMap<>();
                                 params.put("subject",subject_name);
-                                params.put("staff_login",teacher_login.ID);
+                                params.put("staff_login",ID);
                                 return params;
                             }
 

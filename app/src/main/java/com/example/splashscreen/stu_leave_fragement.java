@@ -55,6 +55,8 @@ public class stu_leave_fragement extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    sessionForS SFS;
+    static String Enrollment_No;
 
     public stu_leave_fragement() {
         // Required empty public constructor
@@ -81,6 +83,8 @@ public class stu_leave_fragement extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SFS = new sessionForS(requireActivity());
+        Enrollment_No = SFS.getEnrollment();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -273,7 +277,7 @@ public class stu_leave_fragement extends Fragment {
             //GIVING INPUT TO PHP API THROUGH MAP
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("enrollment", student_login.Enrollment_No);
+                params.put("enrollment", Enrollment_No);
                 return params;
             }
 

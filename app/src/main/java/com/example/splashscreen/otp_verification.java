@@ -86,11 +86,19 @@ public class otp_verification extends AppCompatActivity {
                     finish();
                 }
                 else if(class_name.equals("student_login")){
+                    sessionForS SFS;
+                    SFS = new sessionForS(getApplication());
+                    SFS.setEnrollment(i.getStringExtra("ENROLLMENT"));
+                    SFS.setMobile(i.getStringExtra("MOBILE"));
                     Intent intent = new Intent(otp_verification.this,student_homescreen.class);
                     startActivity(intent);
                     finish();
                 }
                 else  if(class_name.equals("teacher_login")){
+                    sessionForT SFT;
+                    SFT = new sessionForT(getApplication());
+                    SFT.setLogin(i.getStringExtra("ID"));
+                    SFT.setPass(i.getStringExtra("PASS"));
                     Intent intent = new Intent(otp_verification.this,teacher_homescreen.class);
                     startActivity(intent);
                     finish();

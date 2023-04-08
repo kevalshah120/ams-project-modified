@@ -36,6 +36,8 @@ public class stu_lecture_adapter extends RecyclerView.Adapter<stu_lecture_adapte
     Dialog dialog;
     public String attend_code;
     Context context;
+    sessionForS SFS;
+    static String Enrollment_No;
 
     public stu_lecture_adapter(Context context, List<stu_lecture_model> lecture_data) {
         this.context = context;
@@ -45,6 +47,8 @@ public class stu_lecture_adapter extends RecyclerView.Adapter<stu_lecture_adapte
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        SFS = new sessionForS(context.getApplicationContext());
+        Enrollment_No = SFS.getEnrollment();
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.stu_lecture_cv, parent, false);
 //        MyViewHolder viewHolder = new MyViewHolder(view);
@@ -100,7 +104,7 @@ public class stu_lecture_adapter extends RecyclerView.Adapter<stu_lecture_adapte
                     //GIVING INPUT TO PHP API THROUGH MAP
                     protected Map<String,String> getParams(){
                         Map<String,String> params = new HashMap<String, String>();
-                        params.put("enrollment",student_login.Enrollment_No);
+                        params.put("enrollment",Enrollment_No);
                         params.put("staff_id",String.valueOf(staff_id));
                         params.put("sub_code",subject_code);
                         params.put("OTP",attendance_code.getText().toString());

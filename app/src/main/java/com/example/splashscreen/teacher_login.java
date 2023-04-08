@@ -2,11 +2,8 @@ package com.example.splashscreen;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.text.InputType;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,7 +28,8 @@ public class teacher_login extends AppCompatActivity {
     static EditText login_id ;
     Button back,login;
     private boolean passwordshowing = true;
-    public static String ID ;
+     private static String ID ;
+     private static String PASS;
     ImageView password_icon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +47,9 @@ public class teacher_login extends AppCompatActivity {
             finish();
         });
         login.setOnClickListener(view -> {
-//            ID = login_id.getText().toString();
-            ID ="san12";
-            final String PASS = password_field.getText().toString();
-            TEMP(class_name);
+            ID = login_id.getText().toString();
+//            TEMP(class_name);
+            PASS = password_field.getText().toString();
             if(!(ID.trim().isEmpty()) && !(PASS.trim().isEmpty()))
             {
                 //URL FOR FETCHING API DATA
@@ -71,7 +68,7 @@ public class teacher_login extends AppCompatActivity {
                                      */
                                     if(Jobj.getString("result").equalsIgnoreCase("1"))
                                     {
-                                        OTP_ver(Jobj.getString("contact_no"),class_name);
+                                        OTP_ver(ID,PASS,Jobj.getString("contact_no"),class_name);
                                     }
                                     // ELSE THROW ERROR USING TOAST
                                     else
@@ -150,10 +147,12 @@ public class teacher_login extends AppCompatActivity {
         startActivity(i);
         finish();
     }
-    private void OTP_ver(String mobile_no,String class_name) {
+    private void OTP_ver(String ID, String PASSS, String mobile_no, String class_name) {
         Intent i = new Intent(teacher_login.this, otp_verification.class);
         i.putExtra("mobile", mobile_no);
         i.putExtra("class_name", class_name);
+        i.putExtra("ID",ID);
+        i.putExtra("PASS",PASS);
         startActivity(i);
         finish();
     }

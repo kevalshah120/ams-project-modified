@@ -45,6 +45,8 @@ public class leave_data extends AppCompatActivity {
     String[] staff_id;
     String[] staff_name;
     Button submit;
+    sessionForS SFS;
+    static String Enrollment_No;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,8 @@ public class leave_data extends AppCompatActivity {
         autoCompleteTxt = findViewById(R.id.auto_complete_txt);
         submit = findViewById(R.id.submit_button);
         leave_desc = findViewById(R.id.Leave_description);
+        SFS = new sessionForS(getApplication());
+        Enrollment_No = SFS.getEnrollment();
         //-----------------------------------GETTING STAFF NAME BELOW----------------------------------
         String URL = "https://stocky-baud.000webhostapp.com/getStaffName.php";
         //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
@@ -94,7 +98,7 @@ public class leave_data extends AppCompatActivity {
             //GIVING INPUT TO PHP API THROUGH MAP
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("enrollment", student_login.Enrollment_No);
+                params.put("enrollment", Enrollment_No);
                 return params;
             }
 
@@ -222,7 +226,7 @@ public class leave_data extends AppCompatActivity {
                             params.put("tDATE", finalTo_DATE);
                             params.put("sID", S_id);
                             params.put("Ldesc", LeaveD);
-                            params.put("enrollment", student_login.Enrollment_No);
+                            params.put("enrollment", Enrollment_No);
                             return params;
                         }
 

@@ -2,6 +2,7 @@ package com.example.splashscreen;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -33,6 +35,7 @@ public class student_homescreen extends AppCompatActivity {
     ImageView wave_emoji;
     TextView toolbar_textview;
     ActionBarDrawerToggle toogle;
+    sessionForS SFS;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +51,7 @@ public class student_homescreen extends AppCompatActivity {
         toolbar_textview = findViewById(R.id.toolbar_text);
         wave_emoji = findViewById(R.id.wave_emoji);
         bottomNavigationView = findViewById(R.id.bottom_nav);
+        SFS = new sessionForS(getApplication());
         bottomNavigationView.setSelectedItemId(R.id.home_menu);
         float_add_btn.setVisibility(View.GONE);
         replaceFragment(new stu_home_fragement());
@@ -91,7 +95,28 @@ public class student_homescreen extends AppCompatActivity {
             }
             else if(id==R.id.logout)
             {
-                Toast.makeText(getApplicationContext(),"Logout",Toast.LENGTH_SHORT).show();
+                //LOGOUT (START)
+                AlertDialog.Builder builder = new AlertDialog.Builder(student_homescreen.this);
+                builder.setTitle(R.string.app_name);
+                builder.setIcon(R.mipmap.ic_launcher);
+                builder.setMessage("Do you want to exit?")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                SFS.setEnrollment("");
+                                SFS.setMobile("");
+                                startActivity(new Intent(getApplicationContext(),login_screen.class));
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+                //LOGOUT (END)
             }
             drawerLayout.closeDrawer(GravityCompat.START);
             return true;

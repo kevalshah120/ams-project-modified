@@ -52,7 +52,8 @@ public class teacher_student_frag extends Fragment{
     private student_list_adapter student_list_adapter;
     FloatingActionButton bulk_upload_fab,add_student_fab;
     ActivityResultLauncher<Intent> resultLauncher;
-
+    sessionForT SFT;
+    private static String ID;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -77,6 +78,8 @@ public class teacher_student_frag extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SFT = new sessionForT(requireActivity());
+        ID = SFT.getLogin();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -231,7 +234,7 @@ public class teacher_student_frag extends Fragment{
             //GIVING INPUT TO PHP API THROUGH MAP
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("T_ID", teacher_login.ID);
+                params.put("T_ID", ID);
                 return params;
             }
 
