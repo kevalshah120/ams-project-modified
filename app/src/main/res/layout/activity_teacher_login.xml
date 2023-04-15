@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context=".student_login">
+    tools:context=".teacher_login">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -53,46 +53,45 @@
             android:background="@drawable/button_1"
             android:drawableStart="@drawable/person_icon"
             android:inputType="text"
-            android:layout_marginLeft="@dimen/_12sdp"
-            android:layout_marginRight="@dimen/_12sdp"
+            android:layout_marginHorizontal="@dimen/_12sdp"
             android:paddingStart="@dimen/_7sdp"
             android:paddingEnd="@dimen/_7sdp"
-            android:layout_marginBottom="@dimen/_15sdp"
             android:drawablePadding="@dimen/_9sdp"
             android:layout_below="@id/signin_illustrator"
             />
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/login_id"
-            android:layout_marginEnd="@dimen/_12sdp"
-            android:layout_marginBottom="@dimen/_70sdp">
             <EditText
                 android:layout_toStartOf="@id/password_hide"
                 android:id="@+id/password_field"
                 android:layout_marginEnd="@dimen/_5sdp"
+                android:layout_below="@id/login_id"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
                 android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginBottom="@dimen/_70sdp"
                 android:background="@drawable/button_1"
                 android:drawableStart="@drawable/lock_icon"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:drawablePadding="@dimen/_9sdp"
                 android:hint="@string/password"
                 android:importantForAutofill="no"
                 android:inputType="textPassword"
+                android:paddingEnd="@dimen/_7sdp"
                 android:paddingStart="@dimen/_7sdp" />
             <ImageView
                 android:contentDescription="@string/password"
                 android:id="@+id/password_hide"
+                android:layout_marginTop="@dimen/_15sdp"
                 android:layout_width="@dimen/_40sdp"
                 android:layout_height="@dimen/_40sdp"
+                android:layout_below="@id/login_id"
+                android:layout_marginEnd="@dimen/_12sdp"
                 android:layout_alignParentEnd="true"
+                android:layout_marginBottom="@dimen/_70sdp"
                 android:src="@drawable/password_hide"
                 android:padding="@dimen/_10sdp"
                 android:adjustViewBounds="true"
                 android:background="@drawable/background"
                 />
-        </RelativeLayout>
         <Button
             android:id="@+id/login_button"
             android:layout_alignParentBottom="true"
@@ -100,8 +99,7 @@
             android:layout_width="match_parent"
             android:layout_marginBottom="@dimen/_30sdp"
             android:layout_height="@dimen/_50sdp"
-            android:layout_marginLeft="@dimen/_12sdp"
-            android:layout_marginRight="@dimen/_12sdp"
+            android:layout_marginHorizontal="@dimen/_12sdp"
             android:backgroundTint="#0065ff"
             android:contentDescription="@string/login"
             android:fontFamily="@font/montserrat_semibold"

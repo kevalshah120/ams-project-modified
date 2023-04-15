@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context=".student_login">
+    tools:context=".otp_verification">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -211,8 +211,7 @@
             android:layout_width="match_parent"
             android:layout_marginBottom="@dimen/_30sdp"
             android:layout_height="@dimen/_50sdp"
-            android:layout_marginLeft="@dimen/_12sdp"
-            android:layout_marginRight="@dimen/_12sdp"
+            android:layout_marginHorizontal="@dimen/_12sdp"
             android:backgroundTint="#0065ff"
             android:contentDescription="@string/verify"
             android:fontFamily="@font/montserrat_semibold"

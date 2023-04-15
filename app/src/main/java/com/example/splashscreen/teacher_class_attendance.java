@@ -1,8 +1,5 @@
 package com.example.splashscreen;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
@@ -11,6 +8,9 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -26,7 +26,7 @@ public class teacher_class_attendance extends AppCompatActivity {
     List<String> month_year_lists;
     TextInputEditText sub_et, div_et;
     Button generate_button;
-    String selected_month_year, selected_subject, selected_division;
+    String selected_month_year, selected_subject, selected_division,selected_month,selected_year;
     String[] subject_list = new String[]{"Java","PPUD","NMA"};
     boolean[] checked_sub_list;
     ArrayList<Integer> sub_selected_pos = new ArrayList<>();
@@ -142,11 +142,24 @@ public class teacher_class_attendance extends AppCompatActivity {
             selected_subject = sub_et.getText().toString();
             selected_division = div_et.getText().toString();
             selected_month_year = month_year_auto.getText().toString();
+            String[] monthYearArray = selected_month_year.split(" ");
+            selected_month = getMonthNumberFromName(monthYearArray[0]);
+            selected_year = monthYearArray[1];
             Intent i = new Intent(teacher_class_attendance.this, attendance_display_wv.class);
             i.putExtra("subject", selected_subject);
             i.putExtra("division", selected_division);
-            i.putExtra("month_year", selected_month_year);
+            i.putExtra("month", selected_month);
+            i.putExtra("year", selected_year);
             startActivity(i);
         });
+    }
+    public String getMonthNumberFromName(String monthName) {
+        String[] months = new DateFormatSymbols().getMonths();
+        for (int i = 0; i < months.length; i++) {
+            if (months[i].equalsIgnoreCase(monthName)) {
+                return String.valueOf(i + 1);
+            }
+        }
+        return "";
     }
 }
