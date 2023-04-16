@@ -48,6 +48,8 @@ public class teacher_attend_details extends AppCompatActivity {
     ArrayList<Integer> div_selected_pos = new ArrayList<>();
     String subject_selected;
     Button take_attend_button;
+    String ID;
+    sessionForT SFT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,8 @@ public class teacher_attend_details extends AppCompatActivity {
         seekbar_layout.setVisibility(View.GONE);
         loc_check_layout.setVisibility(View.GONE);
         take_attend_button = findViewById(R.id.take_attend_btn);
+        SFT = new sessionForT(getApplicationContext());
+        ID = SFT.getLogin();
         // FETCHING DATA FOR SUBJECT NAMES AND DIVISIONS
         String URL = "https://stocky-baud.000webhostapp.com/getSubjectsForTeacher.php";
         //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
@@ -120,12 +124,27 @@ public class teacher_attend_details extends AppCompatActivity {
                             public void onResponse(String response) {
                                 try {
                                     JSONArray array = new JSONArray(response);
-                                    sub_name = new String[array.length()];
-                                    sub_code = new String[array.length()];
-                                    for (int i = 0; i < array.length(); i++) {
-                                        JSONObject object = array.getJSONObject(i);
-                                        sub_name[i] = object.getString("sub_name");
-                                        sub_code[i] = object.getString("sub_code");
+                                    int AL = array.length(),j=0;
+                                    sub_name = new String[AL];
+                                    sub_code = new String[AL];
+                                    for (j = 0; j < AL; j++) {
+                                        JSONObject object = array.getJSONObject(j);
+                                        if(object.getString("lab").equals("0"))
+                                        {
+                                            sub_name[j] = object.getString("sub_name");
+                                            sub_code[j] = object.getString("sub_code");
+                                        }
+                                        else
+                                        {
+                                            sub_name[j] = object.getString("sub_name");
+                                            sub_code[j] = object.getString("sub_code");
+                                            AL++;
+                                            j++;
+                                            sub_name = Arrays.copyOf(sub_name,sub_name.length+1);
+                                            sub_code = Arrays.copyOf(sub_code,sub_code.length+1);
+                                            sub_name[j] = object.getString("sub_name")+" LAB";
+                                            sub_code[j]=object.getString("sub_code")+"*";
+                                        }
                                     }
                                     AlertDialog.Builder builder = new AlertDialog.Builder(teacher_attend_details.this);
                                     builder.setTitle("Subjects");
@@ -151,7 +170,7 @@ public class teacher_attend_details extends AppCompatActivity {
                     //GIVING INPUT TO PHP API THROUGH MAP
                     protected Map<String, String> getParams() {
                         Map<String, String> params = new HashMap<String, String>();
-                        params.put("T_ID", "san12");
+                        params.put("T_ID", ID);
                         return params;
                     }
 
