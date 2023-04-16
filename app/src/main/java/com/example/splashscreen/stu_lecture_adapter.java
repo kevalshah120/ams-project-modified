@@ -107,6 +107,7 @@ public class stu_lecture_adapter extends RecyclerView.Adapter<stu_lecture_adapte
                         params.put("enrollment",Enrollment_No);
                         params.put("staff_id",String.valueOf(staff_id));
                         params.put("sub_code",subject_code);
+                        params.put("sub_name",subject_name);
                         params.put("OTP",attendance_code.getText().toString());
                         return params;
                     }

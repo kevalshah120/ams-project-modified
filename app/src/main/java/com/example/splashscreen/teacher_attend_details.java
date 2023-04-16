@@ -48,6 +48,7 @@ public class teacher_attend_details extends AppCompatActivity {
     ArrayList<Integer> div_selected_pos = new ArrayList<>();
     String subject_selected;
     Button take_attend_button;
+    String subject_code;
     String ID;
     sessionForT SFT;
 
@@ -79,12 +80,27 @@ public class teacher_attend_details extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             JSONArray array = new JSONArray(response);
-                            sub_name = new String[array.length()];
-                            sub_code = new String[array.length()];
-                            for (int i = 0; i < array.length(); i++) {
-                                JSONObject object = array.getJSONObject(i);
-                                sub_name[i] = object.getString("sub_name");
-                                sub_code[i] = object.getString("sub_code");
+                            int AL = array.length(),j=0;
+                            sub_name = new String[AL];
+                            sub_code = new String[AL];
+                            for (j = 0; j < AL; j++) {
+                                JSONObject object = array.getJSONObject(j);
+                                if(object.getString("lab").equals("0"))
+                                {
+                                    sub_name[j] = object.getString("sub_name");
+                                    sub_code[j] = object.getString("sub_code");
+                                }
+                                else
+                                {
+                                    sub_name[j] = object.getString("sub_name");
+                                    sub_code[j] = object.getString("sub_code");
+                                    AL++;
+                                    j++;
+                                    sub_name = Arrays.copyOf(sub_name,sub_name.length+1);
+                                    sub_code = Arrays.copyOf(sub_code,sub_code.length+1);
+                                    sub_name[j] = object.getString("sub_name")+" LAB";
+                                    sub_code[j]=object.getString("sub_code")+"*";
+                                }
                             }
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
@@ -253,6 +269,7 @@ public class teacher_attend_details extends AppCompatActivity {
                         Map<String, String> params = new HashMap<String, String>();
                         int i = Arrays.asList(sub_name).indexOf(sub_name_tv.getText().toString());
                         params.put("s_code", sub_code[i]);
+                        subject_code = sub_code[i];
                         return params;
                     }
 
@@ -307,6 +324,7 @@ public class teacher_attend_details extends AppCompatActivity {
                 i.putExtra("location",loc_check_bol);
                 i.putExtra("subject", sub_name_tv.getText().toString());
                 i.putExtra("division", div_tv.getText().toString());
+                i.putExtra("subject_code",subject_code);
                 startActivity(i);
                 finish();
             }
