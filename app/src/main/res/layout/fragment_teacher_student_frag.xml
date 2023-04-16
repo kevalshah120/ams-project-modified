@@ -46,36 +46,18 @@
         android:visibility="gone"
         android:scrollbars="vertical" />
 
-    <com.getbase.floatingactionbutton.FloatingActionsMenu
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/float_add_Btn"
         android:layout_width="wrap_content"
+        android:backgroundTint="@color/white"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_10sdp"
+        app:fabCustomSize="50dp"
+        app:tint="#1B5BBA"
+        app:borderWidth="0dp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:clickable="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:focusable="true"
-        app:fab_addButtonColorNormal="@color/white"
-        app:fab_addButtonPlusIconColor="#1B5BBA"
-        app:fab_expandDirection="up"
-        app:fab_labelStyle="@style/getbase_fab_style"
-        app:fab_labelsPosition="left">
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/bulk_upload_fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fab_colorNormal="@color/white"
-            app:fab_icon="@drawable/bulk_upload"
-            app:fab_size="normal"
-            app:fab_title="Bulk Upload" />
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/add_student_fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fab_colorNormal="@color/white"
-            app:fab_icon="@drawable/ic_baseline_add_24"
-            app:fab_size="normal"
-            app:fab_title="Add Student" />
-
-    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+        app:srcCompat="@drawable/ic_baseline_add_24" />
 </RelativeLayout>
