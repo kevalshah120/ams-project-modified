@@ -16,8 +16,9 @@
         android:layout_marginHorizontal="@dimen/_7sdp"
         android:layout_marginTop="@dimen/_7sdp"
         android:background="@color/white"
-        android:hint="Name"
-        app:startIconDrawable="@drawable/person_icon">
+        android:hint="Surname Name Father'sName"
+        app:startIconDrawable="@drawable/person_icon"
+        tools:ignore="NotSibling">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/name_ti"
@@ -125,7 +126,7 @@
             android:layout_marginEnd="@dimen/_3sdp"
             android:layout_weight="1"
             android:background="@color/white"
-            android:hint="Division">
+            android:hint="Exmpl 6A">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/div_ti"
@@ -141,7 +142,7 @@
             android:layout_marginStart="@dimen/_3sdp"
             android:layout_weight="1"
             android:background="@color/white"
-            android:hint="Batch">
+            android:hint="Exmpl 2021">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/batch_ti"
                 android:layout_width="match_parent"
