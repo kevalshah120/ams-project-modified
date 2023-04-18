@@ -7,6 +7,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -15,26 +16,42 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class teacher_student_attendance_view extends AppCompatActivity {
     TextInputEditText from_Date,to_Date,subject;
     AutoCompleteTextView stu_auto_comp,sem_auto_comp;
     ArrayAdapter<String> stu_adap_items;
     ArrayAdapter<String> sem_adap_items;
-    String[] subject_list = new String[]{"Java","PPUD","NMA"};
+    String[] subject_list ;
     boolean[] checked_sub_list;
     Button generate_button;
-    String[] student_enr = {"206090307001","206090307002","206090307003","206090307004","206090307005","206090307006","206090307007","206090307009","2060903070010","2060903070011"};
-    String[] sem_val = {"5","6"};
+    String[] student_enr ;
+    String[] sem_val ;
     Calendar calendar = Calendar.getInstance();
     int year = calendar.get(Calendar.YEAR);
     int day = calendar.get(Calendar.DAY_OF_MONTH);
     ArrayList<Integer> sub_selected_pos = new ArrayList<>();
     int month = calendar.get(Calendar.MONTH);
+    String SelectedSem,SelectedEnr,SelectedSubject;
+    sessionForT SFT;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,19 +62,164 @@ public class teacher_student_attendance_view extends AppCompatActivity {
         generate_button = findViewById(R.id.generate_button);
         stu_auto_comp = findViewById(R.id.stu_auto_comp);
         sem_auto_comp = findViewById(R.id.sem_auto_comp);
-        stu_adap_items = new ArrayAdapter<String>(this,R.layout.leave_staffname_dropdown, student_enr);
-        stu_auto_comp.setAdapter(stu_adap_items);
-        stu_auto_comp.setOnItemClickListener((adapterView, view, i, l) -> {
-            String item = adapterView.getItemAtPosition(i).toString();
-            Toast.makeText(teacher_student_attendance_view.this,item,Toast.LENGTH_SHORT).show();
-            stu_auto_comp.clearFocus();
-        });
-        sem_adap_items = new ArrayAdapter<String>(this,R.layout.leave_staffname_dropdown,sem_val);
-        sem_auto_comp.setAdapter(sem_adap_items);
+        SFT = new sessionForT(getApplicationContext());
+        stu_auto_comp.setEnabled(false);
+        subject.setEnabled(false);
+        //-------------------------------------------------------------------------------------------------------------
+        // FETCHING DATA FOR SUBJECT NAMES AND DIVISIONS
+        String URL1 = "https://stocky-baud.000webhostapp.com/getSemFromT.php";
+        //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
+        RequestQueue queue = Volley.newRequestQueue(teacher_student_attendance_view.this);
+        //STRING REQUEST OBJECT INITIALIZATION
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL1,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONArray array = new JSONArray(response);
+                            int AL = array.length(),j=0;
+                            sem_val = new String[AL];
+                            for (j = 0; j < AL; j++) {
+                                JSONObject object = array.getJSONObject(j);
+                                sem_val[j] = object.getString("sem");
+                            }
+                            sem_adap_items = new ArrayAdapter<String>(teacher_student_attendance_view.this,R.layout.leave_staffname_dropdown,sem_val);
+                            sem_auto_comp.setAdapter(sem_adap_items);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(teacher_student_attendance_view.this, "Connectivity Error", Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            //GIVING INPUT TO PHP API THROUGH MAP
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Tlogin", SFT.getLogin());
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+        queue.add(stringRequest);
+        //-------------------------------------------------------------------------------------------------------------
         sem_auto_comp.setOnItemClickListener((adapterView, view, i, l) -> {
             String item = adapterView.getItemAtPosition(i).toString();
-            Toast.makeText(teacher_student_attendance_view.this,item,Toast.LENGTH_SHORT).show();
+            SelectedSem = adapterView.getItemAtPosition(i).toString();
+            String URL2 = "https://stocky-baud.000webhostapp.com/getEnrForT.php";
+            //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
+            RequestQueue queue1 = Volley.newRequestQueue(teacher_student_attendance_view.this);
+            //STRING REQUEST OBJECT INITIALIZATION
+            StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL2,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                stu_auto_comp.setEnabled(true);
+                                JSONArray array = new JSONArray(response);
+                                int AL = array.length(),j=0;
+                                student_enr = new String[AL];
+                                for (j = 0; j < AL; j++) {
+                                    JSONObject object = array.getJSONObject(j);
+                                    student_enr[j] = object.getString("enr_no");
+                                }
+                                stu_adap_items = new ArrayAdapter<String>(teacher_student_attendance_view.this,R.layout.leave_staffname_dropdown, student_enr);
+                                stu_auto_comp.setAdapter(stu_adap_items);
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(teacher_student_attendance_view.this, "Connectivity Error", Toast.LENGTH_SHORT).show();
+                }
+            }) {
+                @Override
+                //GIVING INPUT TO PHP API THROUGH MAP
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("sem", SelectedSem);
+                    return params;
+                }
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("Content-Type", "application/x-www-form-urlencoded");
+                    return params;
+                }
+            };
+            queue1.add(stringRequest1);
             sem_auto_comp.clearFocus();
+
+        });
+        stu_auto_comp.setOnItemClickListener((adapterView, view, i, l) -> {
+            String item = adapterView.getItemAtPosition(i).toString();
+            SelectedEnr = adapterView.getItemAtPosition(i).toString();
+            String URL3 = "https://stocky-baud.000webhostapp.com/getSubForT.php";
+            //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
+            RequestQueue queue2 = Volley.newRequestQueue(teacher_student_attendance_view.this);
+            //STRING REQUEST OBJECT INITIALIZATION
+            StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL3,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                subject.setEnabled(true);
+                                JSONArray array = new JSONArray(response);
+                                int AL = array.length(),j=0;
+                                subject_list = new String[AL];
+                                for (j = 0; j < AL; j++) {
+                                    JSONObject object = array.getJSONObject(j);
+                                    if(object.getString("lab").equals("1"))
+                                    {
+                                        subject_list[j] = object.getString("sub_name");
+                                        AL++;
+                                        j++;
+                                        subject_list = Arrays.copyOf(subject_list,subject_list.length+1);
+                                        subject_list[j] = object.getString("sub_name") + " LAB";
+                                    }
+                                    else {
+                                        subject_list[j] = object.getString("sub_name");
+                                    }
+                                }
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(teacher_student_attendance_view.this, "Connectivity Error", Toast.LENGTH_SHORT).show();
+                }
+            }) {
+                @Override
+                //GIVING INPUT TO PHP API THROUGH MAP
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<String, String>();
+                    Log.d("ABCDEF",SelectedSem+" "+SFT.getLogin());
+                    params.put("sem", SelectedSem);
+                    params.put("Tlogin", SFT.getLogin());
+                    return params;
+                }
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("Content-Type", "application/x-www-form-urlencoded");
+                    return params;
+                }
+            };
+            queue2.add(stringRequest2);
+            stu_auto_comp.clearFocus();
         });
         from_Date.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -106,7 +268,8 @@ public class teacher_student_attendance_view extends AppCompatActivity {
                         {
                             sub_selected_val.append(subject_list[sub_selected_pos.get(count_val)]);
                         }
-                        subject.setText(sub_selected_val.toString() + " ");
+                        subject.setText(sub_selected_val.toString());
+                        SelectedSubject = subject.getText().toString();
                     });
                     builder.setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.dismiss());
                     builder.show();
@@ -117,6 +280,11 @@ public class teacher_student_attendance_view extends AppCompatActivity {
             final String class_name = getLocalClassName();
             Intent i = new Intent(teacher_student_attendance_view.this, attendance_display_wv.class);
             i.putExtra("class_name",class_name);
+            i.putExtra("Semester",SelectedSem);
+            i.putExtra("Enrollment",SelectedEnr);
+            i.putExtra("Subject",SelectedSubject);
+            i.putExtra("to_date",to_Date.getText().toString());
+            i.putExtra("from_date",from_Date.getText().toString());
             startActivity(i);
         });
     }
@@ -126,7 +294,29 @@ public class teacher_student_attendance_view extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                 int month = i1+1;
-                date_text.setText(i2+"/"+month+"/"+i);
+                if(i2<10)
+                {
+                    if(month<10)
+                    {
+                        date_text.setText("0"+i2+"/"+"0"+month+"/"+i);
+                    }
+                    else
+                    {
+                        date_text.setText("0"+i2+"/"+month+"/"+i);
+                    }
+                }
+                else
+                {
+                    if(month<10)
+                    {
+                        date_text.setText(i2+"/"+"0"+month+"/"+i);
+                    }
+                    else
+                    {
+                        date_text.setText(i2+"/"+month+"/"+i);
+                    }
+                }
+
             }
         };
         DatePickerDialog d = new DatePickerDialog(teacher_student_attendance_view.this, dpd,year,month,day);

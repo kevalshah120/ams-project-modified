@@ -116,7 +116,7 @@ public class teacher_attend_details extends AppCompatActivity {
             //GIVING INPUT TO PHP API THROUGH MAP
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("T_ID", "san12");
+                params.put("T_ID", SFT.getLogin());
                 return params;
             }
 
