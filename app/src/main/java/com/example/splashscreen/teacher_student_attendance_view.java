@@ -4,11 +4,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -25,7 +27,8 @@ public class teacher_student_attendance_view extends AppCompatActivity {
     ArrayAdapter<String> sem_adap_items;
     String[] subject_list = new String[]{"Java","PPUD","NMA"};
     boolean[] checked_sub_list;
-    String[] student_name = {"keval shah","henarth agravat","yash matariya","Harshal prajapati","Milan","Harshid","Prem","Vatsal","Manan","sumeet","Jimit","samarth","dev mehta","stavan"};
+    Button generate_button;
+    String[] student_enr = {"206090307001","206090307002","206090307003","206090307004","206090307005","206090307006","206090307007","206090307009","2060903070010","2060903070011"};
     String[] sem_val = {"5","6"};
     Calendar calendar = Calendar.getInstance();
     int year = calendar.get(Calendar.YEAR);
@@ -39,15 +42,15 @@ public class teacher_student_attendance_view extends AppCompatActivity {
         from_Date = findViewById(R.id.from_date);
         to_Date = findViewById(R.id.to_date);
         subject = findViewById(R.id.sub_et);
+        generate_button = findViewById(R.id.generate_button);
         stu_auto_comp = findViewById(R.id.stu_auto_comp);
         sem_auto_comp = findViewById(R.id.sem_auto_comp);
-        stu_adap_items = new ArrayAdapter<String>(this,R.layout.leave_staffname_dropdown,student_name);
+        stu_adap_items = new ArrayAdapter<String>(this,R.layout.leave_staffname_dropdown, student_enr);
         stu_auto_comp.setAdapter(stu_adap_items);
         stu_auto_comp.setOnItemClickListener((adapterView, view, i, l) -> {
             String item = adapterView.getItemAtPosition(i).toString();
             Toast.makeText(teacher_student_attendance_view.this,item,Toast.LENGTH_SHORT).show();
             stu_auto_comp.clearFocus();
-            stu_auto_comp.setInputType(InputType.TYPE_NULL);
         });
         sem_adap_items = new ArrayAdapter<String>(this,R.layout.leave_staffname_dropdown,sem_val);
         sem_auto_comp.setAdapter(sem_adap_items);
@@ -55,7 +58,6 @@ public class teacher_student_attendance_view extends AppCompatActivity {
             String item = adapterView.getItemAtPosition(i).toString();
             Toast.makeText(teacher_student_attendance_view.this,item,Toast.LENGTH_SHORT).show();
             sem_auto_comp.clearFocus();
-            sem_auto_comp.setInputType(InputType.TYPE_NULL);
         });
         from_Date.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -110,6 +112,12 @@ public class teacher_student_attendance_view extends AppCompatActivity {
                     builder.show();
                 }
             }
+        });
+        generate_button.setOnClickListener(v -> {
+            final String class_name = getLocalClassName();
+            Intent i = new Intent(teacher_student_attendance_view.this, attendance_display_wv.class);
+            i.putExtra("class_name",class_name);
+            startActivity(i);
         });
     }
     private void datepicker_fun(EditText date_text)

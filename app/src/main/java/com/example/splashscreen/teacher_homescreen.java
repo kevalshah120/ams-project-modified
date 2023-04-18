@@ -102,7 +102,7 @@ public class teacher_homescreen extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(teacher_homescreen.this);
                 builder.setTitle(R.string.app_name);
                 builder.setIcon(R.mipmap.ic_launcher);
-                builder.setMessage("Do you want to exit?")
+                builder.setMessage("Do you want to Logout?")
                         .setCancelable(false)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {

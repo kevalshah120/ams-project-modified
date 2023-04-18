@@ -113,12 +113,12 @@ public class student_add extends AppCompatActivity {
                                         if(RES.equals("1"))
                                         {
                                             Toast.makeText(student_add.this, "Student Added", Toast.LENGTH_SHORT).show();
-                                            startActivity(new Intent(getApplication(),teacher_student_frag.class));
+                                            startActivity(new Intent(getApplication(),teacher_homescreen.class));
                                         }
                                         else
                                         {
                                             Toast.makeText(student_add.this, "Student insert Failed", Toast.LENGTH_SHORT).show();
-                                            startActivity(new Intent(getApplication(),teacher_student_frag.class));
+                                            startActivity(new Intent(getApplication(),teacher_homescreen.class));
                                         }
                                     } catch (JSONException e) {
                                         throw new RuntimeException(e);

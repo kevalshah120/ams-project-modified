@@ -10,9 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="10dp"
-        app:cardElevation="10dp"
+        app:cardElevation="8dp"
         app:cardUseCompatPadding="true">
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -64,7 +63,7 @@
                 android:fontFamily="@font/montserrat_semibold"
                 android:text="@string/mark"
                 android:textAllCaps="false"
-                android:textSize="@dimen/_13sdp"
+                android:textSize="@dimen/_11sdp"
                 app:cornerRadius="@dimen/_5sdp" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

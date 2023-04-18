@@ -1,38 +1,38 @@
 package com.example.splashscreen;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.DatePicker;
+import android.widget.EditText;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
-import java.util.Locale;
 
 public class teacher_class_attendance extends AppCompatActivity {
-    AutoCompleteTextView month_year_auto;
-    ArrayAdapter<String> month_year_adap;
-    List<String> month_year_lists;
+    TextInputEditText from_Date,to_Date;
     TextInputEditText sub_et, div_et;
     Button generate_button;
-    String selected_month_year, selected_subject, selected_division,selected_month,selected_year;
+    String selected_subject, selected_division;
     String[] subject_list = new String[]{"Java","PPUD","NMA"};
     boolean[] checked_sub_list;
     ArrayList<Integer> sub_selected_pos = new ArrayList<>();
     String[] div_list = new String[]{"5A","5B"};
     boolean[] checked_divs;
     ArrayList<Integer> div_selected_pos = new ArrayList<>();
+    Calendar calendar = Calendar.getInstance();
+    int year = calendar.get(Calendar.YEAR);
+    int day = calendar.get(Calendar.DAY_OF_MONTH);
+    int month = calendar.get(Calendar.MONTH);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,28 +40,9 @@ public class teacher_class_attendance extends AppCompatActivity {
         setContentView(R.layout.activity_teacher_class_attendance);
         sub_et = findViewById(R.id.sub_et);
         div_et = findViewById(R.id.div_et);
-        month_year_auto = findViewById(R.id.month_auto_comp);
+        from_Date = findViewById(R.id.from_date);
+        to_Date = findViewById(R.id.to_date);
         generate_button = findViewById(R.id.generate_button);
-
-        // Get the current year and month
-        Calendar calendar = Calendar.getInstance();
-        int currentYear = calendar.get(Calendar.YEAR);
-        int currentMonth = calendar.get(Calendar.MONTH);
-
-        // Generate a list of month and year strings
-        month_year_lists = new ArrayList<>();
-        DateFormatSymbols dfs = new DateFormatSymbols(Locale.US);
-        for (int year = 2022; year <= currentYear; year++) {
-            int startMonth = (year == 2022) ? Calendar.JANUARY : 0;
-            int endMonth = (year == currentYear) ? currentMonth : Calendar.DECEMBER;
-            for (int month = startMonth; month <= endMonth; month++) {
-                String monthName = dfs.getMonths()[month];
-                String yearName = String.valueOf(year);
-                String monthYear = monthName + " " + yearName;
-                month_year_lists.add(monthYear);
-            }
-        }
-
         sub_et.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean bol) {
@@ -126,40 +107,49 @@ public class teacher_class_attendance extends AppCompatActivity {
                 }
             }
         });
-
-        // Set up the adapter and set it to the AutoCompleteTextView
-        month_year_adap = new ArrayAdapter<String>(this, R.layout.leave_staffname_dropdown, month_year_lists);
-        month_year_auto.setAdapter(month_year_adap);
-
-        month_year_auto.setOnItemClickListener((adapterView, view, i, l) -> {
-            String item = adapterView.getItemAtPosition(i).toString();
-            Toast.makeText(teacher_class_attendance.this,item,Toast.LENGTH_SHORT).show();
-            month_year_auto.clearFocus();
-            month_year_auto.setInputType(InputType.TYPE_NULL);
+        from_Date.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(b)
+                {
+                    datepicker_fun(from_Date);
+                    from_Date.clearFocus();
+                    from_Date.setInputType(InputType.TYPE_NULL);
+                }
+            }
         });
-
+        to_Date.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(b)
+                {
+                    datepicker_fun(to_Date);
+                    to_Date.clearFocus();
+                    to_Date.setInputType(InputType.TYPE_NULL);
+                }
+            }
+        });
         generate_button.setOnClickListener(v -> {
             selected_subject = sub_et.getText().toString();
             selected_division = div_et.getText().toString();
-            selected_month_year = month_year_auto.getText().toString();
-            String[] monthYearArray = selected_month_year.split(" ");
-            selected_month = getMonthNumberFromName(monthYearArray[0]);
-            selected_year = monthYearArray[1];
+            final String class_name = getLocalClassName();
             Intent i = new Intent(teacher_class_attendance.this, attendance_display_wv.class);
             i.putExtra("subject", selected_subject);
             i.putExtra("division", selected_division);
-            i.putExtra("month", selected_month);
-            i.putExtra("year", selected_year);
+            i.putExtra("class_name",class_name);
             startActivity(i);
         });
     }
-    public String getMonthNumberFromName(String monthName) {
-        String[] months = new DateFormatSymbols().getMonths();
-        for (int i = 0; i < months.length; i++) {
-            if (months[i].equalsIgnoreCase(monthName)) {
-                return String.valueOf(i + 1);
+    private void datepicker_fun(EditText date_text)
+    {
+        DatePickerDialog.OnDateSetListener dpd = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                int month = i1+1;
+                date_text.setText(i2+"/"+month+"/"+i);
             }
-        }
-        return "";
+        };
+        DatePickerDialog d = new DatePickerDialog(teacher_class_attendance.this, dpd,year,month,day);
+        d.show();
     }
 }
