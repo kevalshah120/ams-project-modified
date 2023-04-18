@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -51,6 +52,7 @@ public class teacher_leave_frag extends Fragment {
     private String mParam1;
     private String mParam2;
     sessionForT SFT;
+    LottieAnimationView LAV;
     private static String ID;
 
     public teacher_leave_frag() {
@@ -96,6 +98,7 @@ public class teacher_leave_frag extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.teacher_leave_recyclerview);
+        LAV = view.findViewById(R.id.no_Data_anim);
         dataInitialize();
     }
 
@@ -119,6 +122,10 @@ public class teacher_leave_frag extends Fragment {
                             String std_name[] = new String[array.length()];
                             String finalDate[] = new String[array.length()];
                             String leave_id[] = new String[array.length()];
+                            if(array.length()==0)
+                            {
+                                LAV.setVisibility(View.VISIBLE);
+                            }
                             for (int i = 0; i < array.length(); i++) {
                                 JSONObject object = array.getJSONObject(i);
                                 if (object.has("semester")) {
