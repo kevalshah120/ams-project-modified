@@ -298,22 +298,22 @@ public class teacher_student_attendance_view extends AppCompatActivity {
                 {
                     if(month<10)
                     {
-                        date_text.setText("0"+i2+"/"+"0"+month+"/"+i);
+                        date_text.setText("0"+month+"/"+"0"+i2+"/"+i);
                     }
                     else
                     {
-                        date_text.setText("0"+i2+"/"+month+"/"+i);
+                        date_text.setText(month+"/"+"0"+i2+"/"+i);
                     }
                 }
                 else
                 {
                     if(month<10)
                     {
-                        date_text.setText(i2+"/"+"0"+month+"/"+i);
+                        date_text.setText("0"+month+"/"+i2+"/"+i);
                     }
                     else
                     {
-                        date_text.setText(i2+"/"+month+"/"+i);
+                        date_text.setText(month+"/"+i2+"/"+i);
                     }
                 }
 
