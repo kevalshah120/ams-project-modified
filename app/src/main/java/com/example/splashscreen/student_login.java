@@ -3,8 +3,10 @@ package com.example.splashscreen;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +27,7 @@ import java.util.Map;
 public class student_login extends AppCompatActivity {
     private static String  Mobile_No ;
     private static String Enrollment_No ;
+    ProgressBar pgbar;
     Button back,login;
     EditText mobile_no,enr_no;
     @Override
@@ -36,6 +39,7 @@ public class student_login extends AppCompatActivity {
         enr_no = findViewById(R.id.enr_no);
         back = findViewById(R.id.back_button);
         login = findViewById(R.id.login_button);
+        pgbar = findViewById(R.id.pgbar);
         back.setOnClickListener(view -> {
             Intent i = new Intent(student_login.this,login_screen.class);
             startActivity(i);
@@ -47,10 +51,10 @@ public class student_login extends AppCompatActivity {
         -------------------------------------------------------------------------------------------
          */
         login.setOnClickListener(view -> {
+            pgbar.setVisibility(View.VISIBLE);
+            login.setVisibility(View.INVISIBLE);
             Mobile_No = mobile_no.getText().toString();
             Enrollment_No = enr_no.getText().toString();
-//            Enrollment_No="206090307064";
-//            TEMP(class_name);
             if(Mobile_No.trim().length() == 10 && Enrollment_No.trim().length() == 12)
             {
                 //URL FOR FETCHING API DATA
@@ -70,10 +74,14 @@ public class student_login extends AppCompatActivity {
                                     if(Jobj.getString("result").equalsIgnoreCase("1"))
                                     {
                                         otp_verpage(Enrollment_No,Mobile_No,class_name);
+                                        pgbar.setVisibility(View.INVISIBLE);
+                                        login.setVisibility(View.VISIBLE);
                                     }
                                     // ELSE THROW ERROR USING TOAST
                                     else
                                     {
+                                        pgbar.setVisibility(View.INVISIBLE);
+                                        login.setVisibility(View.VISIBLE);
                                         Toast.makeText(student_login.this,Jobj.getString("result"), Toast.LENGTH_LONG).show();
                                         if(Jobj.getString("result") == "Enrollment not present.")
                                         {
@@ -93,6 +101,8 @@ public class student_login extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(student_login.this, "Connectivity Error", Toast.LENGTH_SHORT).show();
+                        pgbar.setVisibility(View.INVISIBLE);
+                        login.setVisibility(View.VISIBLE);
                     }
                 }){
                     @Override
@@ -116,25 +126,25 @@ public class student_login extends AppCompatActivity {
                 if(Enrollment_No.trim().length() != 12 && Mobile_No.trim().length() != 10)
                 {
                     Toast.makeText(student_login.this,"Incorrect Mobile No and Enrollment No",Toast.LENGTH_LONG).show();
+                    pgbar.setVisibility(View.INVISIBLE);
+                    login.setVisibility(View.VISIBLE);
                 }
                 else if(Mobile_No.trim().length() != 10)
                 {
                     Toast.makeText(student_login.this,"Incorrect Mobile No",Toast.LENGTH_LONG).show();
+                    pgbar.setVisibility(View.INVISIBLE);
+                    login.setVisibility(View.VISIBLE);
                 }
                 else {
                     Toast.makeText(student_login.this,"Incorrect Enrollment No",Toast.LENGTH_LONG).show();
+                    pgbar.setVisibility(View.INVISIBLE);
+                    login.setVisibility(View.VISIBLE);
                 }
             }
         });
     }
     //DIRECTING TO OTP VERIFICATION PAGE
-    private void TEMP(String class_name) {
-        Intent i = new Intent(student_login.this, otp_verification.class);
-        i.putExtra("mobile", "9023849933");
-        i.putExtra("class_name", class_name);
-        startActivity(i);
-        finish();
-    }
+
     private void otp_verpage(String ENRNO,String Mobile_No,String class_name) {
         Intent i = new Intent(student_login.this, otp_verification.class);
         i.putExtra("ENROLLMENT",ENRNO);

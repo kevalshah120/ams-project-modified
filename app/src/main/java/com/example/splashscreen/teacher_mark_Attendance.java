@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -41,6 +42,7 @@ public class teacher_mark_Attendance extends AppCompatActivity {
     TextView timer_tv;
     ImageView timer_icon;
     RecyclerView recyclerView;
+    LottieAnimationView LAV;
     public static TextView studentCount;
     String[] div_list;
     TextView OTP_code;
@@ -62,6 +64,7 @@ public class teacher_mark_Attendance extends AppCompatActivity {
         timer_tv = findViewById(R.id.timer_tv);
         timer_icon = findViewById(R.id.timer_icon);
         recyclerView = findViewById(R.id.teacher_mark_attend_rv);
+        LAV = findViewById(R.id.no_Data_anim);
         studentCount = findViewById(R.id.student_Count);
         OTP_code = findViewById(R.id.attendance_code_val);
         SFT = new sessionForT(getApplication());
@@ -220,6 +223,11 @@ public class teacher_mark_Attendance extends AppCompatActivity {
                         int atdCount = 0;
                         try {
                             JSONArray array = new JSONArray(response);
+                            if(array.length()==0)
+                            {
+                                LAV.setVisibility(View.VISIBLE);
+                                Save.setVisibility(View.GONE);
+                            }
                             for (int i = 0; i < array.length(); i++) {
                                 JSONObject object = array.getJSONObject(i);
                                 name = object.getString("std_name");
@@ -339,6 +347,11 @@ public class teacher_mark_Attendance extends AppCompatActivity {
                             String name;
                             try {
                                 JSONArray array = new JSONArray(response);
+                                if(array.length()==0)
+                                {
+                                    LAV.setVisibility(View.VISIBLE);
+                                    Save.setVisibility(View.GONE);
+                                }
                                 for (int i = 0; i < array.length() - 1; i++) {
                                     JSONObject object = array.getJSONObject(i);
                                     name = object.getString("std_name");

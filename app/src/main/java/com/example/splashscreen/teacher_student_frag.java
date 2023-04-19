@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
@@ -15,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -28,17 +28,20 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class teacher_student_frag extends Fragment{
+public class teacher_student_frag extends Fragment {
     List<teacher_student_model> student_model;
     private RecyclerView recyclerView;
     ShimmerFrameLayout shimmerFrameLayout;
+
     List<teacher_student_model> filteredList;
     private SearchView student_searchView;
+    LottieAnimationView LAV;
     FloatingActionButton float_add_btn;
     private student_list_adapter student_list_adapter;
     sessionForT SFT;
@@ -88,6 +91,7 @@ public class teacher_student_frag extends Fragment{
         shimmerFrameLayout = view.findViewById(R.id.shimmer_layout);
         shimmerFrameLayout.startShimmer();
         recyclerView = view.findViewById(R.id.student_list_rv);
+        LAV = view.findViewById(R.id.no_Data_anim);
         student_searchView = view.findViewById(R.id.searchview);
         float_add_btn = view.findViewById(R.id.float_add_Btn);
         dataInitialize();
@@ -96,11 +100,12 @@ public class teacher_student_frag extends Fragment{
             public boolean onQueryTextSubmit(String query) {
                 return false;
             }
+
             @Override
             public boolean onQueryTextChange(String newText) {
                 filteredList = new ArrayList<teacher_student_model>();
                 if (newText.length() > 0) {
-                    for (int i = 0; i < student_model.size() ; i++) {
+                    for (int i = 0; i < student_model.size(); i++) {
                         if (student_model.get(i).getStu_name().toUpperCase().contains(newText.toUpperCase()) || student_model.get(i).getEnr_no().contains(newText.toUpperCase())) {
                             filteredList.add(student_model.get(i));
                         }
@@ -123,11 +128,12 @@ public class teacher_student_frag extends Fragment{
         float_add_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getActivity(),student_add.class);
+                Intent i = new Intent(getActivity(), student_add.class);
                 startActivity(i);
             }
         });
     }
+
     private void dataInitialize() {
         String URL = "https://stocky-baud.000webhostapp.com/fetchStudentProfile.php";
         if (student_model != null) {
@@ -147,11 +153,14 @@ public class teacher_student_frag extends Fragment{
                         String name;
                         try {
                             JSONArray array = new JSONArray(response);
+                            if (array.length() == 0) {
+                                LAV.setVisibility(View.VISIBLE);
+                            }
                             for (int i = 0; i < array.length(); i++) {
                                 JSONObject object = array.getJSONObject(i);
                                 name = object.getString("std_name");
                                 enr = object.getString("enr_no");
-                                student_model.add(new teacher_student_model(enr,name));
+                                student_model.add(new teacher_student_model(enr, name));
                             }
 
                         } catch (JSONException e) {

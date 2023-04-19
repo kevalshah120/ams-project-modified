@@ -11,6 +11,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,17 +27,20 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import java.util.concurrent.TimeUnit;
 
 public class otp_verification extends AppCompatActivity {
-    private EditText otpET1,otpET2,otpET3,otpET4,otpET5,otpET6;
+    private EditText otpET1, otpET2, otpET3, otpET4, otpET5, otpET6;
     TextView resend_otp_tv;
     FirebaseAuth mAuth;
-    Button verify_otp_button,back_button;
-    String otp_entered,verificationID,class_name;
+    ProgressBar pgbar;
+    Button verify_otp_button, back_button;
+    String otp_entered, verificationID, class_name;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_otp_verification);
         verify_otp_button = findViewById(R.id.verify_button);
         resend_otp_tv = findViewById(R.id.resend_tv);
+        pgbar = findViewById(R.id.pgbar);
         resend_otp_tv.setEnabled(false);
         Intent i = getIntent();
         class_name = i.getStringExtra("class_name");
@@ -71,8 +75,9 @@ public class otp_verification extends AppCompatActivity {
 //        sendverificatsioncode(i.getStringExtra("mobile"));
         next_et();
         verify_otp_button.setOnClickListener(view -> {
-            if(true)
-            {
+            pgbar.setVisibility(View.VISIBLE);
+            verify_otp_button.setVisibility(View.INVISIBLE);
+            if (true) {
                 otp_entered = otpET1.getText().toString();
                 otp_entered += otpET2.getText().toString();
                 otp_entered += otpET3.getText().toString();
@@ -80,49 +85,44 @@ public class otp_verification extends AppCompatActivity {
                 otp_entered += otpET5.getText().toString();
                 otp_entered += otpET6.getText().toString();
 //                verifycode(otp_entered);
-                if(class_name.equals("parent_login")){
-                    Intent intent = new Intent(otp_verification.this,parent_homescreen.class);
+                if (class_name.equals("parent_login")) {
+                    Intent intent = new Intent(otp_verification.this, parent_homescreen.class);
                     startActivity(intent);
                     finish();
-                }
-                else if(class_name.equals("student_login")){
+                } else if (class_name.equals("student_login")) {
                     sessionForS SFS;
                     SFS = new sessionForS(getApplication());
                     SFS.setEnrollment(i.getStringExtra("ENROLLMENT"));
                     SFS.setMobile(i.getStringExtra("MOBILE"));
-                    Intent intent = new Intent(otp_verification.this,student_homescreen.class);
+                    Intent intent = new Intent(otp_verification.this, student_homescreen.class);
                     startActivity(intent);
                     finish();
-                }
-                else  if(class_name.equals("teacher_login")){
+                } else if (class_name.equals("teacher_login")) {
                     sessionForT SFT;
                     SFT = new sessionForT(getApplication());
                     SFT.setLogin(i.getStringExtra("ID"));
                     SFT.setPass(i.getStringExtra("PASS"));
-                    Intent intent = new Intent(otp_verification.this,teacher_homescreen.class);
+                    Intent intent = new Intent(otp_verification.this, teacher_homescreen.class);
                     startActivity(intent);
                     finish();
                 }
             }
         });
         back_button.setOnClickListener(view -> {
-            if(class_name.equals("parent_login")){
-                Intent intent = new Intent(otp_verification.this,parent_login.class);
+            if (class_name.equals("parent_login")) {
+                Intent intent = new Intent(otp_verification.this, parent_login.class);
                 startActivity(intent);
                 finish();
-            }
-            else if(class_name.equals("student_login")){
-                Intent intent = new Intent(otp_verification.this,student_login.class);
+            } else if (class_name.equals("student_login")) {
+                Intent intent = new Intent(otp_verification.this, student_login.class);
                 startActivity(intent);
                 finish();
-            }
-            else  if(class_name.equals("teacher_login")){
-                Intent intent = new Intent(otp_verification.this,teacher_login.class);
+            } else if (class_name.equals("teacher_login")) {
+                Intent intent = new Intent(otp_verification.this, teacher_login.class);
                 startActivity(intent);
                 finish();
-            }
-            else{
-                Toast.makeText(otp_verification.this,"Error generated",Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(otp_verification.this, "Error generated", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -136,34 +136,38 @@ public class otp_verification extends AppCompatActivity {
             }
         });
     }
+
     private void sendverificationcode(String mobile_no) {
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
-                        .setPhoneNumber("+91"+mobile_no)
+                        .setPhoneNumber("+91" + mobile_no)
                         .setTimeout(100L, TimeUnit.SECONDS)
                         .setActivity(this)
                         .setCallbacks(mCallbacks)
                         .build();
         PhoneAuthProvider.verifyPhoneNumber(options);
     }
+
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
         @Override
         public void onVerificationCompleted(@NonNull PhoneAuthCredential credential) {
             final String otp_generated = credential.getSmsCode();
-            if (otp_generated != null){
+            if (otp_generated != null) {
                 verifycode(otp_generated);
             }
         }
 
         @Override
         public void onVerificationFailed(@NonNull FirebaseException e) {
-            Toast.makeText(otp_verification.this,"Verification failed",Toast.LENGTH_SHORT).show();
+            Toast.makeText(otp_verification.this, "Verification failed", Toast.LENGTH_SHORT).show();
+            pgbar.setVisibility(View.INVISIBLE);
+            verify_otp_button.setVisibility(View.VISIBLE);
         }
 
         @Override
         public void onCodeSent(@NonNull String s,
-                @NonNull PhoneAuthProvider.ForceResendingToken token) {
+                               @NonNull PhoneAuthProvider.ForceResendingToken token) {
             // The SMS verification code has been sent to the provided phone number, we
             // now need to ask the user to enter the code and then construct a credential
             // by combining the code with a verification ID.
@@ -173,45 +177,47 @@ public class otp_verification extends AppCompatActivity {
             verificationID = s;
         }
     };
+
     private void verifycode(String otp_generated) {
-        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationID,otp_generated);
+        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationID, otp_generated);
         signinbyCredentials(credential);
     }
-//Code which is executed when user is verified
+
+    //Code which is executed when user is verified
     private void signinbyCredentials(PhoneAuthCredential credential) {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             //code for redirecting user to their corresponding home screen after successful verification
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful())
-                {
-                    Toast.makeText(otp_verification.this,"Login Successfull",Toast.LENGTH_SHORT).show();
-                    if(class_name.equals("parent_login")){
-                        Intent intent = new Intent(otp_verification.this,parent_homescreen.class);
+                if (task.isSuccessful()) {
+                    pgbar.setVisibility(View.INVISIBLE);
+                    verify_otp_button.setVisibility(View.VISIBLE);
+                    Toast.makeText(otp_verification.this, "Login Successfull", Toast.LENGTH_SHORT).show();
+                    if (class_name.equals("parent_login")) {
+                        Intent intent = new Intent(otp_verification.this, parent_homescreen.class);
                         startActivity(intent);
                         finish();
-                    }
-                    else if(class_name.equals("student_login")){
-                        Intent intent = new Intent(otp_verification.this,student_homescreen.class);
+                    } else if (class_name.equals("student_login")) {
+                        Intent intent = new Intent(otp_verification.this, student_homescreen.class);
                         startActivity(intent);
                         finish();
-                    }
-                    else  if(class_name.equals("teacher_login")){
-                        Intent intent = new Intent(otp_verification.this,teacher_homescreen.class);
+                    } else if (class_name.equals("teacher_login")) {
+                        Intent intent = new Intent(otp_verification.this, teacher_homescreen.class);
                         startActivity(intent);
                         finish();
+                    } else {
+                        Toast.makeText(otp_verification.this, "Error generated", Toast.LENGTH_SHORT).show();
                     }
-                    else{
-                        Toast.makeText(otp_verification.this,"Error generated",Toast.LENGTH_SHORT).show();
-                    }
-                }
-                else{
-                    Toast.makeText(otp_verification.this,"Invalid OTP entered",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(otp_verification.this, "Invalid OTP entered", Toast.LENGTH_SHORT).show();
+                    pgbar.setVisibility(View.INVISIBLE);
+                    verify_otp_button.setVisibility(View.VISIBLE);
                 }
             }
         });
     }
+
     //Code for automatically focusing next edittext while entering otp
     private void next_et() {
         otpET1.addTextChangedListener(new TextWatcher() {
@@ -222,8 +228,7 @@ public class otp_verification extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(!charSequence.toString().trim().isEmpty())
-                {
+                if (!charSequence.toString().trim().isEmpty()) {
                     otpET2.requestFocus();
                 }
 
@@ -242,8 +247,7 @@ public class otp_verification extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(!charSequence.toString().trim().isEmpty())
-                {
+                if (!charSequence.toString().trim().isEmpty()) {
                     otpET3.requestFocus();
                 }
             }
@@ -261,8 +265,7 @@ public class otp_verification extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(!charSequence.toString().trim().isEmpty())
-                {
+                if (!charSequence.toString().trim().isEmpty()) {
                     otpET4.requestFocus();
                 }
             }
@@ -280,8 +283,7 @@ public class otp_verification extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(!charSequence.toString().trim().isEmpty())
-                {
+                if (!charSequence.toString().trim().isEmpty()) {
                     otpET5.requestFocus();
                 }
             }
@@ -299,8 +301,7 @@ public class otp_verification extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(!charSequence.toString().trim().isEmpty())
-                {
+                if (!charSequence.toString().trim().isEmpty()) {
                     otpET6.requestFocus();
                 }
             }

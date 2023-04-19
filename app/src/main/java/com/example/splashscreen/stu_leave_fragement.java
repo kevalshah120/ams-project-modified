@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -44,6 +45,7 @@ public class stu_leave_fragement extends Fragment {
     public static String Response = "yash";
     private TextView b1, b2, b3, b4;
     List<leave_model_class> leave_data;
+    LottieAnimationView LAV;
     ShimmerFrameLayout shimmerFrameLayout;
 
     private RecyclerView recyclerView;
@@ -169,6 +171,7 @@ public class stu_leave_fragement extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         shimmerFrameLayout = view.findViewById(R.id.shimmer_layout);
+        LAV = view.findViewById(R.id.no_Data_anim);
         shimmerFrameLayout.startShimmer();
         dataInitialize("all");
     }
@@ -198,6 +201,10 @@ public class stu_leave_fragement extends Fragment {
                             String to_date[] = new String[array.length()];
                             String Proof_name[] = new String[array.length()];
                             String finalDate[] = new String[array.length()];
+                            if(array.length()==0)
+                            {
+                                LAV.setVisibility(View.VISIBLE);
+                            }
                             for (int i = 0; i < array.length(); i++) {
                                 JSONObject object = array.getJSONObject(i);
                                 if (object.has("status")) {

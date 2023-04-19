@@ -135,4 +135,13 @@
         android:textSize="@dimen/_17sdp"
         app:cornerRadius="@dimen/_8sdp"
         />
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/no_Data_anim"
+        android:layout_below="@id/relative_lay_id"
+        android:visibility="gone"
+        app:lottie_autoPlay="true"
+        app:lottie_repeatCount="1"
+        app:lottie_rawRes="@raw/no_data_anim" />
 </RelativeLayout>
