@@ -65,6 +65,7 @@ public class teacher_student_attendance_view extends AppCompatActivity {
         SFT = new sessionForT(getApplicationContext());
         stu_auto_comp.setEnabled(false);
         subject.setEnabled(false);
+        subject.setInputType(InputType.TYPE_NULL);
         //-------------------------------------------------------------------------------------------------------------
         // FETCHING DATA FOR SUBJECT NAMES AND DIVISIONS
         String URL1 = "https://stocky-baud.000webhostapp.com/getSemFromTSA.php";
