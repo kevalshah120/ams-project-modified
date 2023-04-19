@@ -67,7 +67,7 @@ public class teacher_student_attendance_view extends AppCompatActivity {
         subject.setEnabled(false);
         //-------------------------------------------------------------------------------------------------------------
         // FETCHING DATA FOR SUBJECT NAMES AND DIVISIONS
-        String URL1 = "https://stocky-baud.000webhostapp.com/getSemFromT.php";
+        String URL1 = "https://stocky-baud.000webhostapp.com/getSemFromTSA.php";
         //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
         RequestQueue queue = Volley.newRequestQueue(teacher_student_attendance_view.this);
         //STRING REQUEST OBJECT INITIALIZATION
@@ -115,7 +115,7 @@ public class teacher_student_attendance_view extends AppCompatActivity {
         sem_auto_comp.setOnItemClickListener((adapterView, view, i, l) -> {
             String item = adapterView.getItemAtPosition(i).toString();
             SelectedSem = adapterView.getItemAtPosition(i).toString();
-            String URL2 = "https://stocky-baud.000webhostapp.com/getEnrForT.php";
+            String URL2 = "https://stocky-baud.000webhostapp.com/getEnrForTSA.php";
             //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
             RequestQueue queue1 = Volley.newRequestQueue(teacher_student_attendance_view.this);
             //STRING REQUEST OBJECT INITIALIZATION
@@ -165,7 +165,7 @@ public class teacher_student_attendance_view extends AppCompatActivity {
         stu_auto_comp.setOnItemClickListener((adapterView, view, i, l) -> {
             String item = adapterView.getItemAtPosition(i).toString();
             SelectedEnr = adapterView.getItemAtPosition(i).toString();
-            String URL3 = "https://stocky-baud.000webhostapp.com/getSubForT.php";
+            String URL3 = "https://stocky-baud.000webhostapp.com/getSubForTSA.php";
             //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
             RequestQueue queue2 = Volley.newRequestQueue(teacher_student_attendance_view.this);
             //STRING REQUEST OBJECT INITIALIZATION
