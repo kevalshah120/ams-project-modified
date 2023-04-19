@@ -1,12 +1,17 @@
 package com.example.splashscreen;
 
+
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -32,6 +37,14 @@ public class student_list_adapter extends RecyclerView.Adapter<student_list_adap
         String stu_name = teacher_mark_attend_models.get(position).getStu_name();
         String enr_no = teacher_mark_attend_models.get(position).getEnr_no();
         holder.setData(stu_name,enr_no);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(holder.itemView.getContext(),student_details.class);
+                i.putExtra("enrollment",enr_no);
+                holder.itemView.getContext().startActivity(i);
+            }
+        });
     }
 
     @Override
