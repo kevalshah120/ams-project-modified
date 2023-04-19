@@ -250,7 +250,7 @@ public class teacher_student_attendance_view extends AppCompatActivity {
                 if(bol)
                 {
                     AlertDialog.Builder builder = new AlertDialog.Builder(teacher_student_attendance_view.this);
-                    builder.setTitle("Division");
+                    builder.setTitle("Subject");
                     builder.setMultiChoiceItems(subject_list, checked_sub_list, (dialogInterface, i, b) -> {
                         if(b){
                             if(!sub_selected_pos.contains(i)){
