@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -25,39 +27,43 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class teacher_login extends AppCompatActivity {
-    static EditText login_id ;
-    Button back,login;
+    static EditText login_id;
+    Button back, login;
     private boolean passwordshowing = true;
-     private static String ID ;
-     private static String PASS;
+    ProgressBar pgbar;
+    private static String ID;
+    private static String PASS;
     ImageView password_icon;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_login);
         final String class_name = getLocalClassName();
-        final String mobile_no ;
+        final String mobile_no;
         login_id = findViewById(R.id.login_id);
         final EditText password_field = findViewById(R.id.password_field);
         back = findViewById(R.id.back_button);
         login = findViewById(R.id.login_button);
+        pgbar = findViewById(R.id.pgbar);
         back.setOnClickListener(view -> {
-            Intent i = new Intent(teacher_login.this,login_screen.class);
+            Intent i = new Intent(teacher_login.this, login_screen.class);
             startActivity(i);
             finish();
         });
         login.setOnClickListener(view -> {
+            pgbar.setVisibility(View.VISIBLE);
+            login.setVisibility(View.INVISIBLE);
             ID = login_id.getText().toString();
 //            TEMP(class_name);
             PASS = password_field.getText().toString();
-            if(!(ID.trim().isEmpty()) && !(PASS.trim().isEmpty()))
-            {
+            if (!(ID.trim().isEmpty()) && !(PASS.trim().isEmpty())) {
                 //URL FOR FETCHING API DATA
                 String URL = "https://stocky-baud.000webhostapp.com/checkForTeacher.php";
                 //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
                 RequestQueue queue = Volley.newRequestQueue(teacher_login.this);
                 //STRING REQUEST OBJECT INITIALIZATION
-                StringRequest stringRequest = new StringRequest(Request.Method.POST,URL ,
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
@@ -66,21 +72,20 @@ public class teacher_login extends AppCompatActivity {
                                     /*
                                     IF RESULT IS 1 ThAT MEANS DATA IS PRESENT IN DATABASE
                                      */
-                                    if(Jobj.getString("result").equalsIgnoreCase("1"))
-                                    {
-                                        OTP_ver(ID,PASS,Jobj.getString("contact_no"),class_name);
+                                    if (Jobj.getString("result").equalsIgnoreCase("1")) {
+                                        OTP_ver(ID, PASS, Jobj.getString("contact_no"), class_name);
+                                        pgbar.setVisibility(View.INVISIBLE);
+                                        login.setVisibility(View.VISIBLE);
                                     }
                                     // ELSE THROW ERROR USING TOAST
-                                    else
-                                    {
-                                        Toast.makeText(teacher_login.this,Jobj.getString("result"), Toast.LENGTH_LONG).show();
-                                        if(Jobj.getString("result") == "Couldn't find ID")
-                                        {
+                                    else {
+                                        pgbar.setVisibility(View.INVISIBLE);
+                                        login.setVisibility(View.VISIBLE);
+                                        Toast.makeText(teacher_login.this, Jobj.getString("result"), Toast.LENGTH_LONG).show();
+                                        if (Jobj.getString("result") == "Couldn't find ID") {
                                             login_id.setText("");
                                             password_field.setText("");
-                                        }
-                                        else
-                                        {
+                                        } else {
                                             password_field.setText("");
                                         }
                                     }
@@ -92,47 +97,50 @@ public class teacher_login extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(teacher_login.this, "Connectivity Error", Toast.LENGTH_SHORT).show();
+                        pgbar.setVisibility(View.INVISIBLE);
+                        login.setVisibility(View.VISIBLE);
                     }
-                }){
+                }) {
                     @Override
                     //GIVING INPUT TO PHP API THROUGH MAP
-                    protected Map<String,String> getParams(){
-                        Map<String,String> params = new HashMap<String, String>();
-                        params.put("ID",ID);
-                        params.put("PASS",PASS);
+                    protected Map<String, String> getParams() {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("ID", ID);
+                        params.put("PASS", PASS);
                         return params;
                     }
+
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
-                        Map<String,String> params = new HashMap<String, String>();
-                        params.put("Content-Type","application/x-www-form-urlencoded");
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("Content-Type", "application/x-www-form-urlencoded");
                         return params;
                     }
                 };
                 queue.add(stringRequest);
-            }
-            else{
-                if((ID.trim().isEmpty()) && (PASS.trim().isEmpty()))
-                {
-                    Toast.makeText(teacher_login.this,"Please enter ID and Password",Toast.LENGTH_LONG).show();
-                }
-                else if(ID.trim().isEmpty())
-                {
-                    Toast.makeText(teacher_login.this,"Please enter your ID",Toast.LENGTH_LONG).show();
-                }
-                else {
-                    Toast.makeText(teacher_login.this,"Please enter the Password",Toast.LENGTH_LONG).show();
+            } else {
+                if ((ID.trim().isEmpty()) && (PASS.trim().isEmpty())) {
+                    Toast.makeText(teacher_login.this, "Please enter ID and Password", Toast.LENGTH_LONG).show();
+                    pgbar.setVisibility(View.INVISIBLE);
+                    login.setVisibility(View.VISIBLE);
+                } else if (ID.trim().isEmpty()) {
+                    Toast.makeText(teacher_login.this, "Please enter your ID", Toast.LENGTH_LONG).show();
+                    pgbar.setVisibility(View.INVISIBLE);
+                    login.setVisibility(View.VISIBLE);
+                } else {
+                    Toast.makeText(teacher_login.this, "Please enter the Password", Toast.LENGTH_LONG).show();
+                    pgbar.setVisibility(View.INVISIBLE);
+                    login.setVisibility(View.VISIBLE);
                 }
             }
         });
         password_icon = findViewById(R.id.password_hide);
         password_icon.setOnClickListener(view -> {
-            if(passwordshowing){
+            if (passwordshowing) {
                 passwordshowing = false;
                 password_field.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                 password_icon.setImageResource(R.drawable.password_show);
-            }
-            else{
+            } else {
                 passwordshowing = true;
                 password_field.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 password_icon.setImageResource(R.drawable.password_hide);
@@ -140,19 +148,12 @@ public class teacher_login extends AppCompatActivity {
             password_field.setSelection(password_field.length());
         });
     }
-    private void TEMP(String class_name) {
-        Intent i = new Intent(teacher_login.this, otp_verification.class);
-        i.putExtra("mobile", "9999999991");
-        i.putExtra("class_name", class_name);
-        startActivity(i);
-        finish();
-    }
     private void OTP_ver(String ID, String PASSS, String mobile_no, String class_name) {
         Intent i = new Intent(teacher_login.this, otp_verification.class);
         i.putExtra("mobile", mobile_no);
         i.putExtra("class_name", class_name);
-        i.putExtra("ID",ID);
-        i.putExtra("PASS",PASS);
+        i.putExtra("ID", ID);
+        i.putExtra("PASS", PASS);
         startActivity(i);
         finish();
     }

@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -41,6 +42,8 @@ public class stu_home_fragement extends Fragment {
 
     List<stu_lecture_model> lecture_data;
     ShimmerFrameLayout shimmerFrameLayout;
+    LottieAnimationView LAV;
+
     private RecyclerView recyclerView;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -99,6 +102,7 @@ public class stu_home_fragement extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.lecture_recyclerview);
         shimmerFrameLayout = view.findViewById(R.id.shimmer_layout);
+        LAV = view.findViewById(R.id.no_Data_anim);
         shimmerFrameLayout.startShimmer();
         dataInitialize();
     }
@@ -125,6 +129,10 @@ public class stu_home_fragement extends Fragment {
                             String subject_name;
                             String staff_name;
                             int staff_id;
+                            if(array.length()==0)
+                            {
+                                LAV.setVisibility(View.VISIBLE);
+                            }
                             for (int i = 0; i < array.length(); i++) {
                                 JSONObject object = array.getJSONObject(i);
                                 subject_code= object.getString("sub_code");
