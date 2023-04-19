@@ -271,11 +271,15 @@ public class teacher_class_attendance extends AppCompatActivity {
                                         for(int count_val = 0; count_val < div_selected_pos.size() ; count_val++)
                                         {
                                             div_selected_val.append(div_list[div_selected_pos.get(count_val)]);
+                                            if (count_val + 1 != div_selected_pos.size()) {
+                                                div_selected_val.append(",");
+                                            }
                                         }
                                         div_et.setText(div_selected_val.toString());
                                     });
                                     builder.setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.dismiss());
                                     builder.show();
+                                    div_selected_pos.clear();
                                 }
                             }, new Response.ErrorListener() {
                         @Override

@@ -268,12 +268,16 @@ public class teacher_student_attendance_view extends AppCompatActivity {
                         for(int count_val = 0; count_val < sub_selected_pos.size() ; count_val++)
                         {
                             sub_selected_val.append(subject_list[sub_selected_pos.get(count_val)]);
+                            if (count_val + 1 != sub_selected_pos.size()) {
+                                sub_selected_val.append(",");
+                            }
                         }
                         subject.setText(sub_selected_val.toString());
                         SelectedSubject = subject.getText().toString();
                     });
                     builder.setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.dismiss());
                     builder.show();
+                    sub_selected_pos.clear();
                 }
             }
         });
