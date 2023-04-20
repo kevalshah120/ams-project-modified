@@ -16,7 +16,7 @@
         android:layout_marginHorizontal="@dimen/_7sdp"
         android:layout_marginTop="@dimen/_7sdp"
         android:background="@color/white"
-        android:hint="Surname Name Father'sName"
+        android:hint="Full Name"
         app:startIconDrawable="@drawable/person_icon"
         tools:ignore="NotSibling">
 
@@ -115,7 +115,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
-                android:maxLength="2" />
+                android:maxLength="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -126,7 +126,7 @@
             android:layout_marginEnd="@dimen/_3sdp"
             android:layout_weight="1"
             android:background="@color/white"
-            android:hint="Exmpl 6A">
+            android:hint="Div (eg 6A)">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/div_ti"
@@ -142,29 +142,38 @@
             android:layout_marginStart="@dimen/_3sdp"
             android:layout_weight="1"
             android:background="@color/white"
-            android:hint="Exmpl 2021">
+            android:hint="Batch">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/batch_ti"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLength="5"
-                android:inputType="text" />
+                android:maxLength="4"
+                android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
-    <Button
-        android:id="@+id/submit_button"
-        style="@style/Widget.MaterialComponents.Button"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_50sdp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginHorizontal="@dimen/_5sdp"
-        android:layout_marginBottom="@dimen/_25sdp"
-        android:backgroundTint="#0065ff"
-        android:contentDescription="@string/submit"
-        android:fontFamily="@font/montserrat_semibold"
-        android:text="Save"
-        android:textAllCaps="false"
-        android:textSize="@dimen/_17sdp"
-        app:cornerRadius="@dimen/_8sdp" />
-
+        android:layout_marginBottom="@dimen/_25sdp">
+        <Button
+            android:id="@+id/save_button"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:backgroundTint="#0065ff"
+            android:contentDescription="@string/submit"
+            android:fontFamily="@font/montserrat_semibold"
+            android:text="Save"
+            android:textAllCaps="false"
+            android:textSize="@dimen/_17sdp"
+            app:cornerRadius="@dimen/_8sdp" />
+        <ProgressBar
+            android:id="@+id/pgbar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+    </FrameLayout>
 </RelativeLayout>
