@@ -2,6 +2,8 @@ package com.example.splashscreen;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +34,12 @@ import java.util.Map;
 public class teacher_leave_adapter extends RecyclerView.Adapter<teacher_leave_adapter.MyViewHolder> {
     private List<teacher_leave_model> tea_leave_data;
     Context context;
+    String leave_name ;
+    String stu_name ;
+    String date ;
+    String sem_no ;
+    String leave_id ;
+    String desc;
 
     public teacher_leave_adapter(Context context, List<teacher_leave_model> tea_leave_data) {
         this.context = context;
@@ -48,12 +56,37 @@ public class teacher_leave_adapter extends RecyclerView.Adapter<teacher_leave_ad
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        String leave_name = tea_leave_data.get(position).getLeave_name();
-        String stu_name = tea_leave_data.get(position).getStu_name();
-        String date = tea_leave_data.get(position).getDate();
-        String sem_no = tea_leave_data.get(position).getSem_no();
-        String leave_id = tea_leave_data.get(position).getLeave_id();
+         leave_name = tea_leave_data.get(position).getLeave_name();
+         stu_name = tea_leave_data.get(position).getStu_name();
+         date = tea_leave_data.get(position).getDate();
+         sem_no = tea_leave_data.get(position).getSem_no();
+         leave_id = tea_leave_data.get(position).getLeave_id();
+        desc = tea_leave_data.get(position).getDescription();
         holder.setData(leave_name, stu_name, date, sem_no, leave_id);
+        holder.textView1_leave_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDesc(holder);
+            }
+        });
+        holder.textView3_date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDesc(holder);
+            }
+        });
+        holder.textView2_stu_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDesc(holder);
+            }
+        });
+        holder.textView4_sem_no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDesc(holder);
+            }
+        });
         holder.approve_button.setOnClickListener(view -> {
             aORr(true, holder.approve_button.getContext(), leave_id);
         });
@@ -112,6 +145,14 @@ public class teacher_leave_adapter extends RecyclerView.Adapter<teacher_leave_ad
         return result;
     }
 
+    private void showDesc(MyViewHolder holder)
+    {
+        Intent i = new Intent(holder.itemView.getContext(),leave_details_display.class);
+        i.putExtra("leave_name",leave_name);
+        i.putExtra("Date",date);
+        i.putExtra("desc",desc);
+        holder.itemView.getContext().startActivity(i);
+    }
     @Override
     public int getItemCount() {
         return tea_leave_data.size();

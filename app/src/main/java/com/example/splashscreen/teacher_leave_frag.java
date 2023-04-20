@@ -122,6 +122,7 @@ public class teacher_leave_frag extends Fragment {
                             String std_name[] = new String[array.length()];
                             String finalDate[] = new String[array.length()];
                             String leave_id[] = new String[array.length()];
+                            String desc[] = new String[array.length()];
                             if(array.length()==0)
                             {
                                 LAV.setVisibility(View.VISIBLE);
@@ -143,9 +144,12 @@ public class teacher_leave_frag extends Fragment {
                                 if (object.has("std_name")) {
                                     std_name[i] = object.getString("std_name");
                                 }
+                                if (object.has("description")) {
+                                    desc[i] = object.getString("description");
+                                }
                                 leave_id[i]= object.getString("leave_id");
                                 finalDate[i] = stu_leave_fragement.dateConversion(from_date[i], to_date[i]);
-                                tea_leave_data.add(new teacher_leave_model(Leave_name[i],finalDate[i],std_name[i] ,semester[i]+" SEM",leave_id[i]));
+                                tea_leave_data.add(new teacher_leave_model(Leave_name[i],finalDate[i],std_name[i] ,semester[i]+" SEM",leave_id[i],desc[i]));
                             }
                             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                             recyclerView.setHasFixedSize(true);

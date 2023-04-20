@@ -64,6 +64,7 @@ public class teacher_student_attendance_view extends AppCompatActivity {
         sem_auto_comp = findViewById(R.id.sem_auto_comp);
         SFT = new sessionForT(getApplicationContext());
         stu_auto_comp.setEnabled(false);
+        sem_auto_comp.setEnabled(false);
         subject.setEnabled(false);
         subject.setInputType(InputType.TYPE_NULL);
         //-------------------------------------------------------------------------------------------------------------
@@ -77,6 +78,7 @@ public class teacher_student_attendance_view extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            sem_auto_comp.setEnabled(true);
                             JSONArray array = new JSONArray(response);
                             int AL = array.length(),j=0;
                             sem_val = new String[AL];
