@@ -169,31 +169,40 @@ public class teacher_class_attendance extends AppCompatActivity {
                                         throw new RuntimeException(e);
                                     }
                                     AlertDialog.Builder builder = new AlertDialog.Builder(teacher_class_attendance.this);
-                                    builder.setTitle("Subject");
-                                    builder.setMultiChoiceItems(subject_list, checked_sub_list, (dialogInterface, i, b) -> {
-                                        if(b){
-                                            if(!sub_selected_pos.contains(i)){
-                                                sub_selected_pos.add(i);
-                                                sub_et.clearFocus();
-                                                sub_et.setInputType(InputType.TYPE_NULL);
-                                            }
-                                        }
-                                        else{
-                                            sub_selected_pos.remove((Integer) i);
-                                        }
-                                    });
+                                    builder.setTitle("Subjects");
+                                    builder.setSingleChoiceItems(subject_list, -1, (dialogInterface, i) -> selected_subject = subject_list[i]);
                                     builder.setPositiveButton("OK", (dialogInterface, i) -> {
-                                        StringBuilder sub_selected_val = new StringBuilder();
-                                        for(int count_val = 0; count_val < sub_selected_pos.size() ; count_val++)
-                                        {
-                                            sub_selected_val.append(subject_list[sub_selected_pos.get(count_val)]);
-                                        }
-                                        sub_et.setText(sub_selected_val.toString());
-                                        Subject = sub_selected_val.toString();
-                                        Log.d("HAHAHAHAHA",sub_selected_val.toString());
+                                        sub_et.setText(selected_subject);
+                                        dialogInterface.dismiss();
                                     });
                                     builder.setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.dismiss());
                                     builder.show();
+//                                    AlertDialog.Builder builder = new AlertDialog.Builder(teacher_class_attendance.this);
+//                                    builder.setTitle("Subject");
+//                                    builder.setMultiChoiceItems(subject_list, checked_sub_list, (dialogInterface, i, b) -> {
+//                                        if(b){
+//                                            if(!sub_selected_pos.contains(i)){
+//                                                sub_selected_pos.add(i);
+//                                                sub_et.clearFocus();
+//                                                sub_et.setInputType(InputType.TYPE_NULL);
+//                                            }
+//                                        }
+//                                        else{
+//                                            sub_selected_pos.remove((Integer) i);
+//                                        }
+//                                    });
+//                                    builder.setPositiveButton("OK", (dialogInterface, i) -> {
+//                                        StringBuilder sub_selected_val = new StringBuilder();
+//                                        for(int count_val = 0; count_val < sub_selected_pos.size() ; count_val++)
+//                                        {
+//                                            sub_selected_val.append(subject_list[sub_selected_pos.get(count_val)]);
+//                                        }
+//                                        sub_et.setText(sub_selected_val.toString());
+//                                        Subject = sub_selected_val.toString();
+//                                        Log.d("HAHAHAHAHA",sub_selected_val.toString());
+//                                    });
+//                                    builder.setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.dismiss());
+//                                    builder.show();
                                 }
                             }, new Response.ErrorListener() {
                         @Override
