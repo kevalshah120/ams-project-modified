@@ -3,6 +3,7 @@ package com.example.splashscreen;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -232,54 +233,72 @@ public class student_details extends AppCompatActivity {
         remove_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String UrL = "https://stocky-baud.000webhostapp.com/removeStudent.php";
-                //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
-                RequestQueue Queue = Volley.newRequestQueue(student_details.this);
-                //STRING REQUEST OBJECT INITIALIZATION
-                StringRequest StringRequest = new StringRequest(Request.Method.POST, UrL,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                Log.d("response", response);
-                                try {
-                                    JSONObject obj = new JSONObject(response);
-                                    String res = obj.getString("result");
-                                    if (res.equals("1")) {
-                                        Toast.makeText(student_details.this, "Student Removed", Toast.LENGTH_SHORT).show();
-                                        Intent i = new Intent(student_details.this, teacher_homescreen.class);
-                                        startActivity(i);
-                                    } else {
-                                        Toast.makeText(student_details.this, "Error Occured", Toast.LENGTH_SHORT).show();
-                                        Intent i = new Intent(student_details.this, student_details.class);
-                                        i.putExtra("enrollment", enrollment);
-                                        startActivity(i);
+                //LOGOUT (START)
+                AlertDialog.Builder builder = new AlertDialog.Builder(student_details.this);
+                builder.setTitle(R.string.app_name);
+                builder.setIcon(R.mipmap.ic_launcher);
+                builder.setMessage("Do you want to  delete?")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                String UrL = "https://stocky-baud.000webhostapp.com/removeStudent.php";
+                                //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
+                                RequestQueue Queue = Volley.newRequestQueue(student_details.this);
+                                //STRING REQUEST OBJECT INITIALIZATION
+                                StringRequest StringRequest = new StringRequest(Request.Method.POST, UrL,
+                                        new Response.Listener<String>() {
+                                            @Override
+                                            public void onResponse(String response) {
+                                                Log.d("response", response);
+                                                try {
+                                                    JSONObject obj = new JSONObject(response);
+                                                    String res = obj.getString("result");
+                                                    if (res.equals("1")) {
+                                                        Toast.makeText(student_details.this, "Student Removed", Toast.LENGTH_SHORT).show();
+                                                        Intent i = new Intent(student_details.this, teacher_homescreen.class);
+                                                        startActivity(i);
+                                                    } else {
+                                                        Toast.makeText(student_details.this, "Error Occured", Toast.LENGTH_SHORT).show();
+                                                        Intent i = new Intent(student_details.this, student_details.class);
+                                                        i.putExtra("enrollment", enrollment);
+                                                        startActivity(i);
+                                                    }
+                                                } catch (JSONException e) {
+                                                    throw new RuntimeException(e);
+                                                }
+                                            }
+                                        }, new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        Toast.makeText(student_details.this, "Connectivity Error", Toast.LENGTH_SHORT).show();
                                     }
-                                } catch (JSONException e) {
-                                    throw new RuntimeException(e);
-                                }
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(student_details.this, "Connectivity Error", Toast.LENGTH_SHORT).show();
-                    }
-                }) {
-                    @Override
-                    //GIVING INPUT TO PHP API THROUGH MAP
-                    protected Map<String, String> getParams() {
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put("enrollment", enrollment);
-                        return params;
-                    }
+                                }) {
+                                    @Override
+                                    //GIVING INPUT TO PHP API THROUGH MAP
+                                    protected Map<String, String> getParams() {
+                                        Map<String, String> params = new HashMap<String, String>();
+                                        params.put("enrollment", enrollment);
+                                        return params;
+                                    }
 
-                    @Override
-                    public Map<String, String> getHeaders() throws AuthFailureError {
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put("Content-Type", "application/x-www-form-urlencoded");
-                        return params;
-                    }
-                };
-                Queue.add(StringRequest);
+                                    @Override
+                                    public Map<String, String> getHeaders() throws AuthFailureError {
+                                        Map<String, String> params = new HashMap<String, String>();
+                                        params.put("Content-Type", "application/x-www-form-urlencoded");
+                                        return params;
+                                    }
+                                };
+                                Queue.add(StringRequest);
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+                //LOGOUT (END)
             }
         });
     }
