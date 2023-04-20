@@ -171,6 +171,7 @@ public class teacher_class_attendance extends AppCompatActivity {
                                     builder.setSingleChoiceItems(subject_list, -1, (dialogInterface, i) -> selected_subject = subject_list[i]);
                                     builder.setPositiveButton("OK", (dialogInterface, i) -> {
                                         sub_et.setText(selected_subject);
+                                        Subject = selected_subject;
                                         dialogInterface.dismiss();
                                     });
                                     builder.setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.dismiss());
@@ -196,7 +197,7 @@ public class teacher_class_attendance extends AppCompatActivity {
 //                                            sub_selected_val.append(subject_list[sub_selected_pos.get(count_val)]);
 //                                        }
 //                                        sub_et.setText(sub_selected_val.toString());
-//                                        Subject = sub_selected_val.toString();
+//
 //                                        Log.d("HAHAHAHAHA",sub_selected_val.toString());
 //                                    });
 //                                    builder.setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.dismiss());
