@@ -336,6 +336,8 @@ public class teacher_class_attendance extends AppCompatActivity {
             Intent i = new Intent(teacher_class_attendance.this, attendance_display_wv.class);
             i.putExtra("subject", selected_subject);
             i.putExtra("division", selected_division);
+            i.putExtra("from_date", from_Date.getText().toString());
+            i.putExtra("to_date", to_Date.getText().toString());
             i.putExtra("class_name",class_name);
             startActivity(i);
         });
@@ -346,7 +348,28 @@ public class teacher_class_attendance extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                 int month = i1+1;
-                date_text.setText(i2+"/"+month+"/"+i);
+                if(i2<10)
+                {
+                    if(month<10)
+                    {
+                        date_text.setText("0"+month+"/"+"0"+i2+"/"+i);
+                    }
+                    else
+                    {
+                        date_text.setText(month+"/"+"0"+i2+"/"+i);
+                    }
+                }
+                else
+                {
+                    if(month<10)
+                    {
+                        date_text.setText("0"+month+"/"+i2+"/"+i);
+                    }
+                    else
+                    {
+                        date_text.setText(month+"/"+i2+"/"+i);
+                    }
+                }
             }
         };
         DatePickerDialog d = new DatePickerDialog(teacher_class_attendance.this, dpd,year,month,day);
