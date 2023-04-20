@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -40,7 +39,6 @@ public class teacher_class_attendance extends AppCompatActivity {
     Button generate_button;
     String selected_subject, selected_division;
     String[] subject_list ;
-    boolean[] checked_sub_list;
     ArrayList<Integer> sub_selected_pos = new ArrayList<>();
     String[] div_list ;
     boolean[] checked_divs;
