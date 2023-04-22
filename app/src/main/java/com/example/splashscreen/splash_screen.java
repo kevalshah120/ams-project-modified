@@ -93,6 +93,7 @@ public class splash_screen extends AppCompatActivity {
                             }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
+                            run();
                             Toast.makeText(getApplication(), "Connectivity Error", Toast.LENGTH_SHORT).show();
                         }
                     }) {
@@ -149,6 +150,7 @@ public class splash_screen extends AppCompatActivity {
                             }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
+                            run();
                             Toast.makeText(splash_screen.this, "Connectivity Error", Toast.LENGTH_SHORT).show();
                         }
                     }){

@@ -84,9 +84,10 @@ public class stu_lecture_adapter extends RecyclerView.Adapter<stu_lecture_adapte
                             @Override
                             public void onResponse(String response) {
                                 try {
+                                    Log.d("RESULT",response);
                                     JSONArray Jarry = new JSONArray(response);
                                     JSONObject Jobj = Jarry.getJSONObject(0);
-//                                    Log.d("RESULT",response);
+                                    Log.d("RESULT",response);
                                     String RESULT = Jobj.getString("RESULT");
                                     Toast.makeText(context, RESULT, Toast.LENGTH_LONG).show();
                                     dialog.dismiss();

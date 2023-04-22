@@ -87,6 +87,13 @@ public class teacher_leave_adapter extends RecyclerView.Adapter<teacher_leave_ad
                 showDesc(holder);
             }
         });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDesc(holder);
+            }
+        });
+
         holder.approve_button.setOnClickListener(view -> {
             aORr(true, holder.approve_button.getContext(), leave_id);
         });
