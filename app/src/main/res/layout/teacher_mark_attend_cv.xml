@@ -1,60 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/teacher_markattend_cv"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/teacher_markattend_cv"
     app:cardCornerRadius="10dp"
     app:cardUseCompatPadding="true">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="5dp">
-            <TextView
-                android:id="@+id/student_enr_no"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:fontFamily="@font/muli_bold"
-                android:maxLength="12"
-                android:text="206090307004"
-                android:textAllCaps="true"
-                android:textColor="#200745"
-                android:textSize="@dimen/_17sdp" />
-            <TextView
-                android:id="@+id/student_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/student_enr_no"
-                android:layout_alignParentStart="true"
-                android:fontFamily="@font/muli_semibold"
-                android:maxLength="20"
-                android:text="@string/student_name"
-                android:textAllCaps="true"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_14sdp" />
-            <ImageButton
-                android:id="@+id/absent_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:background="@android:color/transparent"
-                android:src="@drawable/absent" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="10dp">
 
-            <ImageButton
-                android:id="@+id/present_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="7dp"
-                android:layout_toStartOf="@id/absent_icon"
-                android:background="@android:color/transparent"
-                android:src="@drawable/present" />
-        </RelativeLayout>
+        <TextView
+            android:id="@+id/student_enr_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:fontFamily="@font/muli_bold"
+            android:maxLength="12"
+            android:text="@string/enr_no"
+            android:textAllCaps="true"
+            android:textColor="#200745"
+            android:textSize="@dimen/_17sdp" />
+
+        <TextView
+            android:id="@+id/student_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/student_enr_no"
+            android:layout_alignParentStart="true"
+            android:fontFamily="@font/muli_semibold"
+            android:maxLength="22"
+            android:text="@string/student_name"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14sdp" />
+
+        <ImageButton
+            android:id="@+id/absent_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@android:color/transparent"
+            android:src="@drawable/absent" />
+
+        <ImageButton
+            android:id="@+id/present_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="7dp"
+            android:layout_toStartOf="@id/absent_icon"
+            android:background="@android:color/transparent"
+            android:src="@drawable/present" />
+    </RelativeLayout>
 </androidx.cardview.widget.CardView>

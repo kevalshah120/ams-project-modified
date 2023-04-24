@@ -11,6 +11,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/sub_et_lay"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -24,11 +25,12 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/sub_et"
-                app:drawableEndCompat="@drawable/baseline_arrow_drop_down_24"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="none" />
+                android:inputType="none"
+                app:drawableEndCompat="@drawable/baseline_arrow_drop_down_24" />
         </com.google.android.material.textfield.TextInputLayout>
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/div_et_lay"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -38,14 +40,14 @@
             android:layout_marginHorizontal="@dimen/_5sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:background="@color/white"
-            android:hint="Division">
+            android:hint="@string/division">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/div_et"
-                app:drawableEndCompat="@drawable/baseline_arrow_drop_down_24"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="none" />
+                android:inputType="none"
+                app:drawableEndCompat="@drawable/baseline_arrow_drop_down_24" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -72,11 +74,11 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/from_date_lay"
             android:layout_marginHorizontal="@dimen/_5sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:background="@color/white"
             android:hint="@string/to_date"
-            android:layout_below="@id/from_date_lay"
             app:endIconMode="clear_text"
             app:startIconDrawable="@drawable/ic_calendar">
 

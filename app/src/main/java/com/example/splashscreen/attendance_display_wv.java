@@ -3,6 +3,7 @@ package com.example.splashscreen;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.webkit.WebView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,14 +20,17 @@ public class attendance_display_wv extends AppCompatActivity {
         class_name = getIntent().getStringExtra("class_name");
         if(class_name.equals("teacher_class_attendance"))
         {
-            String selected_subject,selected_division,from_date,to_date,is_lab;
             String url = "https://stocky-baud.000webhostapp.com/testing.php";
-            from_date = "01/01/2023";
-            to_date = "01/30/2023";
-            selected_division = "6A";
-            selected_subject="java";
-            is_lab = "0";
-            String postData = "selected_subject=" + selected_subject + "&selected_division=" + selected_division + "&from_date=" + from_date + "&to_date=" + to_date+ "&is_lab=" + is_lab;
+            Intent i = getIntent();
+            String subject = i.getStringExtra("subject");
+            String division = i.getStringExtra("division");
+            String to_date = i.getStringExtra("to_date");
+            String from_date = i.getStringExtra("from_date");
+            Log.d("data1",subject);
+            Log.d("data2",division);
+            Log.d("data3",to_date);
+            Log.d("data4",from_date);
+            String postData = "selected_subject=" + subject + "&selected_division=" + division + "&from_date=" + from_date + "&to_date=" + to_date;
             webView.postUrl(url, postData.getBytes());
         } else if (class_name.equals("teacher_student_attendance_view")) {
             Intent i = getIntent();
@@ -36,7 +40,7 @@ public class attendance_display_wv extends AppCompatActivity {
             String to_date = i.getStringExtra("to_date");
             String from_date = i.getStringExtra("from_date");
             String url = "https://stocky-baud.000webhostapp.com/particular_student_attendance_view.php";
-            String postData = "enrolmment_number=" + enrollment + "&from_date=" + from_date + "&to_date=" + to_date;
+            String postData = "enrolmment_number=" + enrollment + "&from_date=" + from_date + "&to_date=" + to_date+ "&subject=" + subject;
             webView.postUrl(url, postData.getBytes());
         }
     }

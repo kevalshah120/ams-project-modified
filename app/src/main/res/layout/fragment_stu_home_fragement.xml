@@ -1,36 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/app_bg"
     android:orientation="vertical"
     tools:context=".stu_home_fragement">
+
     <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/shimmer_layout">
+        android:layout_height="wrap_content">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <include layout="@layout/shimmer_layout" />
+
+            <include layout="@layout/shimmer_layout" />
+
             <include layout="@layout/shimmer_layout" />
         </LinearLayout>
     </com.facebook.shimmer.ShimmerFrameLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lecture_recyclerview"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:scrollbars="vertical"
-        android:visibility="gone"
-        android:layout_height="match_parent" />
+        android:visibility="gone" />
+
     <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/no_Data_anim"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/no_Data_anim"
         android:visibility="gone"
         app:lottie_autoPlay="true"
-        app:lottie_repeatCount="1"
-        app:lottie_rawRes="@raw/no_data_anim" />
+        app:lottie_rawRes="@raw/no_data_anim"
+        app:lottie_repeatCount="1" />
 </LinearLayout>

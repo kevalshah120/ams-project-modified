@@ -3,133 +3,144 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".stu_attendance_fragement"
-    android:background="@color/app_bg">
+    android:background="@color/app_bg"
+    tools:context=".stu_attendance_fragement">
+
     <LinearLayout
+        android:id="@+id/linear_lay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/linear_lay"
-        android:layout_marginTop="@dimen/_15sdp"
         android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:background="@drawable/rounded_corner10"
         android:elevation="5dp"
-        android:background="@drawable/rounded_corner10">
+        android:orientation="vertical">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_20sdp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/muli_bold"
-            android:text="Overall Attendance"
-            />
+            android:text="@string/overall_attendance"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_20sdp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:background="@drawable/present_cv_bg"
-                android:layout_weight="1"
+                android:layout_height="100dp"
                 android:layout_margin="10dp"
-                android:layout_height="100dp">
+                android:layout_weight="1"
+                android:background="@drawable/present_cv_bg">
+
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:orientation="vertical"
+                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_height="wrap_content">
+                    android:orientation="vertical">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="86%"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_20sdp"
                         android:fontFamily="@font/muli_semibold"
-                        />
+                        android:maxLength="4"
+                        android:text="@string/present_percentage"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_20sdp" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Present"
+                        android:fontFamily="@font/muli_semibold"
+                        android:text="@string/present"
                         android:textColor="#25AF36"
-                        android:textSize="@dimen/_14sdp"
-                        android:fontFamily="@font/muli_semibold"
-                        />
+                        android:textSize="@dimen/_14sdp" />
                 </LinearLayout>
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/present_enlarged"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:layout_alignParentEnd="true"
-                    />
+                    android:src="@drawable/present_enlarged" />
             </RelativeLayout>
+
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/absent_cv_bg"
+                android:layout_height="100dp"
                 android:layout_margin="10dp"
-                android:layout_height="100dp">
+                android:layout_weight="1"
+                android:background="@drawable/absent_cv_bg">
+
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_height="wrap_content">
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:orientation="vertical">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="14%"
+                        android:fontFamily="@font/muli_semibold"
+                        android:maxLength="4"
+                        android:text="@string/absent_percentage"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/_20sdp"
-                        android:fontFamily="@font/muli_semibold"
-                        />
+                        android:textSize="@dimen/_20sdp" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Absent"
-                        android:textColor="#D82222"
-                        android:textSize="@dimen/_14sdp"
                         android:fontFamily="@font/muli_semibold"
-                        />
+                        android:text="@string/absent"
+                        android:textColor="#D82222"
+                        android:textSize="@dimen/_14sdp" />
                 </LinearLayout>
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/absent_enlarged"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:layout_alignParentEnd="true"
-                    />
+                    android:src="@drawable/absent_enlarged" />
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_below="@id/linear_lay"
-        android:layout_marginTop="@dimen/_15sdp"
         android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_15sdp"
         android:layout_marginBottom="@dimen/_10sdp"
+        android:background="@drawable/rounded_corner10"
         android:elevation="5dp"
-        android:background="@drawable/rounded_corner10">
+        android:orientation="vertical">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_20sdp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/muli_bold"
-            android:text="Subjects"
-            />
+            android:text="@string/subjects"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_20sdp" />
+
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
             android:id="@+id/subject_list_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:layout_height="wrap_content"/>
+            android:scrollbars="vertical" />
     </LinearLayout>
 </RelativeLayout>

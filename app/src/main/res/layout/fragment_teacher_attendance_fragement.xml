@@ -4,80 +4,79 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/app_bg"
     tools:context=".teacher_attendance_fragement">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/student_attendance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/student_attendance"
+        android:foreground="?android:attr/selectableItemBackgroundBorderless"
         app:cardCornerRadius="10dp"
         app:cardUseCompatPadding="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="5dp">
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="10dp">
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/icon_1"
                 android:layout_width="@dimen/_50sdp"
                 android:layout_height="@dimen/_50sdp"
-                android:layout_marginStart="5dp"
-                android:layout_marginBottom="5dp"
                 android:layout_centerVertical="true"
-                android:clickable="true"
+                android:layout_marginStart="5dp"
                 android:src="@drawable/student_attend" />
+
             <TextView
                 android:id="@+id/student_attend_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/icon_1"
                 android:layout_centerVertical="true"
-                android:fontFamily="@font/muli_semibold"
                 android:layout_marginStart="15dp"
-                android:text="Student Attendance"
+                android:layout_toEndOf="@id/icon_1"
+                android:fontFamily="@font/muli_semibold"
+                android:text="@string/student_attendance"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_18sdp" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
+
     <androidx.cardview.widget.CardView
+        android:id="@+id/class_attendance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/class_attendance"
         android:layout_below="@id/student_attendance"
+        android:foreground="?android:attr/selectableItemBackgroundBorderless"
         app:cardCornerRadius="10dp"
         app:cardUseCompatPadding="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="5dp">
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="10dp">
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/icon_2"
                 android:layout_width="@dimen/_50sdp"
                 android:layout_height="@dimen/_50sdp"
-                android:layout_marginStart="5dp"
-                android:layout_marginBottom="5dp"
                 android:layout_centerVertical="true"
-                android:clickable="true"
+                android:layout_marginStart="5dp"
                 android:src="@drawable/class_attend" />
+
             <TextView
                 android:id="@+id/class_attend_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/icon_2"
                 android:layout_centerVertical="true"
-                android:fontFamily="@font/muli_semibold"
                 android:layout_marginStart="15dp"
-                android:text="Class Attendance"
+                android:layout_toEndOf="@id/icon_2"
+                android:fontFamily="@font/muli_semibold"
+                android:text="@string/class_attendance"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_18sdp" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
-
 </RelativeLayout>

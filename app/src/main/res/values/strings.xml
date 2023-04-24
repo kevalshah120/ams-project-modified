@@ -28,8 +28,7 @@
     <string name="student_home_fragment">student home fragment</string>
     <string name="student_attendance_fragment">student attendance fragment</string>
     <string name="student_leave_fragment">student leave fragment</string>
-    <string name="username_top">Hi Keval</string>
-    <string name="leave_date_heading">August 2022</string>
+    <string name="username_top">Hi Folk</string>
     <string name="leave_name">Leave Name</string>
     <string name="to_date">To Date</string>
     <string name="from_date">From Date</string>
@@ -48,8 +47,8 @@
     <string name="all">All</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="all_absent">ALL ABSENT</string>
-    <string name="all_present">ALL PRESENT</string>
+    <string name="all_absent">All Absent</string>
+    <string name="all_present">All Present</string>
     <string name="attendance_code_val">HJI18L</string>
     <string name="attendance_code_label">Attendance Code :</string>
     <string name="semester">Semester</string>
@@ -58,4 +57,28 @@
     <string name="generate">Generate</string>
     <string name="student_semester">Student Semester</string>
     <string name="month_amp_year"><![CDATA[Month & Year]]></string>
+    <string name="attendance_percentage">70%</string>
+    <string name="leave_from_to_date">Mon 16 Aug - Wed 18 Aug</string>
+    <string name="enr_no">206090307004</string>
+    <string name="student_attendance">Student Attendance</string>
+    <string name="class_attendance">Class Attendance</string>
+    <string name="overall_attendance">Overall Attendance</string>
+    <string name="present_percentage">86%</string>
+    <string name="absent_percentage">14%</string>
+    <string name="present">Present</string>
+    <string name="subjects">Subjects</string>
+    <string name="absent">Absent</string>
+    <string name="student_enrollment_no">Student Enrollment No</string>
+    <string name="attendance_code">000000</string>
+    <string name="timer_val">02:00</string>
+    <string name="save">Save</string>
+    <string name="student_count_val">0 / 0</string>
+    <string name="division">Division</string>
+    <string name="select_subject">Select Subject</string>
+    <string name="select_division">Select Division</string>
+    <string name="expiry_time">Expiry Time</string>
+    <string name="take">Take</string>
+    <string name="expiry_time_val">1</string>
+    <string name="location_check">Location Check</string>
+    <string name="smart_attendance">Smart Attendance</string>
 </resources>
