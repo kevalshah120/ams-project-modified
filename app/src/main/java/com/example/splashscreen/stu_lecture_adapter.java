@@ -62,6 +62,7 @@ public class stu_lecture_adapter extends RecyclerView.Adapter<stu_lecture_adapte
         String prof_name = lecture_data.get(position).getProf_name();
         int staff_id = lecture_data.get(position).getStaff_id();
         String subject_code = lecture_data.get(position).getSubject_code();
+        String LAB = lecture_data.get(position).getLAB();
         holder.setData(subject_name, prof_name);
         holder.markButton.setOnClickListener(view -> {
             LayoutInflater inflater = LayoutInflater.from(context);
@@ -110,6 +111,7 @@ public class stu_lecture_adapter extends RecyclerView.Adapter<stu_lecture_adapte
                         params.put("sub_code",subject_code);
                         params.put("sub_name",subject_name);
                         params.put("OTP",attendance_code.getText().toString());
+                        params.put("LAB",LAB);
                         return params;
                     }
                     @Override

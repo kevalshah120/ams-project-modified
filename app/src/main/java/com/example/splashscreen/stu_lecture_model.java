@@ -5,12 +5,14 @@ public class stu_lecture_model {
     private String prof_name;
     private int staff_id;
     private String subject_code;
+    private String LAB;
 
-    stu_lecture_model(String subject_name, String prof_name, int staff_id, String subject_code) {
+    stu_lecture_model(String subject_name, String prof_name, int staff_id, String subject_code,String LAB) {
         this.subject_name = subject_name;
         this.prof_name = prof_name;
         this.staff_id = staff_id;
         this.subject_code = subject_code;
+        this.LAB = LAB;
     }
 
     public String getSubject_code() {
@@ -23,6 +25,10 @@ public class stu_lecture_model {
 
     public int getStaff_id() {
         return staff_id;
+    }
+
+    public String getLAB() {
+        return LAB;
     }
 
     public String getProf_name() {

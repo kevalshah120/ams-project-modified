@@ -72,9 +72,9 @@ public class teacher_mark_Attendance extends AppCompatActivity {
         //DECLARATION AND DEFINITION (END)
         //--------------------------------------------------------------------------------------------------------------------------------------------
         //GENERATING OTP (START)
-        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        String AlphaNumericString = "ABCDEFGHKMNOPQRSTUVWXYZ"
                 + "0123456789"
-                + "abcdefghijklmnopqrstuvxyz";
+                + "abcdefghkmnopqrstuvxyz";
         // create StringBuffer size of AlphaNumericString
         StringBuilder sb = new StringBuilder(6);
         for (i = 0; i < 6; i++) {
