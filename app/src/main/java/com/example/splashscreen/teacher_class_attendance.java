@@ -338,16 +338,28 @@ public class teacher_class_attendance extends AppCompatActivity {
             }
         });
         generate_button.setOnClickListener(v -> {
-            selected_subject = sub_et.getText().toString();
-            selected_division = div_et.getText().toString();
-            final String class_name = getLocalClassName();
-            Intent i = new Intent(teacher_class_attendance.this, attendance_display_wv.class);
-            i.putExtra("subject", selected_subject);
-            i.putExtra("division", selected_division);
-            i.putExtra("from_date", from_Date.getText().toString());
-            i.putExtra("to_date", to_Date.getText().toString());
-            i.putExtra("class_name",class_name);
-            startActivity(i);
+            String fromDate = from_Date.getText().toString();
+            String toDate = to_Date.getText().toString();
+            if (fromDate.isEmpty()) {
+                Toast.makeText(teacher_class_attendance.this, "Please select a from date", Toast.LENGTH_SHORT).show();
+            } else if (toDate.isEmpty()) {
+                Toast.makeText(teacher_class_attendance.this, "Please select a to date", Toast.LENGTH_SHORT).show();
+            } else if (toDate.compareTo(fromDate) < 0) {
+                Toast.makeText(teacher_class_attendance.this, "Please select a TO Date after From Date", Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                selected_subject = sub_et.getText().toString();
+                selected_division = div_et.getText().toString();
+                final String class_name = getLocalClassName();
+                Intent i = new Intent(teacher_class_attendance.this, attendance_display_wv.class);
+                i.putExtra("subject", selected_subject);
+                i.putExtra("division", selected_division);
+                i.putExtra("from_date", from_Date.getText().toString());
+                i.putExtra("to_date", to_Date.getText().toString());
+                i.putExtra("class_name",class_name);
+                startActivity(i);
+            }
         });
     }
     private void datepicker_fun(EditText date_text)

@@ -284,15 +284,26 @@ public class teacher_student_attendance_view extends AppCompatActivity {
             }
         });
         generate_button.setOnClickListener(v -> {
-            final String class_name = getLocalClassName();
-            Intent i = new Intent(teacher_student_attendance_view.this, attendance_display_wv.class);
-            i.putExtra("class_name",class_name);
-            i.putExtra("Semester",SelectedSem);
-            i.putExtra("Enrollment",SelectedEnr);
-            i.putExtra("Subject",SelectedSubject);
-            i.putExtra("to_date",to_Date.getText().toString());
-            i.putExtra("from_date",from_Date.getText().toString());
-            startActivity(i);
+            String fromDate = from_Date.getText().toString();
+            String toDate = to_Date.getText().toString();
+            if (fromDate.isEmpty()) {
+                Toast.makeText(teacher_student_attendance_view.this, "Please select a from date", Toast.LENGTH_SHORT).show();
+            } else if (toDate.isEmpty()) {
+                Toast.makeText(teacher_student_attendance_view.this, "Please select a to date", Toast.LENGTH_SHORT).show();
+            } else if (toDate.compareTo(fromDate) < 0) {
+                Toast.makeText(teacher_student_attendance_view.this, "Please select a TO Date after From Date", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                final String class_name = getLocalClassName();
+                Intent i = new Intent(teacher_student_attendance_view.this, attendance_display_wv.class);
+                i.putExtra("class_name",class_name);
+                i.putExtra("Semester",SelectedSem);
+                i.putExtra("Enrollment",SelectedEnr);
+                i.putExtra("Subject",SelectedSubject);
+                i.putExtra("to_date",to_Date.getText().toString());
+                i.putExtra("from_date",from_Date.getText().toString());
+                startActivity(i);
+            }
         });
     }
     private void datepicker_fun(EditText date_text)

@@ -129,7 +129,11 @@ public class leave_data extends AppCompatActivity {
                 Toast.makeText(leave_data.this, "Enter all details", Toast.LENGTH_SHORT).show();
                 pgbar.setVisibility(View.INVISIBLE);
                 submit.setVisibility(View.VISIBLE);
-            } else {
+            }
+            if (to_DATE.compareTo(from_DATE) < 0) {
+                Toast.makeText(leave_data.this, "Please select a TO Date after From Date", Toast.LENGTH_SHORT).show();
+            }
+            else {
                 String to_year = "";
                 String from_month = "";
                 String from_date = "";
