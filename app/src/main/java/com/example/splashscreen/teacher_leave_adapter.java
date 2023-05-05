@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
@@ -59,31 +60,7 @@ public class teacher_leave_adapter extends RecyclerView.Adapter<teacher_leave_ad
          leave_id = tea_leave_data.get(position).getLeave_id();
         desc = tea_leave_data.get(position).getDescription();
         holder.setData(leave_name, stu_name, date, sem_no, leave_id);
-        holder.textView1_leave_name.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDesc(holder);
-            }
-        });
-        holder.textView3_date.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDesc(holder);
-            }
-        });
-        holder.textView2_stu_name.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDesc(holder);
-            }
-        });
-        holder.textView4_sem_no.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDesc(holder);
-            }
-        });
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.leave_cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showDesc(holder);
@@ -154,6 +131,7 @@ public class teacher_leave_adapter extends RecyclerView.Adapter<teacher_leave_ad
         i.putExtra("leave_name",leave_name);
         i.putExtra("Date",date);
         i.putExtra("desc",desc);
+        i.putExtra("stu_name",stu_name);
         holder.itemView.getContext().startActivity(i);
     }
     @Override
@@ -169,6 +147,8 @@ public class teacher_leave_adapter extends RecyclerView.Adapter<teacher_leave_ad
         private final ImageButton approve_button;
         private final ImageButton reject_button;
 
+        private final CardView leave_cv;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             textView1_leave_name = itemView.findViewById(R.id.leave_name);
@@ -177,6 +157,7 @@ public class teacher_leave_adapter extends RecyclerView.Adapter<teacher_leave_ad
             textView4_sem_no = itemView.findViewById(R.id.sem_no);
             approve_button = itemView.findViewById(R.id.approve_icon);
             reject_button = itemView.findViewById(R.id.reject_icon);
+            leave_cv = itemView.findViewById(R.id.teacher_leave_cardview);
 
         }
 

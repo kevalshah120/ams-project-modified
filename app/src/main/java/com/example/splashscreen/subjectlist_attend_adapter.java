@@ -1,12 +1,14 @@
 package com.example.splashscreen;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -31,6 +33,16 @@ public class subjectlist_attend_adapter extends RecyclerView.Adapter<subjectlist
         String prof_name = subject_Data.get(position).getProf_name();
         String sub_percentage = subject_Data.get(position).getAttend_percentage();
         holder.setData(subject_name, prof_name,sub_percentage);
+        // Make changes in this onclicklistener and pass the appropriate data qccording to the cardview that is clicked
+        holder.subject_attend_cv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(holder.itemView.getContext(),stu_sub_attendance_view.class);
+                i.putExtra("subject_code","3350704");
+                i.putExtra("enr_no","206090307001");
+                holder.itemView.getContext().startActivity(i);
+            }
+        });
     }
 
     @Override
@@ -41,11 +53,14 @@ public class subjectlist_attend_adapter extends RecyclerView.Adapter<subjectlist
         private final TextView textView1_subject_name;
         private final TextView textView2_prof_name;
         private final TextView textView3_sub_precentage;
+
+        private final CardView subject_attend_cv;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             textView1_subject_name = itemView.findViewById(R.id.subject_name);
             textView2_prof_name = itemView.findViewById(R.id.prof_name);
             textView3_sub_precentage = itemView.findViewById(R.id.percentage_tv);
+            subject_attend_cv = itemView.findViewById(R.id.subject_attend_cv);
         }
         public void setData(String subject_name, String prof_name,String sub_percentage) {
             textView1_subject_name.setText(subject_name);

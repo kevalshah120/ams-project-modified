@@ -18,6 +18,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".student_leave_details_display"
+            android:exported="false" />
+        <activity
             android:name=".stu_sub_attendance_view"
             android:exported="false" />
         <activity

@@ -7,73 +7,76 @@
     android:background="@color/app_bg"
     tools:context=".stu_leave_fragement">
 
-    <LinearLayout
-        android:id="@+id/linear_layout_1"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:weightSum="4"
-        tools:ignore="UselessParent">
+        android:layout_marginHorizontal="10dp"
+        android:id="@+id/leave_status_cv"
+        app:cardCornerRadius="10dp">
+        <LinearLayout
+            android:id="@+id/linear_layout_1"
+            android:layout_width="match_parent"
+            android:background="@drawable/switch_thumb"
+            android:layout_height="wrap_content"
+            android:weightSum="4"
+            tools:ignore="UselessParent">
+            <TextView
+                android:id="@+id/all_button"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_weight="1"
+                android:background="@drawable/corner_left_focused"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackgroundBorderless"
+                android:gravity="center"
+                android:text="@string/all"
+                android:textColor="@color/txt_color" />
+            <TextView
+                android:id="@+id/pending_button"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_weight="1"
+                android:background="@drawable/pending_btn_bg"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackgroundBorderless"
+                android:gravity="center"
+                android:text="@string/pending"
+                android:textColor="@color/txt_color" />
+            <TextView
+                android:id="@+id/approved_button"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_weight="1"
+                android:background="@drawable/approved_btn_bg"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackgroundBorderless"
+                android:gravity="center"
+                android:text="@string/approved"
+                android:textColor="@color/txt_color" />
+            <TextView
+                android:id="@+id/rejected_button"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_weight="1"
+                android:background="@drawable/corner_right"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackgroundBorderless"
+                android:gravity="center"
+                android:text="@string/rejected"
+                android:textColor="@color/txt_color" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:id="@+id/all_button"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_30sdp"
-            android:layout_weight="1"
-            android:background="@drawable/corner_left_focused"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackgroundBorderless"
-            android:gravity="center"
-            android:text="@string/all"
-            android:textColor="@color/txt_color" />
-
-        <TextView
-            android:id="@+id/pending_button"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_30sdp"
-            android:layout_weight="1"
-            android:background="@drawable/pending_btn_bg"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackgroundBorderless"
-            android:gravity="center"
-            android:text="@string/pending"
-            android:textColor="@color/txt_color" />
-
-        <TextView
-            android:id="@+id/approved_button"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_30sdp"
-            android:layout_weight="1"
-            android:background="@drawable/approved_btn_bg"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackgroundBorderless"
-            android:gravity="center"
-            android:text="@string/approved"
-            android:textColor="@color/txt_color" />
-
-        <TextView
-            android:id="@+id/rejected_button"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_30sdp"
-            android:layout_weight="1"
-            android:background="@drawable/corner_right"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackgroundBorderless"
-            android:gravity="center"
-            android:text="@string/rejected"
-            android:textColor="@color/txt_color" />
-    </LinearLayout>
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmer_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/linear_layout_1"
+        android:layout_below="@id/leave_status_cv"
         android:layout_marginTop="20dp">
 
         <LinearLayout
@@ -98,7 +101,7 @@
         android:id="@+id/leave_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/linear_layout_1"
+        android:layout_below="@id/leave_status_cv"
         android:layout_marginTop="20dp"
         android:scrollbars="vertical"
         android:visibility="gone" />
@@ -107,7 +110,7 @@
         android:id="@+id/no_Data_anim"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/linear_layout_1"
+        android:layout_below="@id/leave_status_cv"
         android:visibility="gone"
         app:lottie_autoPlay="true"
         app:lottie_rawRes="@raw/no_data_anim"

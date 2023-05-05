@@ -8,8 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class leave_details_display extends AppCompatActivity {
-    TextInputEditText leave_name, from_date, to_date, leave_desc;
-    String leave_nameS, descS, to_dateS, from_dateS, DATE;
+    TextInputEditText leave_name, from_date, to_date, leave_desc,stu_name;
+    String leave_nameS, descS, to_dateS, from_dateS, DATE,student_name;
     StringBuilder toS,fromS;
 
     @Override
@@ -20,10 +20,12 @@ public class leave_details_display extends AppCompatActivity {
         from_date = findViewById(R.id.from_date);
         to_date = findViewById(R.id.to_date);
         leave_desc = findViewById(R.id.Leave_description);
+        stu_name = findViewById(R.id.stu_name);
         Intent intent = getIntent();
         leave_nameS = intent.getStringExtra("leave_name");
         DATE = intent.getStringExtra("Date");
         descS = intent.getStringExtra("desc");
+        student_name = intent.getStringExtra("stu_name");
         fromS = new StringBuilder();
         toS = new StringBuilder();
         int i = 0,j=0;
@@ -53,5 +55,6 @@ public class leave_details_display extends AppCompatActivity {
         to_date.setText(to_dateS);
         from_date.setText(from_dateS);
         leave_desc.setText(descS);
+        stu_name.setText(student_name);
     }
 }

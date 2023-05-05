@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:foreground="?android:attr/selectableItemBackgroundBorderless"
     android:layout_height="wrap_content"
+    android:layout_marginHorizontal="5dp"
     app:cardCornerRadius="10dp"
     app:cardUseCompatPadding="true">
 
