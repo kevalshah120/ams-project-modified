@@ -30,9 +30,7 @@ public class subjectlist_attend_adapter extends RecyclerView.Adapter<subjectlist
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         String subject_name = subject_Data.get(position).getSubject_name();
-        String prof_name = subject_Data.get(position).getProf_name();
         String sub_percentage = subject_Data.get(position).getAttend_percentage();
-        holder.setData(subject_name, prof_name,sub_percentage);
         // Make changes in this onclicklistener and pass the appropriate data qccording to the cardview that is clicked
         holder.subject_attend_cv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,20 +49,17 @@ public class subjectlist_attend_adapter extends RecyclerView.Adapter<subjectlist
     }
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private final TextView textView1_subject_name;
-        private final TextView textView2_prof_name;
         private final TextView textView3_sub_precentage;
 
         private final CardView subject_attend_cv;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             textView1_subject_name = itemView.findViewById(R.id.subject_name);
-            textView2_prof_name = itemView.findViewById(R.id.prof_name);
             textView3_sub_precentage = itemView.findViewById(R.id.percentage_tv);
             subject_attend_cv = itemView.findViewById(R.id.subject_attend_cv);
         }
         public void setData(String subject_name, String prof_name,String sub_percentage) {
             textView1_subject_name.setText(subject_name);
-            textView2_prof_name.setText(prof_name);
             textView3_sub_precentage.setText(sub_percentage);
         }
     }

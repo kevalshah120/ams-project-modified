@@ -187,6 +187,7 @@ public class teacher_mark_Attendance extends AppCompatActivity {
                         Map<String, String> params = new HashMap<>();
                         params.put("subject",subject_name);
                         params.put("staff_login",ID);
+                        params.put("division",temp_div);
                         return params;
                     }
 

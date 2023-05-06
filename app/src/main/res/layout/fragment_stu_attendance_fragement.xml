@@ -51,7 +51,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/muli_semibold"
                         android:maxLength="4"
-                        android:text="@string/present_percentage"
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="@dimen/_20sdp" />
 
@@ -93,7 +93,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/muli_semibold"
                         android:maxLength="4"
-                        android:text="@string/absent_percentage"
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="@dimen/_20sdp" />
 

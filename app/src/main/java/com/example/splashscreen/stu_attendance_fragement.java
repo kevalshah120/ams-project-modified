@@ -8,12 +8,30 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +41,9 @@ import java.util.List;
 public class stu_attendance_fragement extends Fragment {
     List<subjectlist_attend_model> subject_data;
     private RecyclerView recyclerView;
+    String Enrollment_No;
+    sessionForS SFS;
+    TextView totalPresent,totalAbsent;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -57,6 +78,8 @@ public class stu_attendance_fragement extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SFS = new sessionForS(requireActivity());
+        Enrollment_No = SFS.getEnrollment();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -70,6 +93,9 @@ public class stu_attendance_fragement extends Fragment {
     }
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        totalAbsent = view.findViewById(R.id.Absent);
+        totalPresent = view.findViewById(R.id.Present);
+        updateTextView(totalAbsent,totalPresent);
         dataInitialize();
         recyclerView = view.findViewById(R.id.subject_list_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -79,13 +105,65 @@ public class stu_attendance_fragement extends Fragment {
         subjectlist_attend_adapter.notifyDataSetChanged();
     }
 
+    private void updateTextView(TextView totalAbsent, TextView totalPresent) {
+        String URL = "https://stocky-baud.000webhostapp.com/getTotalAttendanceData.php";
+        RequestQueue queue = Volley.newRequestQueue(requireContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            Log.d("hello",response);
+                            JSONObject obj = new JSONArray(response).getJSONObject(0);
+                            if(Integer.parseInt(obj.getString("studentATD")) <= 0 ||Integer.parseInt(obj.getString("totalATD")) <= 0 )
+                            {
+                                Toast.makeText(requireContext(),"No Lecture Taken",Toast.LENGTH_LONG).show();
+                                totalAbsent.setText("100%");
+                                totalPresent.setText("100%");
+                            }
+                            else
+                            {
+                                int totalATD = Integer.parseInt(obj.getString("totalATD"));
+                                int studentATD = Integer.parseInt(obj.getString("studentATD"));
+                                int PRE = (studentATD*100)/totalATD;
+                                int ABS = 100 - PRE ;
+                                totalAbsent.setText(ABS +"%");
+                                totalPresent.setText(PRE +"%");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(requireContext(), "Connectivity Error", Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("enrollment",SFS.getEnrollment());
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+        queue.add(stringRequest);
+    }
+
     private void dataInitialize() {
         subject_data = new ArrayList<>();
-        subject_data.add(new subjectlist_attend_model("PPUD (3360702)","Prof Pratik Parmar","86%"));
-        subject_data.add(new subjectlist_attend_model("Ad.Java (3360701)","Prof K. G. Patel","96%"));
-        subject_data.add(new subjectlist_attend_model("NMA (3360703)","Prof Bhailal Limbasiya","75%"));
-        subject_data.add(new subjectlist_attend_model("OS (3360704)","Prof Shakti Sinh Parmar","52%"));
-        subject_data.add(new subjectlist_attend_model("DBMS (3360705)","Prof Uresh Parmar","88%"));
+        subject_data.add(new subjectlist_attend_model("PPUD (3360702)","86%"));
+        subject_data.add(new subjectlist_attend_model("Ad.Java (3360701)","96%"));
+        subject_data.add(new subjectlist_attend_model("NMA (3360703)","75%"));
+        subject_data.add(new subjectlist_attend_model("OS (3360704)","52%"));
+        subject_data.add(new subjectlist_attend_model("DBMS (3360705)","88%"));
 
     }
 }
