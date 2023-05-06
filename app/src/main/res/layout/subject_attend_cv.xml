@@ -23,31 +23,12 @@
             android:layout_alignParentTop="true"
             android:fontFamily="@font/muli_bold"
             android:maxLength="18"
+            android:padding="10dp"
             android:text="@string/subject_name"
             android:textAllCaps="true"
             android:textColor="#E6200745"
             android:textSize="@dimen/_16sdp" />
 
-        <ImageView
-            android:id="@+id/teacher_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/subject_name"
-            android:layout_alignParentStart="true"
-            android:src="@drawable/ic_teacher_24" />
-
-        <TextView
-            android:id="@+id/prof_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/subject_name"
-            android:layout_marginStart="5dp"
-            android:layout_toEndOf="@id/teacher_icon"
-            android:fontFamily="@font/muli_semibold"
-            android:maxLength="25"
-            android:text="@string/professor_name"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_13sdp" />
 
         <TextView
             android:id="@+id/percentage_tv"
