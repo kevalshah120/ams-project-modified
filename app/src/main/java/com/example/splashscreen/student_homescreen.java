@@ -1,26 +1,51 @@
 package com.example.splashscreen;
 
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
+
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 public class student_homescreen extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
@@ -32,6 +57,11 @@ public class student_homescreen extends AppCompatActivity {
     TextView toolbar_textview;
     ActionBarDrawerToggle toogle;
     sessionForS SFS;
+    FusedLocationProviderClient mFusedLocationClient;
+    Handler handler = new Handler();
+    Runnable runnable;
+    int delay = 10000;
+    private static final int PERMISSION_ID = 44;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +81,8 @@ public class student_homescreen extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.home_menu);
         float_add_btn.setVisibility(View.GONE);
         replaceFragment(new stu_home_fragement());
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        getLastLocation();
         bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()){
                 case R.id.home_menu:
@@ -117,7 +149,6 @@ public class student_homescreen extends AppCompatActivity {
             drawerLayout.closeDrawer(GravityCompat.START);
             return true;
         });
-
         float_add_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -152,5 +183,90 @@ public class student_homescreen extends AppCompatActivity {
             super.onBackPressed();
         }
     }
+    protected void onResume() {
+        handler.postDelayed(runnable = new Runnable() {
+            public void run() {
+                handler.postDelayed(runnable, delay);
+                getLastLocation();
+                Toast.makeText(student_homescreen.this, "This method will run",
+                        Toast.LENGTH_SHORT).show();
+            }
+        }, delay);
+        super.onResume();
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnable); //stop handler when activity not visible super.onPause();
+    }
+    //    private void disableEditText(EditText T)
+//    {
+//        T.setFocusable(false);
+//        T.setCursorVisible(false);
+//    }
+    private void getLastLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PERMISSION_GRANTED) {
+            LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);
+            if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER) && lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                mFusedLocationClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+                    @SuppressLint({"SetTextI18n", "MissingPermission"})
+                    @Override
+                    public void onComplete(@NonNull Task<Location> task) {
+                        Location location = task.getResult();
+                        if (location == null) {
+                            requestNewLocationData();
+                        } else {
+                            Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+                            try {
+                                List<Address> add = geocoder.getFromLocation(location.getLatitude(),location.getLongitude(),1);
+                                Address obj = add.get(0);
+                                String Locality = obj.getSubLocality();
+                                sessionForS SFS = new sessionForS(getApplication());
+                                SFS.setLocation(Locality);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                });
+            } else {
+                Toast.makeText(this, "Please turn on " + " your location... ", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(intent);
+            }
+        } else {
+            requestPermission();
+        }
+    }
+    private void requestPermission() {
+        ActivityCompat.requestPermissions(this, new String[]{
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_ID);
+    }
+    @SuppressLint("MissingPermission")
+    private void requestNewLocationData() {
+
+        // Initializing LocationRequest
+        // object with appropriate methods
+        LocationRequest mLocationRequest;
+        mLocationRequest = LocationRequest.create();
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        mLocationRequest.setInterval(5);
+        mLocationRequest.setFastestInterval(0);
+        mLocationRequest.setNumUpdates(1);
+        // setting LocationRequest
+        // on FusedLocationClient
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
+    }
+
+    private final LocationCallback mLocationCallback = new LocationCallback() {
+
+        @SuppressLint("SetTextI18n")
+        @Override
+        public void onLocationResult(LocationResult locationResult) {
+            Location mLastLocation = locationResult.getLastLocation();
+        }
+    };
 
 }

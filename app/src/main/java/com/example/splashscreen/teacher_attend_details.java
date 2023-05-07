@@ -320,7 +320,7 @@ public class teacher_attend_details extends AppCompatActivity {
                 Intent i = new Intent(teacher_attend_details.this, teacher_mark_Attendance.class);
                 i.putExtra("expiry_time", String.valueOf(expiry_time_tv.getText()));
                 i.putExtra("smart_attend_switch", smart_attend_bol);
-                i.putExtra("location",loc_check_bol);
+                i.putExtra("location",loc_check_bol+"");
                 i.putExtra("subject", sub_name_tv.getText().toString());
                 i.putExtra("division", div_tv.getText().toString());
                 i.putExtra("subject_code",subject_code);

@@ -13,6 +13,7 @@ public class sessionForS {
     }
 
     public void setEnrollment(String Enr) {
+
         prefs.edit().putString("Enrollment", Enr).commit();
     }
 
@@ -24,7 +25,14 @@ public class sessionForS {
 
         prefs.edit().putString("setMobile", Mobile).commit();
     }
+    public void setLocation(String LOC) {
 
+        prefs.edit().putString("setLocation", LOC).commit();
+    }
+    public String getLocation() {
+        String LOC = prefs.getString("setLocation","");
+        return LOC;
+    }
     public String getMobile() {
         String Pass = prefs.getString("setMobile","");
         return Pass;

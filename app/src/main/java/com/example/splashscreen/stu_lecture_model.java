@@ -6,13 +6,16 @@ public class stu_lecture_model {
     private int staff_id;
     private String subject_code;
     private String LAB;
+    private String location;
 
-    stu_lecture_model(String subject_name, String prof_name, int staff_id, String subject_code,String LAB) {
+
+    stu_lecture_model(String subject_name, String prof_name, int staff_id, String subject_code, String LAB, String location) {
         this.subject_name = subject_name;
         this.prof_name = prof_name;
         this.staff_id = staff_id;
         this.subject_code = subject_code;
         this.LAB = LAB;
+        this.location = location;
     }
 
     public String getSubject_code() {
@@ -33,5 +36,9 @@ public class stu_lecture_model {
 
     public String getProf_name() {
         return prof_name;
+    }
+
+    public String getLocation() {
+        return location;
     }
 }

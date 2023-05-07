@@ -127,7 +127,7 @@ public class stu_home_fragement extends Fragment {
                             String subject_code;
                             String subject_name;
                             String staff_name;
-                            String LAB;
+                            String LAB,location;
                             int staff_id;
                             if(array.length()==0)
                             {
@@ -140,11 +140,14 @@ public class stu_home_fragement extends Fragment {
                                 staff_name= object.getString("staff_name");
                                 staff_id = Integer.parseInt(object.getString("staff_id"));
                                 LAB = object.getString("lab");
+                                location = object.getString("location");
                                 if(LAB.equals("1"))
                                 {
                                     subject_name = subject_name + " LAB";
                                 }
-                                lecture_data.add(new stu_lecture_model(subject_name+" ("+subject_code+")","Prof "+staff_name,staff_id,subject_code,LAB));
+                                lecture_data.add(new stu_lecture_model(subject_name+" ("+subject_code+")",
+                                        "Prof "+staff_name,staff_id,subject_code,LAB
+                                        ,location));
                             }
                             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                             recyclerView.setHasFixedSize(true);

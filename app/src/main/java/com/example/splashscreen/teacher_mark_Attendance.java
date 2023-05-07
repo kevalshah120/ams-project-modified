@@ -48,6 +48,7 @@ public class teacher_mark_Attendance extends AppCompatActivity {
     TextView OTP_code;
     public static int TotalStudents;
     public static String subject_name;
+    public String location;
     boolean firstTime = true;
     sessionForT SFT;
     private static String ID;
@@ -99,6 +100,7 @@ public class teacher_mark_Attendance extends AppCompatActivity {
         //--------------------------------------------------------------------------------------------------------------------------------------------
         //GETTING DIVISIONS FROM PREVIOUS PAGE (START)
         String temp_div = getIntent().getStringExtra("division");
+        location = getIntent().getStringExtra("location");
         div_list = new String[((int) Math.floor(temp_div.length() / 3)) + 2];
         i=0;
         int  j = 0;
@@ -290,6 +292,7 @@ public class teacher_mark_Attendance extends AppCompatActivity {
         //STRING REQUEST OBJECT INITIALIZATION
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
                 new Response.Listener<String>() {
+
                     @Override
                     public void onResponse(String response) {
                         Log.d("createAttendenceSession",response);
@@ -315,6 +318,8 @@ public class teacher_mark_Attendance extends AppCompatActivity {
                 }
                 params.put("subject",div_list[i]);
                 params.put("sizeOfDiv",String.valueOf(div_list.length-1));
+                params.put("location",location);
+                Log.d("Location",location);
                 return params;
             }
 

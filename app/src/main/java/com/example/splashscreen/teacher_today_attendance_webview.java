@@ -3,6 +3,7 @@ package com.example.splashscreen;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.webkit.WebView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,7 +13,7 @@ import java.util.Calendar;
 
 public class teacher_today_attendance_webview extends AppCompatActivity {
     private WebView webView;
-    private String subject_code;
+    private String subject_name;
     private String division;
     private String current_date;
     @SuppressLint("SetJavaScriptEnabled")
@@ -24,12 +25,16 @@ public class teacher_today_attendance_webview extends AppCompatActivity {
         webView.getSettings().setJavaScriptEnabled(true);
         String url = "https://stocky-baud.000webhostapp.com/today_attendance.php";
         Intent i = getIntent();
-        subject_code = i.getStringExtra("subject_code");
-        division = i.getStringExtra("div");
+        String scode = i.getStringExtra("subject_name");
+        subject_name = scode.substring(0,scode.indexOf('(')).trim();
+        division = i.getStringExtra("div").substring(0,2).trim();
+        Log.d("KHIKHI",subject_name+" "+division);
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         current_date = dateFormat.format(calendar.getTime());
-        String postData = "subject_code=" + subject_code + "&division=" + division + "&today_date=" + current_date;
+        String postData = "subject_name=" + subject_name
+                + "&division=" + division
+                + "&today_date=" + current_date;
         webView.postUrl(url, postData.getBytes());
     }
 }

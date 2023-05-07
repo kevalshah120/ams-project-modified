@@ -32,14 +32,13 @@ public class today_attendance_taken_adapter extends RecyclerView.Adapter<today_a
         String subject_name = Today_Attendance_Taken_Data.get(position).getSubject_name();
         String student_present_count = Today_Attendance_Taken_Data.get(position).getStudent_present_count();
         String division = Today_Attendance_Taken_Data.get(position).getDivision();
-        holder.setData(subject_name, student_present_count,division);
-        // Make changes in this onclicklistener and pass the appropriate data qccording to the cardview that is clicked
+        holder.setData(subject_name,student_present_count,division);
         holder.today_attendance_taken_cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(holder.itemView.getContext(),teacher_today_attendance_webview.class);
-                i.putExtra("subject_code","3350704");
-                i.putExtra("div","6A");
+                i.putExtra("subject_name",subject_name);
+                i.putExtra("div",division);
                 holder.itemView.getContext().startActivity(i);
             }
         });
