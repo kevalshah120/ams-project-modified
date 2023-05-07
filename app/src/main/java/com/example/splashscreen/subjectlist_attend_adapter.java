@@ -16,6 +16,8 @@ import java.util.List;
 public class subjectlist_attend_adapter extends RecyclerView.Adapter<subjectlist_attend_adapter.MyViewHolder> {
     private List<subjectlist_attend_model> subject_Data;
     Context context;
+    String Enrollment_no;
+    sessionForS SFS;
     public subjectlist_attend_adapter(Context context, List<subjectlist_attend_model> subject_data) {
         this.context = context;
         this.subject_Data = subject_data;
@@ -25,19 +27,23 @@ public class subjectlist_attend_adapter extends RecyclerView.Adapter<subjectlist
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.subject_attend_cv, parent, false);
-        return new MyViewHolder(view);    }
+        SFS = new sessionForS(view.getContext());
+        Enrollment_no = SFS.getEnrollment();
+        return new MyViewHolder(view);
+    }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         String subject_name = subject_Data.get(position).getSubject_name();
         String sub_percentage = subject_Data.get(position).getAttend_percentage();
         // Make changes in this onclicklistener and pass the appropriate data qccording to the cardview that is clicked
+        holder.setData(subject_name,sub_percentage);
         holder.subject_attend_cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(holder.itemView.getContext(),stu_sub_attendance_view.class);
-                i.putExtra("subject_code","3350704");
-                i.putExtra("enr_no","206090307001");
+                i.putExtra("subject_name",subject_name);
+                i.putExtra("enr_no",Enrollment_no);
                 holder.itemView.getContext().startActivity(i);
             }
         });
@@ -58,7 +64,7 @@ public class subjectlist_attend_adapter extends RecyclerView.Adapter<subjectlist
             textView3_sub_precentage = itemView.findViewById(R.id.percentage_tv);
             subject_attend_cv = itemView.findViewById(R.id.subject_attend_cv);
         }
-        public void setData(String subject_name, String prof_name,String sub_percentage) {
+        public void setData(String subject_name,String sub_percentage) {
             textView1_subject_name.setText(subject_name);
             textView3_sub_precentage.setText(sub_percentage);
         }

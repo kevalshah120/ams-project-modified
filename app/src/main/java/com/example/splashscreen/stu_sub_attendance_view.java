@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.TextView;
@@ -12,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class stu_sub_attendance_view extends AppCompatActivity {
     private WebView webView;
-    private String subject_code;
+    private String subject_code,subject_string,subject_name;
     private String enr_no;
     TextView present,absent;
     @SuppressLint("SetJavaScriptEnabled")
@@ -26,9 +27,38 @@ public class stu_sub_attendance_view extends AppCompatActivity {
         webView.getSettings().setJavaScriptEnabled(true);
         String url = "https://stocky-baud.000webhostapp.com/student_attendance_P_A.php";
         Intent i = getIntent();
-        subject_code = i.getStringExtra("subject_code");
+        subject_string = i.getStringExtra("subject_name");
+        int size = subject_string.length();
+        int n = 0;
+        StringBuilder sname,scode;
+        sname = new StringBuilder();
+        scode = new StringBuilder();
+        boolean b = true;
+        while(n<size)
+        {
+            if(b)
+            {
+                sname.append(subject_string.charAt(n));
+                if(subject_string.charAt(n+1) == '(')
+                {
+                    b = false;
+                    n++;
+                }
+            }
+            else
+            {
+                if(subject_string.charAt(n) != ')')
+                {
+                    scode.append(subject_string.charAt(n));
+                }
+            }
+            n++;
+        }
+        Log.d("nameandcode",sname.toString().trim()+scode.toString().trim());
+        subject_code = scode.toString().trim();
+        subject_name = sname.toString().trim();
         enr_no = i.getStringExtra("enr_no");
-        String postData = "subject_code=" + subject_code + "&enrollment_number=" + enr_no + "&present_absent=" + "1";
+        String postData = "subject_code=" + subject_code +"&subject_name="+subject_name+"&enrollment_number=" + enr_no + "&present_absent=" + "1";
         webView.postUrl(url, postData.getBytes());
         present.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,7 +69,10 @@ public class stu_sub_attendance_view extends AppCompatActivity {
                 present.setTextColor(Color.WHITE);
                 absent.setBackground(null);
                 absent.setTextColor(color);
-                String postData = "subject_code=" + subject_code + "&enrollment_number=" + enr_no + "&present_absent=" + "1";
+                String postData = "subject_code=" + subject_code
+                        +"&subject_name="+subject_name
+                        +"&enrollment_number=" + enr_no
+                        + "&present_absent=" + "1";
                 webView.postUrl(url, postData.getBytes());
             }
         });
@@ -52,7 +85,7 @@ public class stu_sub_attendance_view extends AppCompatActivity {
                 present.setTextColor(color);
                 absent.setBackgroundResource(R.drawable.switch_track);
                 absent.setTextColor(Color.WHITE);
-                String postData = "subject_code=" + subject_code + "&enrollment_number=" + enr_no + "&present_absent=" + "0";
+                String postData = "subject_code=" + subject_code +"&subject_name="+subject_name+"&enrollment_number=" + enr_no + "&present_absent=" + "0";
                 webView.postUrl(url, postData.getBytes());
             }
         });

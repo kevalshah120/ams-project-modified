@@ -96,13 +96,8 @@ public class stu_attendance_fragement extends Fragment {
         totalAbsent = view.findViewById(R.id.Absent);
         totalPresent = view.findViewById(R.id.Present);
         updateTextView(totalAbsent,totalPresent);
-        dataInitialize();
         recyclerView = view.findViewById(R.id.subject_list_rv);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setHasFixedSize(true);
-        subjectlist_attend_adapter subjectlist_attend_adapter = new subjectlist_attend_adapter(getContext(),subject_data);
-        recyclerView.setAdapter(subjectlist_attend_adapter);
-        subjectlist_attend_adapter.notifyDataSetChanged();
+        dataInitialize();
     }
 
     private void updateTextView(TextView totalAbsent, TextView totalPresent) {
@@ -158,12 +153,78 @@ public class stu_attendance_fragement extends Fragment {
     }
 
     private void dataInitialize() {
-        subject_data = new ArrayList<>();
-        subject_data.add(new subjectlist_attend_model("PPUD (3360702)","86%"));
-        subject_data.add(new subjectlist_attend_model("Ad.Java (3360701)","96%"));
-        subject_data.add(new subjectlist_attend_model("NMA (3360703)","75%"));
-        subject_data.add(new subjectlist_attend_model("OS (3360704)","52%"));
-        subject_data.add(new subjectlist_attend_model("DBMS (3360705)","88%"));
+        String URL = "https://stocky-baud.000webhostapp.com/getSubjectAttendance.php";
+        if (subject_data != null) {
+            recyclerView.setLayoutManager(null);
+            recyclerView.setAdapter(null);
+            subject_data.clear();
+        }
+        //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
+        RequestQueue queue = Volley.newRequestQueue(requireContext());
+        //STRING REQUEST OBJECT INITIALIZATION
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("dataInitialize",response);
+                        subject_data = new ArrayList<>();
+                        //        subject_data = new ArrayList<>();
+//        subject_data.add(new subjectlist_attend_model("PPUD (3360702)","86%"));
+                        String sub_code,sub_name,lab,percentage;
+                        int attended,totalLecture;
+                        int atdCount = 0;
+                        try {
+                            JSONArray array = new JSONArray(response);
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject object = array.getJSONObject(i);
+                                sub_code = object.getString("sub_code");
+                                sub_name = object.getString("sub_name");
+                                lab = object.getString("lab");
+                                totalLecture = Integer.parseInt(object.getString("lecture_count"));
+                                attended = Integer.parseInt(object.getString("count"));
+                                percentage = String.valueOf((attended*100)/totalLecture);
+                                if(lab.equals("1"))
+                                {
+                                    sub_name += " LAB";
+                                }
+                                subject_data.add(new subjectlist_attend_model(sub_name+" ("+sub_code+")",percentage+"%stu"));
+                            }
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                        recyclerView.setHasFixedSize(true);
+                        subjectlist_attend_adapter subjectlist_attend_adapter = new subjectlist_attend_adapter(getContext(),subject_data);
+                        recyclerView.setAdapter(subjectlist_attend_adapter);
+                        subjectlist_attend_adapter.notifyDataSetChanged();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(requireContext(), "Connectivity Error", Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            //GIVING INPUT TO PHP API THROUGH MAP
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("enrollment",Enrollment_No);
+                return params;
+            }
 
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+        queue.add(stringRequest);
+//        subject_data = new ArrayList<>();
+//        subject_data.add(new subjectlist_attend_model("PPUD (3360702)","86%"));
+//        subject_data.add(new subjectlist_attend_model("Ad.Java (3360701)","96%"));
+//        subject_data.add(new subjectlist_attend_model("NMA (3360703)","75%"));
+//        subject_data.add(new subjectlist_attend_model("OS (3360704)","52%"));
+//        subject_data.add(new subjectlist_attend_model("DBMS (3360705)","88%"));
     }
 }

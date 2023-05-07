@@ -125,6 +125,16 @@ public class student_homescreen extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        float_refresh_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                float_refresh_btn.setVisibility(View.VISIBLE);
+                float_add_btn.setVisibility(View.GONE);
+                toolbar_textview.setText("Hi Keval");
+                wave_emoji.setVisibility(View.VISIBLE);
+                replaceFragment(new stu_home_fragement());
+            }
+        });
     }
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
