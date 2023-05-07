@@ -26,9 +26,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class student_add extends AppCompatActivity {
-    EditText Name,Enrollment,Mobile,ParentMobile,Semester,Division,Batch;
-    Button Save;
-    ProgressBar pgbar;
+    private EditText Name,Enrollment,Mobile,ParentMobile,Semester,Division,Batch;
+    private Button Save;
+    private ProgressBar pgbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
