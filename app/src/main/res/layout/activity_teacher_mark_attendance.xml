@@ -105,25 +105,63 @@
         android:id="@+id/teacher_mark_attend_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/attend_save_btn"
+        android:layout_above="@id/frame_lay"
         android:layout_below="@id/relative_lay_id"
-        android:scrollbars="vertical" />
+        android:scrollbars="vertical"
+        android:visibility="gone" />
 
-    <Button
-        android:id="@+id/attend_save_btn"
-        style="@style/Widget.MaterialComponents.Button"
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_layout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_50sdp"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/frame_lay"
+        android:layout_below="@id/relative_lay_id">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/shimmer_layout" />
+
+            <include layout="@layout/shimmer_layout" />
+
+            <include layout="@layout/shimmer_layout" />
+
+            <include layout="@layout/shimmer_layout" />
+
+            <include layout="@layout/shimmer_layout" />
+        </LinearLayout>
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <FrameLayout
+        android:id="@+id/frame_lay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginHorizontal="@dimen/_12sdp"
-        android:layout_marginBottom="@dimen/_5sdp"
-        android:backgroundTint="#0065ff"
-        android:contentDescription="@string/save"
-        android:fontFamily="@font/montserrat_semibold"
-        android:text="@string/save"
-        android:textAllCaps="false"
-        android:textSize="@dimen/_17sdp"
-        app:cornerRadius="@dimen/_8sdp" />
+        android:layout_marginBottom="@dimen/_5sdp">
+
+        <Button
+            android:id="@+id/attend_save_btn"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:backgroundTint="#0065ff"
+            android:contentDescription="@string/save"
+            android:fontFamily="@font/montserrat_semibold"
+            android:text="@string/save"
+            android:textAllCaps="false"
+            android:textSize="@dimen/_17sdp"
+            app:cornerRadius="@dimen/_8sdp" />
+
+        <ProgressBar
+            android:id="@+id/pgbar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+    </FrameLayout>
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/no_Data_anim"

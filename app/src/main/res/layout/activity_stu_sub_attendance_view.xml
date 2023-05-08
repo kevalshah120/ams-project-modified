@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_bg"
-    android:orientation="vertical"
     tools:context=".stu_sub_attendance_view">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/cardview_design"
         android:layout_margin="@dimen/_5sdp"
         app:cardCornerRadius="10dp"
         app:cardUseCompatPadding="true">
@@ -55,6 +55,14 @@
 
     <WebView
         android:id="@+id/web_view"
+        android:layout_below="@id/cardview_design"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-</LinearLayout>
+    <ProgressBar
+        android:id="@+id/pgbar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:visibility="gone"
+        android:layout_centerInParent="true" />
+
+</RelativeLayout>

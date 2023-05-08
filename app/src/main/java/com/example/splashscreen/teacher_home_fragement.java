@@ -21,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,6 +39,7 @@ import java.util.Map;
  */
 public class teacher_home_fragement extends Fragment {
     List<today_attendance_taken_model> today_attendance_taken_data;
+    ShimmerFrameLayout shimmerFrameLayout;
     private RecyclerView recyclerView;
     sessionForT SFT;
     String staff_login;
@@ -91,8 +93,10 @@ public class teacher_home_fragement extends Fragment {
     }
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        dataInitialize();
         recyclerView = view.findViewById(R.id.today_attendance_taken_rv);
+        shimmerFrameLayout = view.findViewById(R.id.shimmer_layout);
+        shimmerFrameLayout.startShimmer();
+        dataInitialize();
     }
 
     private void dataInitialize() {
@@ -141,6 +145,9 @@ public class teacher_home_fragement extends Fragment {
                         recyclerView.setHasFixedSize(true);
                         today_attendance_taken_adapter today_attendance_taken_adapter = new today_attendance_taken_adapter(getContext(),today_attendance_taken_data);
                         recyclerView.setAdapter(today_attendance_taken_adapter);
+                        shimmerFrameLayout.stopShimmer();
+                        shimmerFrameLayout.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
                         today_attendance_taken_adapter.notifyDataSetChanged();
                     }
                 }, new Response.ErrorListener() {

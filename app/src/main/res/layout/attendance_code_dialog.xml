@@ -18,17 +18,29 @@
         android:padding="10dp"
         android:textSize="@dimen/_16sdp" />
 
-    <Button
-        android:id="@+id/submitbutton"
-        style="@style/Widget.MaterialComponents.Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
+    <FrameLayout
+        android:layout_width="match_parent"
         android:layout_marginTop="5dp"
-        android:backgroundTint="#0065ff"
-        android:contentDescription="@string/submit"
-        android:fontFamily="@font/montserrat_semibold"
-        android:text="@string/submit"
-        android:textAllCaps="false"
-        android:textSize="@dimen/_14sdp" />
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/submitbutton"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:backgroundTint="#0065ff"
+            android:contentDescription="@string/submit"
+            android:fontFamily="@font/montserrat_semibold"
+            android:text="@string/submit"
+            android:textAllCaps="false"
+            android:textSize="@dimen/_14sdp" />
+
+        <ProgressBar
+            android:id="@+id/pgbar"
+            android:layout_width="40dp"
+            android:layout_gravity="end"
+            android:visibility="gone"
+            android:layout_marginEnd="30dp"
+            android:layout_height="40dp"/>
+    </FrameLayout>
 </LinearLayout>

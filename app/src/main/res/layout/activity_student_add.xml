@@ -16,7 +16,7 @@
         android:layout_marginHorizontal="@dimen/_7sdp"
         android:layout_marginTop="@dimen/_7sdp"
         android:background="@color/white"
-        android:hint="Full Name"
+        android:hint="@string/full_name"
         app:startIconDrawable="@drawable/person_icon"
         tools:ignore="NotSibling">
 
@@ -37,7 +37,7 @@
         android:layout_marginHorizontal="@dimen/_7sdp"
         android:layout_marginTop="@dimen/_8sdp"
         android:background="@color/white"
-        android:hint="Enrollment No"
+        android:hint="@string/enrollment_no"
         app:startIconDrawable="@drawable/enr_no_icon">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -58,7 +58,7 @@
         android:layout_marginHorizontal="@dimen/_7sdp"
         android:layout_marginTop="@dimen/_8sdp"
         android:background="@color/white"
-        android:hint="Mobile No"
+        android:hint="@string/mobile_no"
         app:startIconDrawable="@drawable/ic_phone_24">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -79,7 +79,7 @@
         android:layout_marginHorizontal="@dimen/_7sdp"
         android:layout_marginTop="@dimen/_8sdp"
         android:background="@color/white"
-        android:hint="Parent Mobile No"
+        android:hint="@string/parent_mobile_number"
         app:startIconDrawable="@drawable/ic_phone_24">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -108,7 +108,7 @@
             android:layout_marginEnd="@dimen/_3sdp"
             android:layout_weight="1"
             android:background="@color/white"
-            android:hint="Sem No">
+            android:hint="@string/sem_no_text">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/sem_ti"
@@ -126,7 +126,7 @@
             android:layout_marginEnd="@dimen/_3sdp"
             android:layout_weight="1"
             android:background="@color/white"
-            android:hint="Div (eg 6A)">
+            android:hint="@string/div_eg_6a">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/div_ti"
@@ -142,7 +142,7 @@
             android:layout_marginStart="@dimen/_3sdp"
             android:layout_weight="1"
             android:background="@color/white"
-            android:hint="Batch">
+            android:hint="@string/batch">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/batch_ti"
                 android:layout_width="match_parent"
@@ -165,7 +165,7 @@
             android:backgroundTint="#0065ff"
             android:contentDescription="@string/submit"
             android:fontFamily="@font/montserrat_semibold"
-            android:text="Save"
+            android:text="@string/save"
             android:textAllCaps="false"
             android:textSize="@dimen/_17sdp"
             app:cornerRadius="@dimen/_8sdp" />

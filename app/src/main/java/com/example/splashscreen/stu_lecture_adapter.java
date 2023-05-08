@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +38,7 @@ public class stu_lecture_adapter extends RecyclerView.Adapter<stu_lecture_adapte
     private List<stu_lecture_model> lecture_data;
     Dialog dialog;
     public String attend_code;
+    ProgressBar pgbar;
     Context context;
     sessionForS SFS;
     static String Enrollment_No;
@@ -73,10 +75,13 @@ public class stu_lecture_adapter extends RecyclerView.Adapter<stu_lecture_adapte
             builder.setView(dialogView);
             builder.setTitle("Attendance Code");
             Button submit = dialogView.findViewById(R.id.submitbutton);
+            pgbar = dialogView.findViewById(R.id.pgbar);
             EditText attendance_code = dialogView.findViewById(R.id.attendance_code);
             dialog = builder.create();
             dialog.show();
             submit.setOnClickListener(view1 -> {
+                pgbar.setVisibility(View.VISIBLE);
+                holder.markButton.setVisibility(View.INVISIBLE);
                 attend_code = attendance_code.getText().toString();
                 String URL = "https://stocky-baud.000webhostapp.com/markAttendanceWithOTP.php";
                 if(location.equals("1"))
@@ -96,6 +101,8 @@ public class stu_lecture_adapter extends RecyclerView.Adapter<stu_lecture_adapte
                                             JSONObject Jobj = Jarry.getJSONObject(0);
                                             Log.d("RESULT", response);
                                             String RESULT = Jobj.getString("RESULT");
+                                            pgbar.setVisibility(View.INVISIBLE);
+                                            holder.markButton.setVisibility(View.VISIBLE);
                                             Toast.makeText(context, RESULT, Toast.LENGTH_LONG).show();
                                             dialog.dismiss();
                                         } catch (JSONException e) {
@@ -105,6 +112,8 @@ public class stu_lecture_adapter extends RecyclerView.Adapter<stu_lecture_adapte
                                 }, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
+                                pgbar.setVisibility(View.INVISIBLE);
+                                holder.markButton.setVisibility(View.VISIBLE);
                                 Toast.makeText(context.getApplicationContext(), "Connectivity Error", Toast.LENGTH_SHORT).show();
                             }
                         }) {
@@ -132,7 +141,9 @@ public class stu_lecture_adapter extends RecyclerView.Adapter<stu_lecture_adapte
                     }
                     else
                     {
-                        Toast.makeText(context, "College aaja pahele", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Location Mismatched", Toast.LENGTH_SHORT).show();
+                        pgbar.setVisibility(View.INVISIBLE);
+                        holder.markButton.setVisibility(View.VISIBLE);
                         dialog.dismiss();
                     }
                 }
@@ -150,6 +161,8 @@ public class stu_lecture_adapter extends RecyclerView.Adapter<stu_lecture_adapte
                                         JSONObject Jobj = Jarry.getJSONObject(0);
                                         Log.d("RESULT", response);
                                         String RESULT = Jobj.getString("RESULT");
+                                        pgbar.setVisibility(View.INVISIBLE);
+                                        holder.markButton.setVisibility(View.VISIBLE);
                                         Toast.makeText(context, RESULT, Toast.LENGTH_LONG).show();
                                         dialog.dismiss();
                                     } catch (JSONException e) {
@@ -159,6 +172,8 @@ public class stu_lecture_adapter extends RecyclerView.Adapter<stu_lecture_adapte
                             }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
+                            pgbar.setVisibility(View.INVISIBLE);
+                            holder.markButton.setVisibility(View.VISIBLE);
                             Toast.makeText(context.getApplicationContext(), "Connectivity Error", Toast.LENGTH_SHORT).show();
                         }
                     }) {

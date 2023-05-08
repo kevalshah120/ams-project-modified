@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -25,6 +27,7 @@ import java.util.Map;
 public class parent_login extends AppCompatActivity {
     static String  PMobile_No ;
     static String Enrollment_No ;
+    ProgressBar pgbar;
     Button back,login_btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,7 @@ public class parent_login extends AppCompatActivity {
         final String class_name = getLocalClassName();
         final EditText mobile_no = findViewById(R.id.mob_no);
         final EditText enr_no = findViewById(R.id.enr_no);
+        pgbar = findViewById(R.id.pgbar);
         back = findViewById(R.id.back_button);
         login_btn = findViewById(R.id.par_login_button);
         back.setOnClickListener(view -> {
@@ -41,6 +45,8 @@ public class parent_login extends AppCompatActivity {
             finish();
         });
         login_btn.setOnClickListener(view -> {
+            pgbar.setVisibility(View.VISIBLE);
+            login_btn.setVisibility(View.INVISIBLE);
             PMobile_No = mobile_no.getText().toString();
             Enrollment_No = enr_no.getText().toString();
             if(PMobile_No.trim().length() == 10 && Enrollment_No.trim().length() == 12)
@@ -62,6 +68,8 @@ public class parent_login extends AppCompatActivity {
                                     if(Jobj.getString("result").equalsIgnoreCase("1"))
                                     {
                                         otp_verpage(PMobile_No,class_name);
+                                        pgbar.setVisibility(View.INVISIBLE);
+                                        login_btn.setVisibility(View.VISIBLE);
                                     }
                                     // ELSE THROW ERROR USING TOAST
                                     else
@@ -71,10 +79,14 @@ public class parent_login extends AppCompatActivity {
                                         {
                                             enr_no.setText("");
                                             mobile_no.setText("");
+                                            pgbar.setVisibility(View.INVISIBLE);
+                                            login_btn.setVisibility(View.VISIBLE);
                                         }
                                         else
                                         {
                                             mobile_no.setText("");
+                                            pgbar.setVisibility(View.INVISIBLE);
+                                            login_btn.setVisibility(View.VISIBLE);
                                         }
                                     }
                                 } catch (JSONException e) {
@@ -84,6 +96,8 @@ public class parent_login extends AppCompatActivity {
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        pgbar.setVisibility(View.INVISIBLE);
+                        login_btn.setVisibility(View.VISIBLE);
                         Toast.makeText(parent_login.this, "Connectivity Error", Toast.LENGTH_SHORT).show();
                     }
                 }){
@@ -107,13 +121,19 @@ public class parent_login extends AppCompatActivity {
             else{
                 if(Enrollment_No.trim().length() != 12 && PMobile_No.trim().length() != 10)
                 {
+                    pgbar.setVisibility(View.INVISIBLE);
+                    login_btn.setVisibility(View.VISIBLE);
                     Toast.makeText(parent_login.this,"Incorrect Mobile No and Enrollment No",Toast.LENGTH_LONG).show();
                 }
                 else if(PMobile_No.trim().length() != 10)
                 {
+                    pgbar.setVisibility(View.INVISIBLE);
+                    login_btn.setVisibility(View.VISIBLE);
                     Toast.makeText(parent_login.this,"Incorrect Mobile No",Toast.LENGTH_LONG).show();
                 }
                 else {
+                    pgbar.setVisibility(View.INVISIBLE);
+                    login_btn.setVisibility(View.VISIBLE);
                     Toast.makeText(parent_login.this,"Incorrect Enrollment No",Toast.LENGTH_LONG).show();
                 }
             }

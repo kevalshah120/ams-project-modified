@@ -37,7 +37,8 @@
                 android:text="@string/login"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_20sdp" />
-        </RelativeLayout>y
+        </RelativeLayout>
+
         <ImageView
             android:id="@+id/signin_illustrator"
             android:layout_width="match_parent"
@@ -52,8 +53,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
             android:layout_below="@id/signin_illustrator"
-            android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginHorizontal="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_5sdp"
             android:background="@drawable/button_1"
             android:drawableStart="@drawable/enr_no_icon"
             android:drawablePadding="@dimen/_9sdp"
@@ -69,8 +70,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
             android:layout_below="@id/enr_no"
-            android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginHorizontal="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginBottom="@dimen/_70sdp"
             android:background="@drawable/button_1"
             android:drawableStart="@drawable/mobile_no_icon"
@@ -82,20 +83,33 @@
             android:paddingStart="@dimen/_10sdp"
             android:paddingEnd="@dimen/_10sdp" />
 
-        <Button
-            android:id="@+id/par_login_button"
-            style="@style/Widget.MaterialComponents.Button"
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginHorizontal="@dimen/_12sdp"
-            android:layout_marginBottom="@dimen/_30sdp"
-            android:backgroundTint="#0065ff"
-            android:contentDescription="@string/login"
-            android:fontFamily="@font/montserrat_semibold"
-            android:text="@string/login"
-            android:textAllCaps="false"
-            android:textSize="@dimen/_17sdp"
-            app:cornerRadius="@dimen/_8sdp" />
+            android:layout_marginBottom="@dimen/_30sdp">
+
+            <Button
+                android:id="@+id/par_login_button"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:backgroundTint="#0065ff"
+                android:contentDescription="@string/login"
+                android:fontFamily="@font/montserrat_semibold"
+                android:text="@string/login"
+                android:textAllCaps="false"
+                android:textSize="@dimen/_17sdp"
+                app:cornerRadius="@dimen/_8sdp" />
+
+            <ProgressBar
+                android:id="@+id/pgbar"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+        </FrameLayout>
     </RelativeLayout>
 </ScrollView>

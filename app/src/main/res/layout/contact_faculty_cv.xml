@@ -3,28 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/contact_fac_cv"
     android:layout_width="match_parent"
-    android:foreground="?android:attr/selectableItemBackgroundBorderless"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="5dp"
+    android:foreground="?android:attr/selectableItemBackgroundBorderless"
     app:cardCornerRadius="10dp"
     app:cardUseCompatPadding="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginHorizontal="10dp"
-        android:layout_marginVertical="10dp">
+        android:layout_marginVertical="10dp"
+        android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
             <ImageView
                 android:id="@+id/teacher_icon"
                 android:layout_width="@dimen/_20sdp"
-                android:layout_margin="3dp"
-                android:layout_gravity="center"
                 android:layout_height="@dimen/_20sdp"
+                android:layout_gravity="center"
+                android:layout_margin="3dp"
                 android:src="@drawable/ic_teacher_24" />
+
             <TextView
                 android:id="@+id/prof_name"
                 android:layout_width="wrap_content"
@@ -34,16 +37,19 @@
                 android:textColor="#200745"
                 android:textSize="@dimen/_17sdp" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
             <ImageView
                 android:layout_width="@dimen/_20sdp"
-                android:layout_margin="3dp"
-                android:layout_gravity="center"
-                app:tint="#3C3B3C"
                 android:layout_height="@dimen/_20sdp"
-                android:src="@drawable/ic_phone_24" />
+                android:layout_gravity="center"
+                android:layout_margin="3dp"
+                android:src="@drawable/ic_phone_24"
+                app:tint="#3C3B3C" />
+
             <TextView
                 android:id="@+id/prof_num"
                 android:layout_width="wrap_content"

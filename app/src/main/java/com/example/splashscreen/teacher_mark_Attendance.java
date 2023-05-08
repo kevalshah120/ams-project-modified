@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +26,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,9 +41,11 @@ import java.util.concurrent.TimeUnit;
 public class teacher_mark_Attendance extends AppCompatActivity {
     List<teacher_mark_attend_model> mark_attend_models = new ArrayList<>();
     Button Save;
+    ShimmerFrameLayout shimmerFrameLayout;
     TextView timer_tv;
     ImageView timer_icon;
     RecyclerView recyclerView;
+    ProgressBar pgbar;
     LottieAnimationView LAV;
     public static TextView studentCount;
     String[] div_list;
@@ -62,9 +66,11 @@ public class teacher_mark_Attendance extends AppCompatActivity {
         Save = findViewById(R.id.attend_save_btn);
         int expiry_time = Integer.parseInt(getIntent().getStringExtra("expiry_time")),i = 0;
         boolean smart_attend_switch = getIntent().getBooleanExtra("smart_attend_switch", false);
-        String booleanString = Boolean.toString(smart_attend_switch);
         timer_tv = findViewById(R.id.timer_tv);
         timer_icon = findViewById(R.id.timer_icon);
+        shimmerFrameLayout = findViewById(R.id.shimmer_layout);
+        pgbar = findViewById(R.id.pgbar);
+        shimmerFrameLayout.startShimmer();
         recyclerView = findViewById(R.id.teacher_mark_attend_rv);
         LAV = findViewById(R.id.no_Data_anim);
         studentCount = findViewById(R.id.student_Count);
@@ -154,7 +160,10 @@ public class teacher_mark_Attendance extends AppCompatActivity {
         Save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 String URL = "https://stocky-baud.000webhostapp.com/saveTempAtdToAtdTb.php";
+                pgbar.setVisibility(View.VISIBLE);
+                Save.setVisibility(View.INVISIBLE);
                 //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
                 RequestQueue queue = Volley.newRequestQueue(teacher_mark_Attendance.this);
                 //STRING REQUEST OBJECT INITIALIZATION
@@ -166,12 +175,16 @@ public class teacher_mark_Attendance extends AppCompatActivity {
                                     String result = new JSONObject(response).getString("result");
                                     if(result.equals("1"))
                                     {
+                                        pgbar.setVisibility(View.INVISIBLE);
+                                        Save.setVisibility(View.VISIBLE);
                                         Intent intent = new Intent(teacher_mark_Attendance.this,teacher_homescreen.class);
                                         startActivity(intent);
                                         finish();
                                     }
                                     else
                                     {
+                                        pgbar.setVisibility(View.INVISIBLE);
+                                        Save.setVisibility(View.VISIBLE);
                                         Toast.makeText(teacher_mark_Attendance.this, result, Toast.LENGTH_SHORT).show();
                                     }
                                 } catch (JSONException e) {
@@ -181,6 +194,8 @@ public class teacher_mark_Attendance extends AppCompatActivity {
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        pgbar.setVisibility(View.INVISIBLE);
+                        Save.setVisibility(View.VISIBLE);
                         Toast.makeText(teacher_mark_Attendance.this, "Connectivity Error", Toast.LENGTH_SHORT).show();
                     }
                 }) {
@@ -336,7 +351,7 @@ public class teacher_mark_Attendance extends AppCompatActivity {
     }
     //--------------------------------------------------------------------------------------------------------------------------------------------
     private void dataInitialize() {
-        if(firstTime == true) {
+        if(firstTime) {
             firstTime = false;
             String URL = "https://stocky-baud.000webhostapp.com/getStudentDetailsForTeacher.php";
             if (mark_attend_models != null) {
@@ -400,6 +415,9 @@ public class teacher_mark_Attendance extends AppCompatActivity {
                             recyclerView.setLayoutManager(new LinearLayoutManager(teacher_mark_Attendance.this));
                             recyclerView.setHasFixedSize(true);
                             teacher_mark_attend_adapter mark_attend_adapter = new teacher_mark_attend_adapter(teacher_mark_Attendance.this, mark_attend_models);
+                            shimmerFrameLayout.stopShimmer();
+                            shimmerFrameLayout.setVisibility(View.GONE);
+                            recyclerView.setVisibility(View.VISIBLE);
                             recyclerView.setAdapter(mark_attend_adapter);
                             mark_attend_adapter.notifyDataSetChanged();
 

@@ -2,11 +2,14 @@ package com.example.splashscreen;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class stu_sub_attendance_view extends AppCompatActivity {
     private WebView webView;
     private String subject_code,subject_string,subject_name;
+    ProgressBar pgbar;
     private String enr_no;
     TextView present,absent;
     @SuppressLint("SetJavaScriptEnabled")
@@ -22,6 +26,7 @@ public class stu_sub_attendance_view extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stu_sub_attendance_view);
         present = findViewById(R.id.present_tv);
+        pgbar = findViewById(R.id.pgbar);
         absent = findViewById(R.id.absent_tv);
         webView = findViewById(R.id.web_view);
         webView.getSettings().setJavaScriptEnabled(true);
@@ -87,6 +92,19 @@ public class stu_sub_attendance_view extends AppCompatActivity {
                 absent.setTextColor(Color.WHITE);
                 String postData = "subject_code=" + subject_code +"&subject_name="+subject_name+"&enrollment_number=" + enr_no + "&present_absent=" + "0";
                 webView.postUrl(url, postData.getBytes());
+            }
+        });
+        webView.setWebViewClient(new WebViewClient(){
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                pgbar.setVisibility(View.INVISIBLE);
+                super.onPageFinished(view, url);
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                pgbar.setVisibility(View.VISIBLE);
+                super.onPageStarted(view, url, favicon);
             }
         });
     }

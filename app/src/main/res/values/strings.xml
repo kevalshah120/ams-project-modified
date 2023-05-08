@@ -94,4 +94,10 @@
     <string name="stu_enr_number">206090307004</string>
     <string name="div">6A</string>
     <string name="attendance_count">90 / 100</string>
+    <string name="full_name">Full Name</string>
+    <string name="enrollment_no">Enrollment No</string>
+    <string name="parent_mobile_number">Parent Mobile Number</string>
+    <string name="sem_no_text">Sem No</string>
+    <string name="batch">Batch</string>
+    <string name="div_eg_6a">Div (eg 6A)</string>
 </resources>

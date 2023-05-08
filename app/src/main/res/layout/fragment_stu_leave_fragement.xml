@@ -8,18 +8,20 @@
     tools:context=".stu_leave_fragement">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/leave_status_cv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
-        android:id="@+id/leave_status_cv"
         app:cardCornerRadius="10dp">
+
         <LinearLayout
             android:id="@+id/linear_layout_1"
             android:layout_width="match_parent"
-            android:background="@drawable/switch_thumb"
             android:layout_height="wrap_content"
+            android:background="@drawable/switch_thumb"
             android:weightSum="4"
             tools:ignore="UselessParent">
+
             <TextView
                 android:id="@+id/all_button"
                 android:layout_width="0dp"
@@ -32,6 +34,7 @@
                 android:gravity="center"
                 android:text="@string/all"
                 android:textColor="@color/txt_color" />
+
             <TextView
                 android:id="@+id/pending_button"
                 android:layout_width="0dp"
@@ -44,6 +47,7 @@
                 android:gravity="center"
                 android:text="@string/pending"
                 android:textColor="@color/txt_color" />
+
             <TextView
                 android:id="@+id/approved_button"
                 android:layout_width="0dp"
@@ -56,6 +60,7 @@
                 android:gravity="center"
                 android:text="@string/approved"
                 android:textColor="@color/txt_color" />
+
             <TextView
                 android:id="@+id/rejected_button"
                 android:layout_width="0dp"

@@ -22,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,6 +41,7 @@ import java.util.Map;
  */
 public class stu_attendance_fragement extends Fragment {
     List<subjectlist_attend_model> subject_data;
+    ShimmerFrameLayout shimmerFrameLayout;
     private RecyclerView recyclerView;
     String Enrollment_No;
     sessionForS SFS;
@@ -95,6 +97,8 @@ public class stu_attendance_fragement extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         totalAbsent = view.findViewById(R.id.Absent);
         totalPresent = view.findViewById(R.id.Present);
+        shimmerFrameLayout = view.findViewById(R.id.shimmer_layout);
+        shimmerFrameLayout.startShimmer();
         updateTextView(totalAbsent,totalPresent);
         recyclerView = view.findViewById(R.id.subject_list_rv);
         dataInitialize();
@@ -195,6 +199,9 @@ public class stu_attendance_fragement extends Fragment {
                         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                         recyclerView.setHasFixedSize(true);
                         subjectlist_attend_adapter subjectlist_attend_adapter = new subjectlist_attend_adapter(getContext(),subject_data);
+                        shimmerFrameLayout.stopShimmer();
+                        shimmerFrameLayout.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
                         recyclerView.setAdapter(subjectlist_attend_adapter);
                         subjectlist_attend_adapter.notifyDataSetChanged();
                     }

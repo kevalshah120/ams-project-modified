@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/app_bg"
     android:layout_height="match_parent"
+    android:background="@color/app_bg"
     tools:context=".teacher_leave_history">
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/leave_history_recyclerview"
         android:layout_width="match_parent"

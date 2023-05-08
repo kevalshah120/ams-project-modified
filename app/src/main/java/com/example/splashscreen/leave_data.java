@@ -131,6 +131,8 @@ public class leave_data extends AppCompatActivity {
                 submit.setVisibility(View.VISIBLE);
             }
             if (to_DATE.compareTo(from_DATE) < 0) {
+                pgbar.setVisibility(View.INVISIBLE);
+                submit.setVisibility(View.VISIBLE);
                 Toast.makeText(leave_data.this, "Please select a TO Date after From Date", Toast.LENGTH_SHORT).show();
             }
             else {

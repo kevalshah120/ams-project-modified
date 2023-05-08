@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -29,6 +30,8 @@ import java.util.Map;
 
 public class student_details extends AppCompatActivity {
     Button edit_btn, save_btn , remove_btn;
+    ProgressBar pgbar;
+
     TextInputEditText name_ti, enr_ti, stu_mob_ti, parent_mob_ti, sem_ti, div_ti, batch_ti;
     String enrollment, stu_name, contact_no, semester, division, batch, parents_number;
 
@@ -40,6 +43,7 @@ public class student_details extends AppCompatActivity {
         remove_btn = findViewById(R.id.delete_button);
         save_btn = findViewById(R.id.save_button);
         save_btn.setVisibility(View.GONE);
+        pgbar = findViewById(R.id.pgbar);
         name_ti = findViewById(R.id.name_ti);
         enr_ti = findViewById(R.id.enr_ti);
         stu_mob_ti = findViewById(R.id.stu_mob_ti);
@@ -124,6 +128,8 @@ public class student_details extends AppCompatActivity {
         save_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                pgbar.setVisibility(View.VISIBLE);
+                save_btn.setVisibility(View.INVISIBLE);
                 stu_name = name_ti.getText().toString();
                 contact_no = stu_mob_ti.getText().toString();
                 semester = sem_ti.getText().toString();
@@ -134,31 +140,43 @@ public class student_details extends AppCompatActivity {
                 int space = stu_name.length() - stu_name.replaceAll(" ", "").length();
                 if (space < 1) {
                     name_ti.setError("Must contain 1 space");
+                    pgbar.setVisibility(View.INVISIBLE);
+                    save_btn.setVisibility(View.VISIBLE);
                     check = false;
                 }
                 if(contact_no.length() != 10)
                 {
                     stu_mob_ti.setError("minimum length 10");
+                    pgbar.setVisibility(View.INVISIBLE);
+                    save_btn.setVisibility(View.VISIBLE);
                     check = false;
                 }
                 if(parents_number.length() != 10)
                 {
                     parent_mob_ti.setError("minimum length 10");
+                    pgbar.setVisibility(View.INVISIBLE);
+                    save_btn.setVisibility(View.VISIBLE);
                     check = false;
                 }
                 if(semester.length() != 1)
                 {
                     sem_ti.setError("minimum length 1");
+                    pgbar.setVisibility(View.INVISIBLE);
+                    save_btn.setVisibility(View.VISIBLE);
                     check = false;
                 }
                 if(division.length() != 2)
                 {
                     div_ti.setError("minimum length 2");
+                    pgbar.setVisibility(View.INVISIBLE);
+                    save_btn.setVisibility(View.VISIBLE);
                     check = false;
                 }
                 if(batch.length() != 4)
                 {
                     batch_ti.setError("minimum length 4");
+                    pgbar.setVisibility(View.INVISIBLE);
+                    save_btn.setVisibility(View.VISIBLE);
                     check = false;
                 }
                 if (check) {
@@ -175,10 +193,14 @@ public class student_details extends AppCompatActivity {
                                         JSONObject obj = new JSONObject(response);
                                         String res = obj.getString("result");
                                         if (res.equals("1")) {
+                                            pgbar.setVisibility(View.INVISIBLE);
+                                            save_btn.setVisibility(View.VISIBLE);
                                             Toast.makeText(student_details.this, "Details Updated", Toast.LENGTH_SHORT).show();
                                             Intent i = new Intent(student_details.this, teacher_homescreen.class);
                                             startActivity(i);
                                         } else {
+                                            pgbar.setVisibility(View.INVISIBLE);
+                                            save_btn.setVisibility(View.VISIBLE);
                                             Toast.makeText(student_details.this, res, Toast.LENGTH_SHORT).show();
                                             Intent i = new Intent(student_details.this, student_details.class);
                                             i.putExtra("enrollment", enrollment);
@@ -191,6 +213,8 @@ public class student_details extends AppCompatActivity {
                             }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
+                            pgbar.setVisibility(View.INVISIBLE);
+                            save_btn.setVisibility(View.VISIBLE);
                             Toast.makeText(student_details.this, "Connectivity Error", Toast.LENGTH_SHORT).show();
                         }
                     }) {

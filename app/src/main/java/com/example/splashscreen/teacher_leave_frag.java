@@ -21,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
@@ -39,6 +40,7 @@ import java.util.Map;
  */
 public class teacher_leave_frag extends Fragment {
     List<teacher_leave_model> tea_leave_data;
+    ShimmerFrameLayout shimmerFrameLayout;
 
     FloatingActionButton leave_history_button;
     private RecyclerView recyclerView;
@@ -99,6 +101,8 @@ public class teacher_leave_frag extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.teacher_leave_recyclerview);
         LAV = view.findViewById(R.id.no_Data_anim);
+        shimmerFrameLayout = view.findViewById(R.id.shimmer_layout);
+        shimmerFrameLayout.startShimmer();
         leave_history_button = view.findViewById(R.id.leave_his_floar_btn);
         leave_history_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,6 +166,9 @@ public class teacher_leave_frag extends Fragment {
                             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                             recyclerView.setHasFixedSize(true);
                             teacher_leave_adapter teacher_leave_adapter = new teacher_leave_adapter(getContext(), tea_leave_data);
+                            shimmerFrameLayout.stopShimmer();
+                            shimmerFrameLayout.setVisibility(View.GONE);
+                            recyclerView.setVisibility(View.VISIBLE);
                             recyclerView.setAdapter(teacher_leave_adapter);
                             teacher_leave_adapter.notifyDataSetChanged();
                         } catch (
