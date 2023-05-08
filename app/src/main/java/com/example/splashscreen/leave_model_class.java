@@ -6,14 +6,20 @@ public class leave_model_class {
     private String date;
     private String prof_name;
     private int teacher_icon;
+    private String desc;
 
-    leave_model_class(int tag,String leave_name,String date,String prof_name,int teacher_icon)
+    leave_model_class(int tag,String leave_name,String date,String prof_name,int teacher_icon,String desc)
     {
         this.tag = tag;
         this.leave_name = leave_name;
         this.date = date;
         this.prof_name = prof_name;
         this.teacher_icon = teacher_icon;
+        this.desc = desc;
+    }
+
+    public String getDesc() {
+        return desc;
     }
 
     public int getTag() {

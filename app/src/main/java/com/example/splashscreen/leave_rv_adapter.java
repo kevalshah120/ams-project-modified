@@ -1,6 +1,7 @@
 package com.example.splashscreen;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,9 +35,23 @@ public class    leave_rv_adapter extends RecyclerView.Adapter<leave_rv_adapter.M
         int teacher_icon = leave_data.get(position).getTeacher_icon();
         String leave_name = leave_data.get(position).getLeave_name();
         String date = leave_data.get(position).getDate();
+        String fromDate = date.substring(0,date.indexOf('-')-1);
+        String toDate = date.substring(date.indexOf('-')+2,date.length());
         String prof_name = leave_data.get(position).getProf_name();
-
+        String desc = leave_data.get(position).getDesc();
         holder.setData(tag,teacher_icon,leave_name,date,prof_name);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(view.getContext(),student_leave_details_display.class);
+                i.putExtra("leave_name",leave_name);
+                i.putExtra("toDate",toDate);
+                i.putExtra("fromDate",fromDate);
+                i.putExtra("prof_name",prof_name);
+                i.putExtra("desc",desc);
+                context.startActivity(i);
+            }
+        });
     }
 
     @Override

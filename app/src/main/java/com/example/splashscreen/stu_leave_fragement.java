@@ -3,6 +3,7 @@ package com.example.splashscreen;
 //https://youtu.be/4cFL7CMd5QY recyclerview video
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -190,6 +191,7 @@ public class stu_leave_fragement extends Fragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        Log.d("getLeaveDataForStudent",response);
                         leave_data = new ArrayList<>();
                         try {
                             JSONArray array = new JSONArray(response);
@@ -199,6 +201,7 @@ public class stu_leave_fragement extends Fragment {
                             String to_date[] = new String[array.length()];
                             String Proof_name[] = new String[array.length()];
                             String finalDate[] = new String[array.length()];
+                            String desc[] = new String[array.length()];
                             if(array.length()==0)
                             {
                                 LAV.setVisibility(View.VISIBLE);
@@ -220,19 +223,23 @@ public class stu_leave_fragement extends Fragment {
                                 if (object.has("staff_name")) {
                                     Proof_name[i] = object.getString("staff_name");
                                 }
+                                if(object.has("description"))
+                                {
+                                    desc[i]= object.getString("description");
+                                }
                                 finalDate[i] = dateConversion(from_date[i], to_date[i] );
                             }
                             if (clickedBUTTON == "all") {
                                 for (int i = 0; i < array.length(); i++) {
                                     if (status[i].equals("approved")) {
                                         leave_data.add(new leave_model_class(R.drawable.approved_tag, Leave_name[i],
-                                                finalDate[i], Proof_name[i], R.drawable.ic_teacher_24));
+                                                finalDate[i], Proof_name[i], R.drawable.ic_teacher_24,desc[i]));
                                     } else if (status[i].equals("rejected")) {
                                         leave_data.add(new leave_model_class(R.drawable.rejected_tag, Leave_name[i],
-                                                finalDate[i], Proof_name[i], R.drawable.ic_teacher_24));
+                                                finalDate[i], Proof_name[i], R.drawable.ic_teacher_24,desc[i]));
                                     } else {
                                         leave_data.add(new leave_model_class(R.drawable.pending_tag, Leave_name[i],
-                                                finalDate[i], Proof_name[i], R.drawable.ic_teacher_24));
+                                                finalDate[i], Proof_name[i], R.drawable.ic_teacher_24,desc[i]));
                                     }
                                 }
                             }
@@ -240,7 +247,7 @@ public class stu_leave_fragement extends Fragment {
                                 for (int i = 0; i < array.length(); i++) {
                                     if (status[i].equals("pending")) {
                                         leave_data.add(new leave_model_class(R.drawable.pending_tag, Leave_name[i],
-                                                finalDate[i], Proof_name[i], R.drawable.ic_teacher_24));
+                                                finalDate[i], Proof_name[i], R.drawable.ic_teacher_24,desc[i]));
                                     }
                                 }
                             }
@@ -248,7 +255,7 @@ public class stu_leave_fragement extends Fragment {
                                 for (int i = 0; i < array.length(); i++) {
                                     if (status[i].equals("approved")) {
                                         leave_data.add(new leave_model_class(R.drawable.approved_tag, Leave_name[i],
-                                                finalDate[i], Proof_name[i], R.drawable.ic_teacher_24));
+                                                finalDate[i], Proof_name[i], R.drawable.ic_teacher_24,desc[i]));
                                     }
                                 }
                             }
@@ -256,7 +263,7 @@ public class stu_leave_fragement extends Fragment {
                                 for (int i = 0; i < array.length(); i++) {
                                     if (status[i].equals("rejected")) {
                                         leave_data.add(new leave_model_class(R.drawable.rejected_tag, Leave_name[i],
-                                                finalDate[i], Proof_name[i], R.drawable.ic_teacher_24));
+                                                finalDate[i], Proof_name[i], R.drawable.ic_teacher_24,desc[i]));
                                     }
                                 }
                             }
