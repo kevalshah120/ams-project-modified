@@ -51,6 +51,7 @@ public class teacher_mark_Attendance extends AppCompatActivity {
     public String location;
     boolean firstTime = true;
     sessionForT SFT;
+    String temp_div;
     private static String ID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +100,7 @@ public class teacher_mark_Attendance extends AppCompatActivity {
         //GENERATING OTP (END)
         //--------------------------------------------------------------------------------------------------------------------------------------------
         //GETTING DIVISIONS FROM PREVIOUS PAGE (START)
-        String temp_div = getIntent().getStringExtra("division");
+         temp_div = getIntent().getStringExtra("division");
         location = getIntent().getStringExtra("location");
         div_list = new String[((int) Math.floor(temp_div.length() / 3)) + 2];
         i=0;
@@ -319,6 +320,7 @@ public class teacher_mark_Attendance extends AppCompatActivity {
                 params.put("subject",div_list[i]);
                 params.put("sizeOfDiv",String.valueOf(div_list.length-1));
                 params.put("location",location);
+                params.put("iDIv",temp_div);
                 Log.d("Location",location);
                 return params;
             }
