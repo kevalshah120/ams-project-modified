@@ -188,8 +188,6 @@ public class student_homescreen extends AppCompatActivity {
             public void run() {
                 handler.postDelayed(runnable, delay);
                 getLastLocation();
-                Toast.makeText(student_homescreen.this, "This method will run",
-                        Toast.LENGTH_SHORT).show();
             }
         }, delay);
         super.onResume();
