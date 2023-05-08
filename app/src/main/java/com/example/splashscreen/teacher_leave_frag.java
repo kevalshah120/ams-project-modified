@@ -1,5 +1,6 @@
 package com.example.splashscreen;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,6 +39,8 @@ import java.util.Map;
  */
 public class teacher_leave_frag extends Fragment {
     List<teacher_leave_model> tea_leave_data;
+
+    FloatingActionButton leave_history_button;
     private RecyclerView recyclerView;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -95,6 +99,14 @@ public class teacher_leave_frag extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.teacher_leave_recyclerview);
         LAV = view.findViewById(R.id.no_Data_anim);
+        leave_history_button = view.findViewById(R.id.leave_his_floar_btn);
+        leave_history_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getContext(),teacher_leave_history.class);
+                startActivity(i);
+            }
+        });
         dataInitialize();
     }
 

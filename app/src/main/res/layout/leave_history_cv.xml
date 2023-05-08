@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/leave_history_cv"
+    android:layout_marginHorizontal="5dp"
+    android:foreground="?android:attr/selectableItemBackgroundBorderless"
+    app:cardCornerRadius="10dp"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="10dp">
+
+        <TextView
+            android:id="@+id/leave_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:fontFamily="@font/muli_semibold"
+            android:maxLength="30"
+            android:text="@string/leave_application_name"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp" />
+
+        <TextView
+            android:id="@+id/student_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/leave_name"
+            android:layout_alignParentStart="true"
+            android:fontFamily="@font/muli_bold"
+            android:maxLength="18"
+            android:text="@string/student_name"
+            android:textAllCaps="true"
+            android:textColor="#200745"
+            android:textSize="@dimen/_14sdp" />
+
+        <TextView
+            android:id="@+id/sem_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="5dp"
+            android:maxLength="5"
+            android:layout_toEndOf="@id/student_name"
+            android:background="#DDD7D7"
+            android:fontFamily="@font/muli_semibold"
+            android:text="@string/sem_no"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14sdp" />
+
+        <TextView
+            android:id="@+id/leave_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/student_name"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="1dp"
+            android:fontFamily="@font/muli_semibold"
+            android:text="@string/leave_from_to_date"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp" />
+
+        <ImageView
+            android:id="@+id/status_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/approved_tag" />
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

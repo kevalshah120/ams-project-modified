@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -45,9 +46,10 @@ public class otp_verification extends AppCompatActivity {
         Intent i = getIntent();
         class_name = i.getStringExtra("class_name");
         String mobile_val = "+91 ";
-        mobile_val += i.getStringExtra("mobile");
+        mobile_val += i.getStringExtra("MOBILE");
         final TextView mobile_no = findViewById(R.id.mobile_num_text);
         mobile_no.setText(mobile_val);
+        Log.e("OPT" , mobile_val);
 
         //code to display timer of 2 minutes
         CountDownTimer countDownTimer = new CountDownTimer(120000, 1000) {
@@ -72,7 +74,7 @@ public class otp_verification extends AppCompatActivity {
         back_button = findViewById(R.id.back_button);
         mAuth = FirebaseAuth.getInstance();
 
-//        sendverificatsioncode(i.getStringExtra("mobile"));
+//        sendverificationcode(i.getStringExtra("MOBILE"));
         next_et();
         verify_otp_button.setOnClickListener(view -> {
             pgbar.setVisibility(View.VISIBLE);
@@ -217,7 +219,6 @@ public class otp_verification extends AppCompatActivity {
             }
         });
     }
-
     //Code for automatically focusing next edittext while entering otp
     private void next_et() {
         otpET1.addTextChangedListener(new TextWatcher() {
@@ -312,5 +313,4 @@ public class otp_verification extends AppCompatActivity {
             }
         });
     }
-
 }

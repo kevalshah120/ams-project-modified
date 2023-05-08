@@ -21,4 +21,21 @@
         app:lottie_autoPlay="true"
         app:lottie_rawRes="@raw/no_data_anim"
         app:lottie_repeatCount="1" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/leave_his_floar_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:backgroundTint="@color/white"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackgroundBorderless"
+        android:focusable="true"
+        app:borderWidth="0dp"
+        app:fabCustomSize="50dp"
+        app:srcCompat="@drawable/history"
+        app:tint="#1B5BBA" />
 </RelativeLayout>

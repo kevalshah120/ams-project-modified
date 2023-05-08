@@ -10,6 +10,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,6 +34,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -47,6 +50,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class student_homescreen extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     DrawerLayout drawerLayout;
@@ -56,6 +61,9 @@ public class student_homescreen extends AppCompatActivity {
     ImageView wave_emoji;
     TextView toolbar_textview;
     ActionBarDrawerToggle toogle;
+
+    CircleImageView profile_image;
+
     sessionForS SFS;
     FusedLocationProviderClient mFusedLocationClient;
     Handler handler = new Handler();
@@ -69,6 +77,7 @@ public class student_homescreen extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigationView);
         toolbar = findViewById(R.id.toolbar);
+        profile_image = findViewById(R.id.profile_image);
         setSupportActionBar(toolbar);
         navigationView.bringToFront();
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -149,6 +158,7 @@ public class student_homescreen extends AppCompatActivity {
             drawerLayout.closeDrawer(GravityCompat.START);
             return true;
         });
+
         float_add_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -164,6 +174,16 @@ public class student_homescreen extends AppCompatActivity {
                 toolbar_textview.setText("Hi Keval");
                 wave_emoji.setVisibility(View.VISIBLE);
                 replaceFragment(new stu_home_fragement());
+            }
+        });
+        profile_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ImagePicker.with(student_homescreen.this)
+                        .crop(100,100)
+                        .compress(1024)
+                        .maxResultSize(1080, 1080)
+                        .start();
             }
         });
     }
@@ -267,4 +287,13 @@ public class student_homescreen extends AppCompatActivity {
         }
     };
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(resultCode == RESULT_OK && data != null)
+        {
+            Uri image = data.getData();
+            profile_image.setImageURI(image);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }
