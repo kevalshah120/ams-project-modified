@@ -354,16 +354,39 @@ public class teacher_mark_Attendance extends AppCompatActivity {
                             String name;
                             try {
                                 JSONArray array = new JSONArray(response);
-                                if(array.length()==0)
+                                if(!array.getJSONObject(0).isNull("result"))
                                 {
-                                    LAV.setVisibility(View.VISIBLE);
-                                    Save.setVisibility(View.GONE);
+                                    Log.d("getStudentDetails",response);
+                                    if(array.getJSONObject(0).getString("result").equals("attendanceTaken")) {
+                                        Toast.makeText(teacher_mark_Attendance.this, "Sub & Div Attendance already taken", Toast.LENGTH_LONG).show();
+                                        startActivity(new Intent(getApplicationContext(), teacher_homescreen.class));
+                                        finish();
+                                    }
+                                    else {
+                                        if (array.length() == 0) {
+                                            LAV.setVisibility(View.VISIBLE);
+                                            Save.setVisibility(View.GONE);
+                                        }
+                                        for (int i = 0; i < array.length() - 1; i++) {
+                                            JSONObject object = array.getJSONObject(i);
+                                            name = object.getString("std_name");
+                                            enr = object.getString("enr_no");
+                                            mark_attend_models.add(new teacher_mark_attend_model(enr, name, false));
+                                        }
+                                    }
                                 }
-                                for (int i = 0; i < array.length() - 1; i++) {
-                                    JSONObject object = array.getJSONObject(i);
-                                    name = object.getString("std_name");
-                                    enr = object.getString("enr_no");
-                                    mark_attend_models.add(new teacher_mark_attend_model(enr, name, false));
+                                else {
+                                    Log.d("getStudentDetails",response);
+                                    if (array.length() == 0) {
+                                        LAV.setVisibility(View.VISIBLE);
+                                        Save.setVisibility(View.GONE);
+                                    }
+                                    for (int i = 0; i < array.length() - 1; i++) {
+                                        JSONObject object = array.getJSONObject(i);
+                                        name = object.getString("std_name");
+                                        enr = object.getString("enr_no");
+                                        mark_attend_models.add(new teacher_mark_attend_model(enr, name, false));
+                                    }
                                 }
 
                             } catch (JSONException e) {

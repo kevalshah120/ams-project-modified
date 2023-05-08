@@ -187,7 +187,7 @@ public class stu_attendance_fragement extends Fragment {
                                 {
                                     sub_name += " LAB";
                                 }
-                                subject_data.add(new subjectlist_attend_model(sub_name+" ("+sub_code+")",percentage+"%stu"));
+                                subject_data.add(new subjectlist_attend_model(sub_name+" ("+sub_code+")",percentage+"%"));
                             }
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
