@@ -14,15 +14,28 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:layout_marginVertical="10dp">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/stu_profile_image"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_alignParentStart="true"
+            android:layout_marginEnd="5dp"
+            android:layout_centerVertical="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/profile_pic"
+            app:civ_border_color="@color/black"
+            app:civ_border_width="1dp" />
 
         <TextView
             android:id="@+id/student_enr_no"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
+            android:layout_toEndOf="@id/stu_profile_image"
             android:fontFamily="@font/muli_bold"
+            android:layout_marginStart="5dp"
             android:maxLength="12"
-            android:text="206090307004"
+            android:text="@string/stu_enr_number"
             android:textAllCaps="true"
             android:textColor="#200745"
             android:textSize="@dimen/_17sdp" />
@@ -32,8 +45,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/student_enr_no"
-            android:layout_alignParentStart="true"
+            android:layout_toEndOf="@id/stu_profile_image"
             android:fontFamily="@font/muli_semibold"
+            android:layout_marginStart="5dp"
             android:text="@string/student_name"
             android:textAllCaps="true"
             android:textColor="@color/black"

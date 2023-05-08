@@ -81,4 +81,17 @@
     <string name="expiry_time_val">1</string>
     <string name="location_check">Location Check</string>
     <string name="smart_attendance">Smart Attendance</string>
+    <string name="logout">Logout</string>
+    <string name="contact_faculty">Contact Faculty</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="about_us">About Us</string>
+    <string name="attendance">Attendance</string>
+    <string name="home">Home</string>
+    <string name="leave">Leave</string>
+    <string name="student">Student</string>
+    <string name="prof_name">Prof Sanjay Bhalgama</string>
+    <string name="prof_number">+91 9999999999</string>
+    <string name="stu_enr_number">206090307004</string>
+    <string name="div">6A</string>
+    <string name="attendance_count">90 / 100</string>
 </resources>

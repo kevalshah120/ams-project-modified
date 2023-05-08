@@ -9,6 +9,11 @@
         android:title="@string/contact_us"
         android:icon="@drawable/ic_baseline_contact_mail_24"/>
     <item
+        android:id="@+id/contact_faculty"
+        android:title="@string/contact_faculty"
+        android:icon="@drawable/ic_phone_24"
+        />
+    <item
         android:id="@+id/logout"
         android:title="@string/logout"
         android:icon="@drawable/baseline_logout_24"/>

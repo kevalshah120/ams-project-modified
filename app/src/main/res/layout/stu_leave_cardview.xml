@@ -37,29 +37,31 @@
             android:text="@string/leave_from_to_date"
             android:textColor="#200745"
             android:textSize="@dimen/_14sdp" />
-
-        <ImageView
-            android:id="@+id/teacher_icon"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/leave_date"
-            android:layout_alignParentStart="true"
-            android:src="@drawable/ic_teacher_24" />
+            android:layout_alignParentStart="true">
+            <ImageView
+                android:id="@+id/teacher_icon"
+                android:layout_width="@dimen/_18sdp"
+                android:layout_gravity="center"
+                android:layout_height="@dimen/_18sdp"
+                android:src="@drawable/ic_teacher_24" />
 
-        <TextView
-            android:id="@+id/leave_teacher_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/leave_date"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="1dp"
-            android:layout_toEndOf="@id/teacher_icon"
-            android:fontFamily="@font/muli_semibold"
-            android:maxLength="25"
-            android:text="@string/professor_name"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_12sdp" />
-
+            <TextView
+                android:id="@+id/leave_teacher_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="1dp"
+                android:fontFamily="@font/muli_semibold"
+                android:maxLength="25"
+                android:text="@string/professor_name"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp" />
+        </LinearLayout>
         <ImageView
             android:id="@+id/status_tag"
             android:layout_width="wrap_content"

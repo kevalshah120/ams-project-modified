@@ -150,7 +150,7 @@ public class teacher_login extends AppCompatActivity {
     }
     private void OTP_ver(String ID, String PASSS, String mobile_no, String class_name) {
         Intent i = new Intent(teacher_login.this, otp_verification.class);
-        i.putExtra("mobile", mobile_no);
+        i.putExtra("MOBILE", mobile_no);
         i.putExtra("class_name", class_name);
         i.putExtra("ID", ID);
         i.putExtra("PASS", PASS);

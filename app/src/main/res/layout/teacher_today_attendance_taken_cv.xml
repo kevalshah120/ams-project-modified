@@ -40,7 +40,7 @@
                 android:layout_gravity="center"
                 android:background="#DDD7D7"
                 android:fontFamily="@font/muli_semibold"
-                android:text="6A"
+                android:text="@string/div"
                 android:paddingHorizontal="3dp"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_16sdp" />
@@ -53,9 +53,9 @@
             android:layout_height="wrap_content">
             <ImageView
                 android:id="@+id/teacher_icon"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/_20sdp"
                 android:layout_gravity="center"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/_20sdp"
                 android:src="@drawable/ic_teacher_24" />
 
             <TextView
@@ -65,7 +65,7 @@
                 android:layout_marginStart="5dp"
                 android:fontFamily="@font/muli_semibold"
                 android:maxLength="9"
-                android:text="90 / 100"
+                android:text="@string/attendance_count"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_16sdp" />
         </LinearLayout>

@@ -18,14 +18,17 @@ public class login_screen extends AppCompatActivity {
         b1.setOnClickListener(view -> {
             Intent i = new Intent(login_screen.this,student_login.class);
             startActivity(i);
+            finish();
         });
         b2.setOnClickListener(view -> {
             Intent i = new Intent(login_screen.this,teacher_login.class);
             startActivity(i);
+            finish();
         });
         b3.setOnClickListener(view -> {
             Intent i = new Intent(login_screen.this,parent_login.class);
             startActivity(i);
+            finish();
         });
     }
 }

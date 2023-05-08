@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/tea_home_menu"
-        android:title="Home"
+        android:title="@string/home"
         android:icon="@drawable/ic_home_24" />
     <item android:id="@+id/tea_student_menu"
-        android:title="Student"
+        android:title="@string/student"
         android:icon="@drawable/student"/>
     <item android:id="@+id/tea_attendance_menu"
-        android:title="Attendance"
+        android:title="@string/attendance"
         android:icon="@drawable/attendance_icon" />
     <item android:id="@+id/tea_leave_menu"
-        android:title="Leave"
+        android:title="@string/leave"
         android:icon="@drawable/ic_baseline_luggage_24" />
 </menu>
