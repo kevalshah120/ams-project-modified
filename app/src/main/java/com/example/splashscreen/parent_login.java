@@ -61,7 +61,7 @@ public class parent_login extends AppCompatActivity {
                                      */
                                     if(Jobj.getString("result").equalsIgnoreCase("1"))
                                     {
-                                        otp_verpage(PMobile_No,class_name);
+                                        otp_verpage(PMobile_No,class_name,Enrollment_No);
                                     }
                                     // ELSE THROW ERROR USING TOAST
                                     else
@@ -119,8 +119,9 @@ public class parent_login extends AppCompatActivity {
             }
         });
     }
-    private void otp_verpage(String PMobile_No,String class_name) {
+    private void otp_verpage(String PMobile_No,String class_name,String Enrollment) {
         Intent i = new Intent(parent_login.this, otp_verification.class);
+        i.putExtra("ENROLLMENT",Enrollment);
         i.putExtra("MOBILE", PMobile_No);
         i.putExtra("class_name", class_name);
         startActivity(i);

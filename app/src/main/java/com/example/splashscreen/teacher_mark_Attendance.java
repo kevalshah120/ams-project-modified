@@ -7,13 +7,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +57,8 @@ public class teacher_mark_Attendance extends AppCompatActivity {
     boolean firstTime = true;
     sessionForT SFT;
     String temp_div;
+    RadioGroup RG;
+    int selectedID=-1;
     private static String ID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +67,7 @@ public class teacher_mark_Attendance extends AppCompatActivity {
         //--------------------------------------------------------------------------------------------------------------------------------------------
         //DECLARATION AND DEFINITION (START)
         Save = findViewById(R.id.attend_save_btn);
+        RG = findViewById(R.id.attendance_radio_btn);
         int expiry_time = Integer.parseInt(getIntent().getStringExtra("expiry_time")),i = 0;
         boolean smart_attend_switch = getIntent().getBooleanExtra("smart_attend_switch", false);
         String booleanString = Boolean.toString(smart_attend_switch);
@@ -136,6 +144,81 @@ public class teacher_mark_Attendance extends AppCompatActivity {
                 }
             }.start();
         }
+        RG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                selectedID = RG.getCheckedRadioButtonId();
+                RadioButton rb = findViewById(selectedID);
+                if(rb.getText().toString().equals("All Absent"))
+                {
+                    RecyclerView recyclerView = findViewById(R.id.teacher_mark_attend_rv);
+                    RecyclerView.Adapter adapter = recyclerView.getAdapter();
+
+                    for (int position = 0; position < adapter.getItemCount(); position++) {
+                        RecyclerView.ViewHolder viewHolder = recyclerView.findViewHolderForAdapterPosition(position);
+
+                        if (viewHolder != null) {
+                            ImageButton button = viewHolder.itemView.findViewById(R.id.absent_icon);
+                            button.performClick();
+                        } else {
+                            recyclerView.scrollToPosition(position);
+                            recyclerView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+                            recyclerView.layout(0, 0, recyclerView.getMeasuredWidth(), recyclerView.getMeasuredHeight());
+                            recyclerView.getAdapter().onBindViewHolder(recyclerView.findViewHolderForAdapterPosition(position), position);
+
+                            viewHolder = recyclerView.findViewHolderForAdapterPosition(position);
+
+                            if (viewHolder != null) {
+                                ImageButton button = viewHolder.itemView.findViewById(R.id.absent_icon);
+                                button.performClick();
+                            }
+                        }
+                    }
+                }
+                else
+                {
+//                    RecyclerView recyclerView = findViewById(R.id.teacher_mark_attend_rv);
+//                    RecyclerView.Adapter adapter = recyclerView.getAdapter();
+//
+//                    for (int position = 0; position < adapter.getItemCount(); position++) {
+//                        RecyclerView.ViewHolder viewHolder = recyclerView.findViewHolderForAdapterPosition(position);
+//
+//                        if (viewHolder == null) {
+//                            // Create a new view holder for the position if it's not currently bound
+//                            viewHolder = adapter.createViewHolder(recyclerView, adapter.getItemViewType(position));
+//                            adapter.onBindViewHolder(viewHolder, position);
+//                        }
+//
+//                        ImageButton button = viewHolder.itemView.findViewById(R.id.present_icon);
+//                        button.performClick();
+//                    }
+                    RecyclerView recyclerView = findViewById(R.id.teacher_mark_attend_rv);
+                    RecyclerView.Adapter adapter = recyclerView.getAdapter();
+
+                    for (int position = 0; position < adapter.getItemCount(); position++) {
+                        RecyclerView.ViewHolder viewHolder = recyclerView.findViewHolderForAdapterPosition(position);
+
+                        if (viewHolder != null) {
+                            ImageButton button = viewHolder.itemView.findViewById(R.id.present_icon);
+                            button.performClick();
+                        } else {
+                            recyclerView.scrollToPosition(position);
+                            recyclerView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+                            recyclerView.layout(0, 0, recyclerView.getMeasuredWidth(), recyclerView.getMeasuredHeight());
+                            recyclerView.getAdapter().onBindViewHolder(recyclerView.findViewHolderForAdapterPosition(position), position);
+
+                            viewHolder = recyclerView.findViewHolderForAdapterPosition(position);
+
+                            if (viewHolder != null) {
+                                ImageButton button = viewHolder.itemView.findViewById(R.id.present_icon);
+                                button.performClick();
+                            }
+                        }
+                    }
+
+                }
+            }
+        });
         //GUI RELATED CODE (END)
         //--------------------------------------------------------------------------------------------------------------------------------------------
         dataInitialize(); //THIS FUNCTION WILL GET ALL THE STUDENT DATA IN THE PAGE
@@ -162,6 +245,7 @@ public class teacher_mark_Attendance extends AppCompatActivity {
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
+                                Log.d("saveTempAtdToAtdTb",response);
                                 try {
                                     String result = new JSONObject(response).getString("result");
                                     if(result.equals("1"))
@@ -204,6 +288,7 @@ public class teacher_mark_Attendance extends AppCompatActivity {
                 queue.add(stringRequest);
             }
         });
+
     }
     //--------------------------------------------------------------------------------------------------------------------------------------------
     //--------------------------------------------------------------------------------------------------------------------------------------------
@@ -283,7 +368,6 @@ public class teacher_mark_Attendance extends AppCompatActivity {
         };
         queue.add(stringRequest);
     }
-
     //--------------------------------------------------------------------------------------------------------------------------------------------
     private void createAttendenceSession(String OTP)
     {

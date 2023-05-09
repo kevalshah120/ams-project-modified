@@ -27,6 +27,7 @@ public class parent_homescreen extends AppCompatActivity {
     Toolbar toolbar;
     TextView toolbar_textview;
     ActionBarDrawerToggle toogle;
+    sessionForP SFP;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +43,8 @@ public class parent_homescreen extends AppCompatActivity {
         toogle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toogle);
         toogle.syncState();
+        SFP = new sessionForP(getApplication());
+        replaceFragment(new stu_attendance_fragement());
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
             if(id==R.id.contact_us){
@@ -63,6 +66,8 @@ public class parent_homescreen extends AppCompatActivity {
                         .setCancelable(false)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
+                                SFP.setEnrollment("");
+                                SFP.setMobile("");
                                 startActivity(new Intent(getApplicationContext(),login_screen.class));
                                 finish();
                             }
@@ -79,6 +84,7 @@ public class parent_homescreen extends AppCompatActivity {
             drawerLayout.closeDrawer(GravityCompat.START);
             return true;
         });
+
     }
     @Override
     public void onBackPressed() {

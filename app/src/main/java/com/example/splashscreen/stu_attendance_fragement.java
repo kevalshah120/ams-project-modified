@@ -42,7 +42,6 @@ public class stu_attendance_fragement extends Fragment {
     List<subjectlist_attend_model> subject_data;
     private RecyclerView recyclerView;
     String Enrollment_No;
-    sessionForS SFS;
     TextView totalPresent,totalAbsent;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -78,8 +77,16 @@ public class stu_attendance_fragement extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SFS = new sessionForS(requireActivity());
-        Enrollment_No = SFS.getEnrollment();
+        if(getActivity().getLocalClassName().equals("parent_homescreen"))
+        {
+            sessionForP SFP = new sessionForP(requireActivity());
+            Enrollment_No = SFP.getEnrollment();
+        }
+        else
+        {
+            sessionForS SFS = new sessionForS(requireActivity());
+            Enrollment_No = SFS.getEnrollment();
+        }
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -138,7 +145,7 @@ public class stu_attendance_fragement extends Fragment {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("enrollment",SFS.getEnrollment());
+                params.put("enrollment",Enrollment_No);
                 return params;
             }
 

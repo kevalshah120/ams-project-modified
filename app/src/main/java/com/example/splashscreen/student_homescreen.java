@@ -6,6 +6,8 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -15,6 +17,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
+import android.renderscript.ScriptGroup;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -34,6 +38,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -45,10 +57,20 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -61,14 +83,14 @@ public class student_homescreen extends AppCompatActivity {
     ImageView wave_emoji;
     TextView toolbar_textview;
     ActionBarDrawerToggle toogle;
-
     CircleImageView profile_image;
-
     sessionForS SFS;
     FusedLocationProviderClient mFusedLocationClient;
     Handler handler = new Handler();
     Runnable runnable;
     int delay = 10000;
+    Bitmap bitmap;
+    String encodedImage,Enrollment_No;
     private static final int PERMISSION_ID = 44;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,9 +111,12 @@ public class student_homescreen extends AppCompatActivity {
         SFS = new sessionForS(getApplication());
         bottomNavigationView.setSelectedItemId(R.id.home_menu);
         float_add_btn.setVisibility(View.GONE);
+        SFS = new sessionForS(getApplicationContext());
+        Enrollment_No = SFS.getEnrollment();
         replaceFragment(new stu_home_fragement());
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         getLastLocation();
+        getImage();
         bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()){
                 case R.id.home_menu:
@@ -158,7 +183,6 @@ public class student_homescreen extends AppCompatActivity {
             drawerLayout.closeDrawer(GravityCompat.START);
             return true;
         });
-
         float_add_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -187,6 +211,62 @@ public class student_homescreen extends AppCompatActivity {
             }
         });
     }
+
+    private void getImage() {
+        String URL = "https://stocky-baud.000webhostapp.com/fetchImages.php";
+        //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
+        RequestQueue queue = Volley.newRequestQueue(student_homescreen.this);
+        //STRING REQUEST OBJECT INITIALIZATION
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,URL ,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("fetchImages",response);
+                        try {
+                            JSONObject object= new JSONObject(response);
+                            String res = object.getString("result");
+                            Log.d("fetchImages",res);
+                            if(res.equals("1"))
+                            {
+                                String img = object.getString("image");
+                                String imageUrl = "https://stocky-baud.000webhostapp.com/Images/"+img;
+                                Log.d("fetchImages",imageUrl);
+                                Picasso.get()
+                                        .load(imageUrl)
+                                        .into(profile_image);
+                            }
+                            else
+                            {
+                                profile_image.setImageResource(R.drawable.profile_pic);
+                                Log.d("fetchImage","f");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(student_homescreen.this, "Connectivity Error", Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            //GIVING INPUT TO PHP API THROUGH MAP
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("enrollment",Enrollment_No);
+                return params;
+            }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("Content-Type","application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+        queue.add(stringRequest);
+    }
+
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -208,6 +288,7 @@ public class student_homescreen extends AppCompatActivity {
             public void run() {
                 handler.postDelayed(runnable, delay);
                 getLastLocation();
+                getImage();
             }
         }, delay);
         super.onResume();
@@ -292,8 +373,60 @@ public class student_homescreen extends AppCompatActivity {
         if(resultCode == RESULT_OK && data != null)
         {
             Uri image = data.getData();
+            try  {
+                InputStream inputStream = getContentResolver().openInputStream(image);
+                bitmap = BitmapFactory.decodeStream(inputStream);
+                imageStore(bitmap);
+            }
+            catch (FileNotFoundException e)
+            {
+                e.printStackTrace();
+            }
+            uploadImage();
             profile_image.setImageURI(image);
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void uploadImage() {
+        String URL = "https://stocky-baud.000webhostapp.com/uploadImage.php";
+        //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
+        RequestQueue queue = Volley.newRequestQueue(student_homescreen.this);
+        //STRING REQUEST OBJECT INITIALIZATION
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,URL ,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("uploadImage",response);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(student_homescreen.this, "Connectivity Error", Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            //GIVING INPUT TO PHP API THROUGH MAP
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("enrollment",Enrollment_No);
+                params.put("image",encodedImage);
+                return params;
+            }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("Content-Type","application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+        queue.add(stringRequest);
+    }
+
+    private void imageStore(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
+        byte[] imageBytes = stream.toByteArray();
+        encodedImage = android.util.Base64.encodeToString(imageBytes, Base64.DEFAULT);
     }
 }

@@ -66,6 +66,7 @@
             android:orientation="horizontal">
 
             <RadioButton
+                android:id="@+id/allAbsent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/muli_semibold"
@@ -73,6 +74,7 @@
                 android:textSize="@dimen/_13sdp" />
 
             <RadioButton
+                android:id="@+id/allPresent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/muli_semibold"

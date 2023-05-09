@@ -1,6 +1,8 @@
 package com.example.splashscreen;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +31,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -151,6 +155,7 @@ public class teacher_student_frag extends Fragment {
                         student_model = new ArrayList<teacher_student_model>();
                         String enr;
                         String name;
+                        String url;
                         try {
                             JSONArray array = new JSONArray(response);
                             if (array.length() == 0) {
@@ -159,8 +164,9 @@ public class teacher_student_frag extends Fragment {
                             for (int i = 0; i < array.length(); i++) {
                                 JSONObject object = array.getJSONObject(i);
                                 name = object.getString("std_name");
+                                url = object.getString("image");
                                 enr = object.getString("enr_no");
-                                student_model.add(new teacher_student_model(enr, name));
+                                student_model.add(new teacher_student_model(enr, name,url));
                             }
 
                         } catch (JSONException e) {

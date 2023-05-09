@@ -32,6 +32,7 @@ public class otp_verification extends AppCompatActivity {
     TextView resend_otp_tv;
     FirebaseAuth mAuth;
     ProgressBar pgbar;
+    Intent i;
     Button verify_otp_button, back_button;
     String otp_entered, verificationID, class_name;
 
@@ -43,7 +44,7 @@ public class otp_verification extends AppCompatActivity {
         resend_otp_tv = findViewById(R.id.resend_tv);
         pgbar = findViewById(R.id.pgbar);
         resend_otp_tv.setEnabled(false);
-        Intent i = getIntent();
+        i = getIntent();
         class_name = i.getStringExtra("class_name");
         String mobile_val = "+91 ";
         mobile_val += i.getStringExtra("MOBILE");
@@ -88,6 +89,10 @@ public class otp_verification extends AppCompatActivity {
                 otp_entered += otpET6.getText().toString();
 //                verifycode(otp_entered);
                 if (class_name.equals("parent_login")) {
+                    sessionForP SFP;
+                    SFP = new sessionForP(getApplicationContext());
+                    SFP.setEnrollment(i.getStringExtra("ENROLLMENT"));
+                    SFP.setMobile(i.getStringExtra("MOBILE"));
                     Intent intent = new Intent(otp_verification.this, parent_homescreen.class);
                     startActivity(intent);
                     finish();
@@ -197,14 +202,25 @@ public class otp_verification extends AppCompatActivity {
                     verify_otp_button.setVisibility(View.VISIBLE);
                     Toast.makeText(otp_verification.this, "Login Successfull", Toast.LENGTH_SHORT).show();
                     if (class_name.equals("parent_login")) {
+                        sessionForP SFP;
+                        SFP = new sessionForP(getApplicationContext());
+                        SFP.setEnrollment(i.getStringExtra("ENROLLMENT"));
+                        SFP.setMobile(i.getStringExtra("MOBILE"));
                         Intent intent = new Intent(otp_verification.this, parent_homescreen.class);
                         startActivity(intent);
                         finish();
-                    } else if (class_name.equals("student_login")) {
+                    } else if (class_name.equals("student_login")) {sessionForS SFS;
+                        SFS = new sessionForS(getApplication());
+                        SFS.setEnrollment(i.getStringExtra("ENROLLMENT"));
+                        SFS.setMobile(i.getStringExtra("MOBILE"));
                         Intent intent = new Intent(otp_verification.this, student_homescreen.class);
                         startActivity(intent);
                         finish();
                     } else if (class_name.equals("teacher_login")) {
+                        sessionForT SFT;
+                        SFT = new sessionForT(getApplication());
+                        SFT.setLogin(i.getStringExtra("ID"));
+                        SFT.setPass(i.getStringExtra("PASS"));
                         Intent intent = new Intent(otp_verification.this, teacher_homescreen.class);
                         startActivity(intent);
                         finish();
