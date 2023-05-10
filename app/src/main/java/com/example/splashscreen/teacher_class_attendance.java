@@ -230,85 +230,87 @@ public class teacher_class_attendance extends AppCompatActivity {
         div_et.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean bol) {
-                if(bol)
-                {
-                    div_et.setText("");
-                    div_selected_pos.clear();
-                    //-------------------------------------------------------------------------------------------------------------
-                    // FETCHING DATA FOR SUBJECT NAMES AND DIVISIONS
-                    String URL = "https://stocky-baud.000webhostapp.com/getDivForTeacher.php";
-                    //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
-                    RequestQueue queue = Volley.newRequestQueue(teacher_class_attendance.this);
-                    //STRING REQUEST OBJECT INITIALIZATION
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
-                            new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {
-                                    try {
-                                        Log.d("Response",response);
-                                        div_et.setEnabled(true);
-                                        JSONArray array = new JSONArray(response);
-                                        div_list = new String[array.length()];
-                                        for (int i = 0; i < array.length(); i++) {
-                                            JSONObject object = array.getJSONObject(i);
-                                            div_list[i] = object.getString("division");
+                if (sub_et.getText().toString().isEmpty()) {
+                    div_et.setEnabled(false);
+                } else {
+                    if (bol) {
+                        div_et.setText("");
+                        div_selected_pos.clear();
+                        //-------------------------------------------------------------------------------------------------------------
+                        // FETCHING DATA FOR SUBJECT NAMES AND DIVISIONS
+                        String URL = "https://stocky-baud.000webhostapp.com/getDivForTeacher.php";
+                        //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
+                        RequestQueue queue = Volley.newRequestQueue(teacher_class_attendance.this);
+                        //STRING REQUEST OBJECT INITIALIZATION
+                        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
+                                new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        try {
+                                            Log.d("Response", response);
+                                            div_et.setEnabled(true);
+                                            JSONArray array = new JSONArray(response);
+                                            div_list = new String[array.length()];
+                                            for (int i = 0; i < array.length(); i++) {
+                                                JSONObject object = array.getJSONObject(i);
+                                                div_list[i] = object.getString("division");
+                                            }
+                                        } catch (JSONException e) {
+                                            throw new RuntimeException(e);
                                         }
-                                    } catch (JSONException e) {
-                                        throw new RuntimeException(e);
+                                        Log.d("Response", response);
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(teacher_class_attendance.this);
+                                        builder.setTitle("Division");
+                                        builder.setMultiChoiceItems(div_list, checked_divs, (dialogInterface, i, b) -> {
+                                            if (b) {
+                                                if (!div_selected_pos.contains(i)) {
+                                                    div_selected_pos.add(i);
+                                                    div_et.clearFocus();
+                                                    div_et.setInputType(InputType.TYPE_NULL);
+                                                }
+                                            } else {
+                                                div_selected_pos.remove((Integer) i);
+                                            }
+                                        });
+                                        builder.setPositiveButton("OK", (dialogInterface, i) -> {
+                                            StringBuilder div_selected_val = new StringBuilder();
+                                            for (int count_val = 0; count_val < div_selected_pos.size(); count_val++) {
+                                                div_selected_val.append(div_list[div_selected_pos.get(count_val)]);
+                                                if (count_val + 1 != div_selected_pos.size()) {
+                                                    div_selected_val.append(",");
+                                                }
+                                            }
+                                            div_et.setText(div_selected_val.toString());
+                                        });
+                                        builder.setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.dismiss());
+                                        builder.show();
+                                        div_selected_pos.clear();
                                     }
-                                    Log.d("Response",response);
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(teacher_class_attendance.this);
-                                    builder.setTitle("Division");
-                                    builder.setMultiChoiceItems(div_list, checked_divs, (dialogInterface, i, b) -> {
-                                        if(b){
-                                            if(!div_selected_pos.contains(i)){
-                                                div_selected_pos.add(i);
-                                                div_et.clearFocus();
-                                                div_et.setInputType(InputType.TYPE_NULL);
-                                            }
-                                        }
-                                        else{
-                                            div_selected_pos.remove((Integer) i);
-                                        }
-                                    });
-                                    builder.setPositiveButton("OK", (dialogInterface, i) -> {
-                                        StringBuilder div_selected_val = new StringBuilder();
-                                        for(int count_val = 0; count_val < div_selected_pos.size() ; count_val++)
-                                        {
-                                            div_selected_val.append(div_list[div_selected_pos.get(count_val)]);
-                                            if (count_val + 1 != div_selected_pos.size()) {
-                                                div_selected_val.append(",");
-                                            }
-                                        }
-                                        div_et.setText(div_selected_val.toString());
-                                    });
-                                    builder.setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.dismiss());
-                                    builder.show();
-                                    div_selected_pos.clear();
-                                }
-                            }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Log.d("Response","fuck");
-                            Toast.makeText(teacher_class_attendance.this, "Connectivity Error", Toast.LENGTH_SHORT).show();
-                        }
-                    }) {
-                        @Override
-                        //GIVING INPUT TO PHP API THROUGH MAP
-                        protected Map<String, String> getParams() {
-                            Map<String, String> params = new HashMap<String, String>();
-                            params.put("subject",Subject);
-                            return params;
-                        }
-                        @Override
-                        public Map<String, String> getHeaders() throws AuthFailureError {
-                            Map<String, String> params = new HashMap<String, String>();
-                            params.put("Content-Type", "application/x-www-form-urlencoded");
-                            return params;
-                        }
-                    };
-                    queue.add(stringRequest);
-                    //-------------------------------------------------------------------------------------------------------------
+                                }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.d("Response", "fuck");
+                                Toast.makeText(teacher_class_attendance.this, "Connectivity Error", Toast.LENGTH_SHORT).show();
+                            }
+                        }) {
+                            @Override
+                            //GIVING INPUT TO PHP API THROUGH MAP
+                            protected Map<String, String> getParams() {
+                                Map<String, String> params = new HashMap<String, String>();
+                                params.put("subject", Subject);
+                                return params;
+                            }
+
+                            @Override
+                            public Map<String, String> getHeaders() throws AuthFailureError {
+                                Map<String, String> params = new HashMap<String, String>();
+                                params.put("Content-Type", "application/x-www-form-urlencoded");
+                                return params;
+                            }
+                        };
+                        queue.add(stringRequest);
+                        //-------------------------------------------------------------------------------------------------------------
+                    }
                 }
             }
         });

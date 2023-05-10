@@ -14,16 +14,16 @@ public class sessionForS {
 
     public void setEnrollment(String Enr) {
 
-        prefs.edit().putString("Enrollment", Enr).commit();
+        prefs.edit().putString("EnrStu", Enr).commit();
     }
 
     public String getEnrollment() {
-        String Login = prefs.getString("Enrollment","");
+        String Login = prefs.getString("EnrStu","");
         return Login;
     }
     public void setMobile(String Mobile) {
 
-        prefs.edit().putString("setMobile", Mobile).commit();
+        prefs.edit().putString("setMobileStu", Mobile).commit();
     }
     public void setLocation(String LOC) {
 
@@ -34,7 +34,7 @@ public class sessionForS {
         return LOC;
     }
     public String getMobile() {
-        String Pass = prefs.getString("setMobile","");
+        String Pass = prefs.getString("setMobileStu","");
         return Pass;
     }
 }

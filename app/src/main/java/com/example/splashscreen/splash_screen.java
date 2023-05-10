@@ -56,10 +56,13 @@ public class splash_screen extends AppCompatActivity {
             public void run() {
                 SFT = new sessionForT(getApplication());
                 SFS = new sessionForS(getApplication());
+                SFP = new sessionForP(getApplication());
                 if (!SFT.getLogin().isEmpty() && !SFT.getPass().isEmpty()) {
                     //CLEAR DATA FROM OTHER LOGINS (START)
                     SFS.setMobile("");
                     SFS.setEnrollment("");
+                    SFP.setEnrollment("");
+                    SFP.setMobile("");
                     //CLEAR DATA FROM OTHER LOGINS (END)
                     String ID = SFT.getLogin();
                     String PASS = SFT.getPass();
@@ -83,6 +86,12 @@ public class splash_screen extends AppCompatActivity {
                                         // ELSE THROW ERROR USING TOAST
                                         else {
                                             Intent i = new Intent(getApplication(), login_screen.class);
+                                            SFP.setEnrollment("");
+                                            SFP.setMobile("");
+                                            SFT.setLogin("");
+                                            SFT.setPass("");
+                                            SFS.setEnrollment("");
+                                            SFS.setMobile("");
                                             startActivity(i);
                                             finish();
                                         }
@@ -117,6 +126,12 @@ public class splash_screen extends AppCompatActivity {
                 }
                 else if (!SFS.getMobile().isEmpty() && !SFS.getEnrollment().isEmpty())
                 {
+                    //CLEAR DATA FROM OTHER LOGINS (START)
+                    SFP.setMobile("");
+                    SFP.setEnrollment("");
+                    SFT.setLogin("");
+                    SFT.setPass("");
+                    //CLEAR DATA FROM OTHER LOGINS (END)
                     String URL = "https://stocky-baud.000webhostapp.com/CheckforStudent.php";
                     //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
                     RequestQueue queue = Volley.newRequestQueue(splash_screen.this);
@@ -140,6 +155,12 @@ public class splash_screen extends AppCompatActivity {
                                         else
                                         {
                                             Intent i = new Intent(getApplication(), login_screen.class);
+                                            SFP.setEnrollment("");
+                                            SFP.setMobile("");
+                                            SFT.setLogin("");
+                                            SFT.setPass("");
+                                            SFS.setEnrollment("");
+                                            SFS.setMobile("");
                                             startActivity(i);
                                             finish();
                                         }
@@ -171,7 +192,75 @@ public class splash_screen extends AppCompatActivity {
                     };
                     queue.add(stringRequest);
                 }
-                else {
+                else if(!SFP.getEnrollment().isEmpty() && !SFP.getMobile().isEmpty())
+                {
+                    //CLEAR DATA FROM OTHER LOGINS (START)
+                    SFS.setMobile("");
+                    SFS.setEnrollment("");
+                    SFT.setLogin("");
+                    SFT.setPass("");
+                    //URL FOR FETCHING API DATA
+                    String URL = "https://stocky-baud.000webhostapp.com/CheckforParent.php";
+                    //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
+                    RequestQueue queue = Volley.newRequestQueue(splash_screen.this);
+                    //STRING REQUEST OBJECT INITIALIZATION
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST,URL ,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    try {
+                                        JSONObject Jobj = new JSONObject(response);
+                                    /*
+                                    IF RESULT IS 1 ThAT MEANS DATA IS PRESENT IN DATABASE
+                                     */
+                                        if(Jobj.getString("result").equalsIgnoreCase("1"))
+                                        {
+                                            Intent i = new Intent(getApplication(), parent_homescreen.class);
+                                            startActivity(i);
+                                            finish();
+                                        }
+                                        // ELSE THROW ERROR USING TOAST
+                                        else
+                                        {
+                                            Intent i = new Intent(getApplication(), login_screen.class);
+                                            SFP.setEnrollment("");
+                                            SFP.setMobile("");
+                                            SFT.setLogin("");
+                                            SFT.setPass("");
+                                            SFS.setEnrollment("");
+                                            SFS.setMobile("");
+                                            startActivity(i);
+                                            finish();
+                                        }
+                                    } catch (JSONException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                }
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(splash_screen.this, "Connectivity Error", Toast.LENGTH_SHORT).show();
+                        }
+                    }){
+                        @Override
+                        //GIVING INPUT TO PHP API THROUGH MAP
+                        protected Map<String,String> getParams(){
+                            Map<String,String> params = new HashMap<String, String>();
+                            params.put("enrollment",SFP.getEnrollment());
+                            params.put("mobile_no",SFP.getMobile());
+                            return params;
+                        }
+                        @Override
+                        public Map<String, String> getHeaders() throws AuthFailureError {
+                            Map<String,String> params = new HashMap<String, String>();
+                            params.put("Content-Type","application/x-www-form-urlencoded");
+                            return params;
+                        }
+                    };
+                    queue.add(stringRequest);
+                }
+                else
+                {
                     Intent i = new Intent(splash_screen.this, login_screen.class);
                     startActivity(i);
                     finish();

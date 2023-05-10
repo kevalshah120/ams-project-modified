@@ -14,13 +14,14 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:layout_marginVertical="10dp">
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/stu_profile_image"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
             android:layout_alignParentStart="true"
-            android:layout_marginEnd="5dp"
             android:layout_centerVertical="true"
+            android:layout_marginEnd="5dp"
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/profile_pic"
