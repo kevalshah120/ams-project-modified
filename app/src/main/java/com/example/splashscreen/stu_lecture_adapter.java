@@ -81,7 +81,7 @@ public class stu_lecture_adapter extends RecyclerView.Adapter<stu_lecture_adapte
             dialog.show();
             submit.setOnClickListener(view1 -> {
                 pgbar.setVisibility(View.VISIBLE);
-                holder.markButton.setVisibility(View.INVISIBLE);
+                submit.setVisibility(View.INVISIBLE);
                 attend_code = attendance_code.getText().toString();
                 String URL = "https://stocky-baud.000webhostapp.com/markAttendanceWithOTP.php";
                 if(location.equals("1"))
@@ -102,7 +102,7 @@ public class stu_lecture_adapter extends RecyclerView.Adapter<stu_lecture_adapte
                                             Log.d("RESULT", response);
                                             String RESULT = Jobj.getString("RESULT");
                                             pgbar.setVisibility(View.INVISIBLE);
-                                            holder.markButton.setVisibility(View.VISIBLE);
+                                            submit.setVisibility(View.VISIBLE);
                                             Toast.makeText(context, RESULT, Toast.LENGTH_LONG).show();
                                             dialog.dismiss();
                                         } catch (JSONException e) {
@@ -113,7 +113,7 @@ public class stu_lecture_adapter extends RecyclerView.Adapter<stu_lecture_adapte
                             @Override
                             public void onErrorResponse(VolleyError error) {
                                 pgbar.setVisibility(View.INVISIBLE);
-                                holder.markButton.setVisibility(View.VISIBLE);
+                                submit.setVisibility(View.VISIBLE);
                                 Toast.makeText(context.getApplicationContext(), "Connectivity Error", Toast.LENGTH_SHORT).show();
                             }
                         }) {
@@ -143,7 +143,7 @@ public class stu_lecture_adapter extends RecyclerView.Adapter<stu_lecture_adapte
                     {
                         Toast.makeText(context, "Location Mismatched", Toast.LENGTH_SHORT).show();
                         pgbar.setVisibility(View.INVISIBLE);
-                        holder.markButton.setVisibility(View.VISIBLE);
+                        submit.setVisibility(View.VISIBLE);
                         dialog.dismiss();
                     }
                 }
@@ -162,7 +162,7 @@ public class stu_lecture_adapter extends RecyclerView.Adapter<stu_lecture_adapte
                                         Log.d("RESULT", response);
                                         String RESULT = Jobj.getString("RESULT");
                                         pgbar.setVisibility(View.INVISIBLE);
-                                        holder.markButton.setVisibility(View.VISIBLE);
+                                        submit.setVisibility(View.VISIBLE);
                                         Toast.makeText(context, RESULT, Toast.LENGTH_LONG).show();
                                         dialog.dismiss();
                                     } catch (JSONException e) {
@@ -173,7 +173,7 @@ public class stu_lecture_adapter extends RecyclerView.Adapter<stu_lecture_adapte
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             pgbar.setVisibility(View.INVISIBLE);
-                            holder.markButton.setVisibility(View.VISIBLE);
+                            submit.setVisibility(View.VISIBLE);
                             Toast.makeText(context.getApplicationContext(), "Connectivity Error", Toast.LENGTH_SHORT).show();
                         }
                     }) {
