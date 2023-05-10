@@ -66,7 +66,7 @@ public class leave_data extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(leave_data.this);
         //STRING REQUEST OBJECT INITIALIZATION
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
-                    new Response.Listener<String>() {
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
@@ -130,10 +130,10 @@ public class leave_data extends AppCompatActivity {
                 pgbar.setVisibility(View.INVISIBLE);
                 submit.setVisibility(View.VISIBLE);
             }
-            if (to_DATE.compareTo(from_DATE) < 0) {
+            else if (to_DATE.compareTo(from_DATE) < 0) {
+                Toast.makeText(leave_data.this, "Please select a TO Date after From Date", Toast.LENGTH_SHORT).show();
                 pgbar.setVisibility(View.INVISIBLE);
                 submit.setVisibility(View.VISIBLE);
-                Toast.makeText(leave_data.this, "Please select a TO Date after From Date", Toast.LENGTH_SHORT).show();
             }
             else {
                 String to_year = "";
@@ -148,19 +148,19 @@ public class leave_data extends AppCompatActivity {
                 int i = 0;
                 while (i < fromSize) {
                     if (dashFOUND == 0) {
-                        if (from_DATE.charAt(i) == ' ') {
-                            dashFOUND++;
-                        } else {
-                            from_date += from_DATE.charAt(i);
-                        }
-                    } else if (dashFOUND == 1) {
-                        if (from_DATE.charAt(i) == ' ') {
+                        if (from_DATE.charAt(i) == '/') {
                             dashFOUND++;
                         } else {
                             from_month += from_DATE.charAt(i);
                         }
+                    } else if (dashFOUND == 1) {
+                        if (from_DATE.charAt(i) == '/') {
+                            dashFOUND++;
+                        } else {
+                            from_date += from_DATE.charAt(i);
+                        }
                     } else {
-                        if (from_DATE.charAt(i) == ' ') {
+                        if (from_DATE.charAt(i) == '/') {
                             dashFOUND++;
                         } else {
                             from_year += from_DATE.charAt(i);
@@ -172,19 +172,20 @@ public class leave_data extends AppCompatActivity {
                 dashFOUND = 0;
                 while (i < toSize) {
                     if (dashFOUND == 0) {
-                        if (to_DATE.charAt(i) == ' ') {
+                        if (to_DATE.charAt(i) == '/') {
+                            dashFOUND++;
+                        } else {
+                            to_month += to_DATE.charAt(i);
+
+                        }
+                    } else if (dashFOUND == 1) {
+                        if (to_DATE.charAt(i) == '/') {
                             dashFOUND++;
                         } else {
                             to_date += to_DATE.charAt(i);
                         }
-                    } else if (dashFOUND == 1) {
-                        if (to_DATE.charAt(i) == ' ') {
-                            dashFOUND++;
-                        } else {
-                            to_month += to_DATE.charAt(i);
-                        }
                     } else {
-                        if (to_DATE.charAt(i) == ' ') {
+                        if (to_DATE.charAt(i) == '/') {
                             dashFOUND++;
                         } else {
                             to_year += to_DATE.charAt(i);
@@ -272,15 +273,37 @@ public class leave_data extends AppCompatActivity {
         });
     }
 
-    private void datepicker_fun(EditText date_text) {
+    private void datepicker_fun(EditText date_text)
+    {
         DatePickerDialog.OnDateSetListener dpd = new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onDateSet(DatePicker datePicker, int i1, int i2, int i3) {
-                int month = i2 + 1;
-                date_text.setText(i3 + " " + month + " " + i1);
+            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                int month = i1+1;
+                if(i2<10)
+                {
+                    if(month<10)
+                    {
+                        date_text.setText("0"+month+"/"+"0"+i2+"/"+i);
+                    }
+                    else
+                    {
+                        date_text.setText(month+"/"+"0"+i2+"/"+i);
+                    }
+                }
+                else
+                {
+                    if(month<10)
+                    {
+                        date_text.setText("0"+month+"/"+i2+"/"+i);
+                    }
+                    else
+                    {
+                        date_text.setText(month+"/"+i2+"/"+i);
+                    }
+                }
             }
         };
-        DatePickerDialog d = new DatePickerDialog(leave_data.this, dpd, year, month, day);
+        DatePickerDialog d = new DatePickerDialog(leave_data.this, dpd,year,month,day);
         d.show();
     }
 }

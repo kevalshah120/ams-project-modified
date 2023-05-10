@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -39,6 +40,7 @@ public class parent_login extends AppCompatActivity {
         pgbar = findViewById(R.id.pgbar);
         back = findViewById(R.id.back_button);
         login_btn = findViewById(R.id.par_login_button);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         back.setOnClickListener(view -> {
             Intent i = new Intent(parent_login.this,login_screen.class);
             startActivity(i);
@@ -141,6 +143,7 @@ public class parent_login extends AppCompatActivity {
     }
     private void otp_verpage(String PMobile_No,String class_name) {
         Intent i = new Intent(parent_login.this, otp_verification.class);
+        i.putExtra("ENROLLMENT",Enrollment_No);
         i.putExtra("MOBILE", PMobile_No);
         i.putExtra("class_name", class_name);
         startActivity(i);
