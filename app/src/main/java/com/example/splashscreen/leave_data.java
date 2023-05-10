@@ -66,7 +66,7 @@ public class leave_data extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(leave_data.this);
         //STRING REQUEST OBJECT INITIALIZATION
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
-                new Response.Listener<String>() {
+                    new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {

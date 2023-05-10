@@ -3,6 +3,7 @@ package com.example.splashscreen;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -39,6 +40,7 @@ public class student_login extends AppCompatActivity {
         enr_no = findViewById(R.id.enr_no);
         back = findViewById(R.id.back_button);
         login = findViewById(R.id.login_button);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         pgbar = findViewById(R.id.pgbar);
         back.setOnClickListener(view -> {
             Intent i = new Intent(student_login.this,login_screen.class);

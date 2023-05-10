@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -46,6 +47,7 @@ public class teacher_login extends AppCompatActivity {
         back = findViewById(R.id.back_button);
         login = findViewById(R.id.login_button);
         pgbar = findViewById(R.id.pgbar);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         back.setOnClickListener(view -> {
             Intent i = new Intent(teacher_login.this, login_screen.class);
             startActivity(i);

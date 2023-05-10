@@ -18,6 +18,7 @@ public class subjectlist_attend_adapter extends RecyclerView.Adapter<subjectlist
     Context context;
     String Enrollment_no;
     sessionForS SFS;
+    sessionForP SFP;
     public subjectlist_attend_adapter(Context context, List<subjectlist_attend_model> subject_data) {
         this.context = context;
         this.subject_Data = subject_data;
@@ -28,7 +29,15 @@ public class subjectlist_attend_adapter extends RecyclerView.Adapter<subjectlist
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.subject_attend_cv, parent, false);
         SFS = new sessionForS(view.getContext());
-        Enrollment_no = SFS.getEnrollment();
+        SFP = new sessionForP(view.getContext());
+        if(SFP.getEnrollment().isEmpty())
+        {
+            Enrollment_no = SFS.getEnrollment();
+        }
+        else
+        {
+            Enrollment_no = SFP.getEnrollment();
+        }
         return new MyViewHolder(view);
     }
 

@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -44,6 +45,7 @@ public class otp_verification extends AppCompatActivity {
         resend_otp_tv = findViewById(R.id.resend_tv);
         pgbar = findViewById(R.id.pgbar);
         resend_otp_tv.setEnabled(false);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         i = getIntent();
         class_name = i.getStringExtra("class_name");
         String mobile_val = "+91 ";

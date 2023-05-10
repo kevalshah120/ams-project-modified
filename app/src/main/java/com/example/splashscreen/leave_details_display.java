@@ -2,6 +2,7 @@ package com.example.splashscreen;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,6 +23,7 @@ public class leave_details_display extends AppCompatActivity {
         leave_desc = findViewById(R.id.Leave_description);
         stu_name = findViewById(R.id.stu_name);
         Intent intent = getIntent();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         leave_nameS = intent.getStringExtra("leave_name");
         DATE = intent.getStringExtra("Date");
         descS = intent.getStringExtra("desc");

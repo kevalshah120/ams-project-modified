@@ -1,6 +1,7 @@
 package com.example.splashscreen;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,7 @@ import java.util.List;
 public class leave_history_adapter extends RecyclerView.Adapter<leave_history_adapter.MyViewHolder>{
     private List<leave_history_model> leave_history_data;
     Context context;
-
+    String stu_name,leave_name,description,sem_no,date;
     public leave_history_adapter(Context context, List<leave_history_model> leave_history_data) {
         this.context = context;
         this.leave_history_data = leave_history_data;
@@ -33,13 +34,18 @@ public class leave_history_adapter extends RecyclerView.Adapter<leave_history_ad
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        String stu_name = leave_history_data.get(position).getStu_name();
-        String date = leave_history_data.get(position).getDate();
-        String sem_no = leave_history_data.get(position).getSem_no();
-        String leave_name = leave_history_data.get(position).getLeave_name();
-        String description = leave_history_data.get(position).getDescription();
+        stu_name = leave_history_data.get(position).getStu_name();
+        date = leave_history_data.get(position).getDate();
+        sem_no = leave_history_data.get(position).getSem_no();
+        leave_name = leave_history_data.get(position).getLeave_name();
+        description = leave_history_data.get(position).getDescription();
         int tag = leave_history_data.get(position).getTag();
-
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.showDesc(holder);
+            }
+        });
         holder.setData(stu_name,date,sem_no,leave_name,description,tag);
     }
 
@@ -72,6 +78,15 @@ public class leave_history_adapter extends RecyclerView.Adapter<leave_history_ad
             textView3_date.setText(date);
             textView4_sem_no.setText(sem_no);
             Iamgeview_tag.setImageResource(tag);
+        }
+        private void showDesc(leave_history_adapter.MyViewHolder holder)
+        {
+            Intent i = new Intent(holder.itemView.getContext(),leave_details_display.class);
+            i.putExtra("leave_name",leave_name);
+            i.putExtra("Date",date);
+            i.putExtra("desc",description);
+            i.putExtra("stu_name",stu_name);
+            holder.itemView.getContext().startActivity(i);
         }
     }
 }
