@@ -113,6 +113,19 @@ public class student_homescreen extends AppCompatActivity {
         float_add_btn.setVisibility(View.GONE);
         SFS = new sessionForS(getApplicationContext());
         Enrollment_No = SFS.getEnrollment();
+        String Name = SFS.getName();
+        int Space = Name.length() - Name.replaceAll(" ", "").length();
+        if(Space > 1)
+        {
+            int first = Name.indexOf(" ");
+            int second = Name.indexOf(" ", first + 1);
+            Name = Name.substring(first ,second);
+        }
+        else
+        {
+            Name = Name.substring(Name.indexOf(" "),Name.length()-1);
+        }
+        toolbar_textview.setText("Hi "+Name);
         replaceFragment(new stu_home_fragement());
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         getLastLocation();
@@ -298,11 +311,6 @@ public class student_homescreen extends AppCompatActivity {
         super.onPause();
         handler.removeCallbacks(runnable); //stop handler when activity not visible super.onPause();
     }
-    //    private void disableEditText(EditText T)
-//    {
-//        T.setFocusable(false);
-//        T.setCursorVisible(false);
-//    }
     private void getLastLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PERMISSION_GRANTED) {
             LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);

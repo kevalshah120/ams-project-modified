@@ -87,7 +87,7 @@ public class stu_lecture_adapter extends RecyclerView.Adapter<stu_lecture_adapte
                 if(location.equals("1"))
                 {
                     String currentLocation = SFS.getLocation();
-                    if(currentLocation.equals("Navarang Society")) {
+                    if(currentLocation.equals("wadhwan") ) {
                         //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
                         RequestQueue queue = Volley.newRequestQueue(context.getApplicationContext());
                         //STRING REQUEST OBJECT INITIALIZATION

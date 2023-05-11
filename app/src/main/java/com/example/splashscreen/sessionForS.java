@@ -26,8 +26,6 @@ public class sessionForS {
         prefs.edit().putString("setMobileStu", Mobile).commit();
     }
     public void setLocation(String LOC) {
-
-        prefs.edit().putString("setLocation", LOC).commit();
     }
     public String getLocation() {
         String LOC = prefs.getString("setLocation","");
@@ -36,5 +34,12 @@ public class sessionForS {
     public String getMobile() {
         String Pass = prefs.getString("setMobileStu","");
         return Pass;
+    }
+    public String getName() {
+        String LOC = prefs.getString("Name","");
+        return LOC;
+    }
+    public void setName(String name) {
+        prefs.edit().putString("Name",name).commit();
     }
 }

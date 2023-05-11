@@ -2,6 +2,7 @@ package com.example.splashscreen;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,12 +32,6 @@ import java.util.Map;
 public class teacher_leave_adapter extends RecyclerView.Adapter<teacher_leave_adapter.MyViewHolder> {
     private List<teacher_leave_model> tea_leave_data;
     Context context;
-    String leave_name ;
-    String stu_name ;
-    String date ;
-    String sem_no ;
-    String leave_id ;
-    String desc;
 
     public teacher_leave_adapter(Context context, List<teacher_leave_model> tea_leave_data) {
         this.context = context;
@@ -53,17 +48,18 @@ public class teacher_leave_adapter extends RecyclerView.Adapter<teacher_leave_ad
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        String leave_name ,stu_name ,date ,sem_no ,leave_id ,desc;
          leave_name = tea_leave_data.get(position).getLeave_name();
          stu_name = tea_leave_data.get(position).getStu_name();
          date = tea_leave_data.get(position).getDate();
          sem_no = tea_leave_data.get(position).getSem_no();
          leave_id = tea_leave_data.get(position).getLeave_id();
         desc = tea_leave_data.get(position).getDescription();
-        holder.setData(leave_name, stu_name, date, sem_no, leave_id);
+        holder.setData(leave_name, stu_name, date, sem_no);
         holder.leave_cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDesc(holder);
+                showDesc(holder,leave_name,date,desc,sem_no);
             }
         });
 
@@ -109,6 +105,7 @@ public class teacher_leave_adapter extends RecyclerView.Adapter<teacher_leave_ad
             //GIVING INPUT TO PHP API THROUGH MAP
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
+                Log.d("Leave_id_adapter",lID);
                 params.put("id", lID);
                 params.put("action", String.valueOf(action));
                 return params;
@@ -125,7 +122,7 @@ public class teacher_leave_adapter extends RecyclerView.Adapter<teacher_leave_ad
         return result;
     }
 
-    private void showDesc(MyViewHolder holder)
+    private void showDesc(MyViewHolder holder,String leave_name,String date,String desc,String stu_name)
     {
         Intent i = new Intent(holder.itemView.getContext(),leave_details_display.class);
         i.putExtra("leave_name",leave_name);
@@ -146,7 +143,6 @@ public class teacher_leave_adapter extends RecyclerView.Adapter<teacher_leave_ad
         private final TextView textView4_sem_no;
         private final ImageButton approve_button;
         private final ImageButton reject_button;
-
         private final CardView leave_cv;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -158,10 +154,9 @@ public class teacher_leave_adapter extends RecyclerView.Adapter<teacher_leave_ad
             approve_button = itemView.findViewById(R.id.approve_icon);
             reject_button = itemView.findViewById(R.id.reject_icon);
             leave_cv = itemView.findViewById(R.id.teacher_leave_cardview);
-
         }
 
-        public void setData(String leave_name, String stu_name, String date, String sem_no, String leave_id) {
+        public void setData(String leave_name, String stu_name, String date, String sem_no) {
             textView1_leave_name.setText(leave_name);
             textView2_stu_name.setText(stu_name);
             textView3_date.setText(date);

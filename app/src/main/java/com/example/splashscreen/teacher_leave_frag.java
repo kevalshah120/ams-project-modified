@@ -1,7 +1,9 @@
 package com.example.splashscreen;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -123,45 +125,28 @@ public class teacher_leave_frag extends Fragment {
         //STRING REQUEST OBJECT INITIALIZATION
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
                 new Response.Listener<String>() {
+                    @SuppressLint("NotifyDataSetChanged")
                     @Override
                     public void onResponse(String response) {
                         try {
                             JSONArray array = new JSONArray(response);
-                            String semester[] = new String[array.length()];
-                            String Leave_name[] = new String[array.length()];
-                            String from_date[] = new String[array.length()];
-                            String to_date[] = new String[array.length()];
-                            String std_name[] = new String[array.length()];
-                            String finalDate[] = new String[array.length()];
-                            String leave_id[] = new String[array.length()];
-                            String desc[] = new String[array.length()];
+                            String semester,Leave_name ,from_date, to_date , std_name , finalDate , leave_id ,desc ;
                             if(array.length()==0)
                             {
                                 LAV.setVisibility(View.VISIBLE);
                             }
                             for (int i = 0; i < array.length(); i++) {
                                 JSONObject object = array.getJSONObject(i);
-                                if (object.has("semester")) {
-                                    semester[i] = object.getString("semester");
-                                }
-                                if (object.has("leave_name")) {
-                                    Leave_name[i] = object.getString("leave_name");
-                                }
-                                if (object.has("from_date")) {
-                                    from_date[i] = object.getString("from_date");
-                                }
-                                if (object.has("to_date")) {
-                                    to_date[i] = object.getString("to_date");
-                                }
-                                if (object.has("std_name")) {
-                                    std_name[i] = object.getString("std_name");
-                                }
-                                if (object.has("description")) {
-                                    desc[i] = object.getString("description");
-                                }
-                                leave_id[i]= object.getString("leave_id");
-                                finalDate[i] = stu_leave_fragement.dateConversion(from_date[i], to_date[i]);
-                                tea_leave_data.add(new teacher_leave_model(Leave_name[i],finalDate[i],std_name[i] ,semester[i]+" SEM",leave_id[i],desc[i]));
+                                    semester = object.getString("semester");
+                                    Leave_name = object.getString("leave_name");
+                                    from_date = object.getString("from_date");
+                                    to_date = object.getString("to_date");
+                                    std_name = object.getString("std_name");
+                                    desc = object.getString("description");
+                                leave_id= object.getString("leave_id");
+                                Log.d("Leave_id",leave_id);
+                                finalDate = stu_leave_fragement.dateConversion(from_date, to_date);
+                                tea_leave_data.add(new teacher_leave_model(Leave_name,finalDate,std_name ,semester+" SEM",leave_id,desc));
                             }
                             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                             recyclerView.setHasFixedSize(true);

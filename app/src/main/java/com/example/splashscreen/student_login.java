@@ -2,6 +2,7 @@ package com.example.splashscreen;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -19,6 +20,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -69,13 +71,14 @@ public class student_login extends AppCompatActivity {
                             @Override
                             public void onResponse(String response) {
                                 try {
-                                    JSONObject Jobj = new JSONObject(response);
+                                    JSONObject Jobj = new JSONArray(response).getJSONObject(0);
+
                                     /*
                                     IF RESULT IS 1 ThAT MEANS DATA IS PRESENT IN DATABASE
                                      */
                                     if(Jobj.getString("result").equalsIgnoreCase("1"))
                                     {
-                                        otp_verpage(Enrollment_No,Mobile_No,class_name);
+                                        otp_verpage(Enrollment_No,Mobile_No,class_name,Jobj.getString("name"));
                                         pgbar.setVisibility(View.INVISIBLE);
                                         login.setVisibility(View.VISIBLE);
                                     }
@@ -147,10 +150,12 @@ public class student_login extends AppCompatActivity {
     }
     //DIRECTING TO OTP VERIFICATION PAGE
 
-    private void otp_verpage(String ENRNO,String Mobile_No,String class_name) {
+    private void otp_verpage(String ENRNO,String Mobile_No,String class_name,String student_name) {
         Intent i = new Intent(student_login.this, otp_verification.class);
+        Log.d("Name",student_name);
         i.putExtra("ENROLLMENT",ENRNO);
         i.putExtra("MOBILE", Mobile_No);
+        i.putExtra("STUDENT",student_name);
         i.putExtra("class_name", class_name);
         startActivity(i);
         finish();

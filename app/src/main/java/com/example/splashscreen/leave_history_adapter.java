@@ -19,7 +19,6 @@ import java.util.List;
 public class leave_history_adapter extends RecyclerView.Adapter<leave_history_adapter.MyViewHolder>{
     private List<leave_history_model> leave_history_data;
     Context context;
-    String stu_name,leave_name,description,sem_no,date;
     public leave_history_adapter(Context context, List<leave_history_model> leave_history_data) {
         this.context = context;
         this.leave_history_data = leave_history_data;
@@ -34,6 +33,7 @@ public class leave_history_adapter extends RecyclerView.Adapter<leave_history_ad
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        String stu_name,leave_name,description,sem_no,date;
         stu_name = leave_history_data.get(position).getStu_name();
         date = leave_history_data.get(position).getDate();
         sem_no = leave_history_data.get(position).getSem_no();
@@ -43,7 +43,7 @@ public class leave_history_adapter extends RecyclerView.Adapter<leave_history_ad
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                holder.showDesc(holder);
+                holder.showDesc(holder,stu_name,date,description,leave_name);
             }
         });
         holder.setData(stu_name,date,sem_no,leave_name,description,tag);
@@ -79,7 +79,7 @@ public class leave_history_adapter extends RecyclerView.Adapter<leave_history_ad
             textView4_sem_no.setText(sem_no);
             Iamgeview_tag.setImageResource(tag);
         }
-        private void showDesc(leave_history_adapter.MyViewHolder holder)
+        private void showDesc(leave_history_adapter.MyViewHolder holder , String stu_name, String date, String description,String leave_name)
         {
             Intent i = new Intent(holder.itemView.getContext(),leave_details_display.class);
             i.putExtra("leave_name",leave_name);

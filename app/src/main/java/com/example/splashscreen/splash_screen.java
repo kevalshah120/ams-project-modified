@@ -21,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -141,7 +142,7 @@ public class splash_screen extends AppCompatActivity {
                                 @Override
                                 public void onResponse(String response) {
                                     try {
-                                        JSONObject Jobj = new JSONObject(response);
+                                        JSONObject Jobj = new JSONArray(response).getJSONObject(0);
                                     /*
                                     IF RESULT IS 1 ThAT MEANS DATA IS PRESENT IN DATABASE
                                      */

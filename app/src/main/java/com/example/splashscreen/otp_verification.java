@@ -102,6 +102,8 @@ public class otp_verification extends AppCompatActivity {
                     sessionForS SFS;
                     SFS = new sessionForS(getApplication());
                     SFS.setEnrollment(i.getStringExtra("ENROLLMENT"));
+                    Log.d("Name",i.getStringExtra("STUDENT"));
+                    SFS.setName(i.getStringExtra("STUDENT"));
                     SFS.setMobile(i.getStringExtra("MOBILE"));
                     Intent intent = new Intent(otp_verification.this, student_homescreen.class);
                     startActivity(intent);
