@@ -85,6 +85,7 @@ public class student_homescreen extends AppCompatActivity {
     ActionBarDrawerToggle toogle;
     CircleImageView profile_image;
     sessionForS SFS;
+    String Name;
     FusedLocationProviderClient mFusedLocationClient;
     Handler handler = new Handler();
     Runnable runnable;
@@ -113,7 +114,7 @@ public class student_homescreen extends AppCompatActivity {
         float_add_btn.setVisibility(View.GONE);
         SFS = new sessionForS(getApplicationContext());
         Enrollment_No = SFS.getEnrollment();
-        String Name = SFS.getName();
+        Name = SFS.getName();
         int Space = Name.length() - Name.replaceAll(" ", "").length();
         if(Space > 1)
         {
@@ -135,7 +136,7 @@ public class student_homescreen extends AppCompatActivity {
                 case R.id.home_menu:
                     float_refresh_btn.setVisibility(View.VISIBLE);
                     float_add_btn.setVisibility(View.GONE);
-                    toolbar_textview.setText("Hi Keval");
+                    toolbar_textview.setText("Hi "+Name);
                     wave_emoji.setVisibility(View.VISIBLE);
                     replaceFragment(new stu_home_fragement());
                     break;
@@ -180,6 +181,8 @@ public class student_homescreen extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int id) {
                                 SFS.setEnrollment("");
                                 SFS.setMobile("");
+                                SFS.setName("");
+                                SFS.setLocation("");
                                 startActivity(new Intent(getApplicationContext(),login_screen.class));
                                 finish();
                             }
@@ -208,7 +211,7 @@ public class student_homescreen extends AppCompatActivity {
             public void onClick(View view) {
                 float_refresh_btn.setVisibility(View.VISIBLE);
                 float_add_btn.setVisibility(View.GONE);
-                toolbar_textview.setText("Hi Keval");
+                toolbar_textview.setText("Hi "+Name);
                 wave_emoji.setVisibility(View.VISIBLE);
                 replaceFragment(new stu_home_fragement());
             }
