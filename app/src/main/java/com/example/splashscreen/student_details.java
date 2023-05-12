@@ -278,7 +278,7 @@ public class student_details extends AppCompatActivity {
                                                         Intent i = new Intent(student_details.this, teacher_homescreen.class);
                                                         startActivity(i);
                                                     } else {
-                                                        Toast.makeText(student_details.this, "Error Occured", Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(student_details.this, "Error Occurred", Toast.LENGTH_SHORT).show();
                                                         Intent i = new Intent(student_details.this, student_details.class);
                                                         i.putExtra("enrollment", enrollment);
                                                         startActivity(i);

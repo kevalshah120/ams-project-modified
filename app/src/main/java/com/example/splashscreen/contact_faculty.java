@@ -51,9 +51,6 @@ public class contact_faculty extends AppCompatActivity {
                                 contact_faculty_model.add(new contact_faculty_model("Prof "+staff_name,"+91 "+staff_num));
                             }
                             recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-//                            contact_faculty_model.add(new contact_faculty_model("Prof Sanjay Bhalgama","+91 8460209843"));
-//                            contact_faculty_model.add(new contact_faculty_model("Prof Bhailal Limbasiya","+91 8000068515"));
-//                            contact_faculty_model.add(new contact_faculty_model("Prof Uresh Parmar","+91 9925206242"));
                             recyclerView.setHasFixedSize(true);
                             contact_faculty_adapter contact_faculty_adapter = new contact_faculty_adapter(getApplicationContext(), contact_faculty_model);
                             recyclerView.setAdapter(contact_faculty_adapter);

@@ -54,7 +54,6 @@ public class teacher_mark_attend_adapter extends RecyclerView.Adapter<teacher_ma
         holder.absent_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "absent", Toast.LENGTH_SHORT).show();
                 holder.absent_button.setImageResource(R.drawable.absent_focused);
                 holder.present_button.setImageResource(R.drawable.present);
                 teacher_mark_attend_models.get(holder.getAdapterPosition()).setAtdStatus(false);
@@ -67,7 +66,6 @@ public class teacher_mark_attend_adapter extends RecyclerView.Adapter<teacher_ma
         holder.present_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "present", Toast.LENGTH_SHORT).show();
                 holder.absent_button.setImageResource(R.drawable.absent);
                 holder.present_button.setImageResource(R.drawable.present_focused);
                 teacher_mark_attend_models.get(holder.getAdapterPosition()).setAtdStatus(true);

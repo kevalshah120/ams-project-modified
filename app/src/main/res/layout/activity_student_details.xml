@@ -15,7 +15,7 @@
         android:layout_marginEnd="5dp"
         android:text="Edit"
         android:textAllCaps="false"
-        android:textSize="13sp"
+        android:textSize="@dimen/_13sdp"
         android:textStyle="bold"
         app:icon="@drawable/baseline_edit_24" />
 
@@ -27,7 +27,7 @@
         android:layout_marginEnd="8dp"
         android:text="Remove"
         android:textAllCaps="false"
-        android:textSize="13sp"
+        android:textSize="@dimen/_13sdp"
         android:textStyle="bold"
         app:backgroundTint="#FA3030"
         app:icon="@drawable/ic_delete" />
@@ -49,6 +49,7 @@
             android:id="@+id/name_ti"
             android:layout_width="match_parent"
             android:enabled="false"
+            android:textSize="@dimen/_13sdp"
             android:inputType="text"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -71,6 +72,7 @@
             android:layout_width="match_parent"
             android:enabled="false"
             android:layout_height="wrap_content"
+            android:textSize="@dimen/_13sdp"
             android:maxLength="12"
             android:inputType="number" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -93,6 +95,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:enabled="false"
+            android:textSize="@dimen/_13sdp"
             android:maxLength="10"
             android:inputType="number" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -115,6 +118,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:enabled="false"
+            android:textSize="@dimen/_13sdp"
             android:maxLength="10"
             android:inputType="number" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -144,8 +148,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:enabled="false"
+                android:textSize="@dimen/_13sdp"
                 android:inputType="number"
-                android:maxLength="2" />
+                android:maxLength="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -163,6 +168,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:enabled="false"
+                android:textSize="@dimen/_13sdp"
                 android:inputType="text"
                 android:maxLength="2" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -178,7 +184,8 @@
                 android:id="@+id/batch_ti"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLength="5"
+                android:maxLength="4"
+                android:textSize="@dimen/_13sdp"
                 android:enabled="false"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>

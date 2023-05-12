@@ -115,6 +115,7 @@ public class student_homescreen extends AppCompatActivity {
         SFS = new sessionForS(getApplicationContext());
         Enrollment_No = SFS.getEnrollment();
         Name = SFS.getName();
+        Log.d("kebal",Name);
         int Space = Name.length() - Name.replaceAll(" ", "").length();
         if(Space > 1)
         {

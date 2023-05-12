@@ -82,7 +82,6 @@ public class leave_data extends AppCompatActivity {
                             autoCompleteTxt.setAdapter(adapteritems);
                             autoCompleteTxt.setOnItemClickListener((adapterView, view, i, l) -> {
                                 String item = adapterView.getItemAtPosition(i).toString();
-                                Toast.makeText(leave_data.this, item, Toast.LENGTH_SHORT).show();
                             });
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
@@ -91,7 +90,7 @@ public class leave_data extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(leave_data.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(leave_data.this, "Connectivity Error", Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override

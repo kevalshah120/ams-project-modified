@@ -33,7 +33,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="@dimen/_82sdp"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/present_cv_bg">
@@ -75,7 +75,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="@dimen/_82sdp"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/absent_cv_bg">

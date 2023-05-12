@@ -62,7 +62,8 @@
             android:importantForAutofill="no"
             android:inputType="text"
             android:paddingStart="@dimen/_7sdp"
-            android:paddingEnd="@dimen/_7sdp" />
+            android:paddingEnd="@dimen/_7sdp"
+            android:textSize="@dimen/_14sdp" />
 
         <EditText
             android:id="@+id/password_field"
@@ -80,7 +81,8 @@
             android:hint="@string/password"
             android:importantForAutofill="no"
             android:inputType="textPassword"
-            android:paddingHorizontal="@dimen/_7sdp" />
+            android:paddingHorizontal="@dimen/_7sdp"
+            android:textSize="@dimen/_14sdp" />
 
         <ImageView
             android:id="@+id/password_hide"

@@ -125,18 +125,18 @@ public class parent_login extends AppCompatActivity {
                 {
                     pgbar.setVisibility(View.INVISIBLE);
                     login_btn.setVisibility(View.VISIBLE);
-                    Toast.makeText(parent_login.this,"Incorrect Mobile No and Enrollment No",Toast.LENGTH_LONG).show();
+                    Toast.makeText(parent_login.this,"Please enter proper Mobile No and Enrollment No",Toast.LENGTH_LONG).show();
                 }
                 else if(PMobile_No.trim().length() != 10)
                 {
                     pgbar.setVisibility(View.INVISIBLE);
                     login_btn.setVisibility(View.VISIBLE);
-                    Toast.makeText(parent_login.this,"Incorrect Mobile No",Toast.LENGTH_LONG).show();
+                    Toast.makeText(parent_login.this,"Please enter proper Mobile No",Toast.LENGTH_LONG).show();
                 }
                 else {
                     pgbar.setVisibility(View.INVISIBLE);
                     login_btn.setVisibility(View.VISIBLE);
-                    Toast.makeText(parent_login.this,"Incorrect Enrollment No",Toast.LENGTH_LONG).show();
+                    Toast.makeText(parent_login.this,"Please enter proper Enrollment No",Toast.LENGTH_LONG).show();
                 }
             }
         });

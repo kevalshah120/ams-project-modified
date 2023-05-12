@@ -1,19 +1,18 @@
 package com.example.splashscreen;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -29,7 +28,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -119,7 +117,6 @@ public class stu_attendance_fragement extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            Log.d("hello",response);
                             JSONObject obj = new JSONArray(response).getJSONObject(0);
                             if(Integer.parseInt(obj.getString("studentATD")) <= 0 ||Integer.parseInt(obj.getString("totalATD")) <= 0 )
                             {
@@ -177,7 +174,6 @@ public class stu_attendance_fragement extends Fragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("dataInitialize",response);
                         subject_data = new ArrayList<>();
                         //        subject_data = new ArrayList<>();
 //        subject_data.add(new subjectlist_attend_model("PPUD (3360702)","86%"));
@@ -234,11 +230,5 @@ public class stu_attendance_fragement extends Fragment {
             }
         };
         queue.add(stringRequest);
-//        subject_data = new ArrayList<>();
-//        subject_data.add(new subjectlist_attend_model("PPUD (3360702)","86%"));
-//        subject_data.add(new subjectlist_attend_model("Ad.Java (3360701)","96%"));
-//        subject_data.add(new subjectlist_attend_model("NMA (3360703)","75%"));
-//        subject_data.add(new subjectlist_attend_model("OS (3360704)","52%"));
-//        subject_data.add(new subjectlist_attend_model("DBMS (3360705)","88%"));
     }
 }

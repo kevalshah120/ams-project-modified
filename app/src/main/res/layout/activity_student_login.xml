@@ -63,7 +63,8 @@
             android:inputType="number"
             android:maxLength="12"
             android:paddingStart="@dimen/_7sdp"
-            android:paddingEnd="@dimen/_7sdp" />
+            android:paddingEnd="@dimen/_7sdp"
+            android:textSize="@dimen/_14sdp" />
 
         <EditText
             android:id="@+id/mob_no"
@@ -81,7 +82,8 @@
             android:inputType="phone"
             android:maxLength="10"
             android:paddingStart="@dimen/_10sdp"
-            android:paddingEnd="@dimen/_10sdp" />
+            android:paddingEnd="@dimen/_10sdp"
+            android:textSize="@dimen/_14sdp" />
 
         <FrameLayout
             android:layout_width="match_parent"

@@ -33,10 +33,6 @@ public class attendance_display_wv extends AppCompatActivity {
             String division = i.getStringExtra("division");
             String to_date = i.getStringExtra("to_date");
             String from_date = i.getStringExtra("from_date");
-            Log.d("data1",subject);
-            Log.d("data2",division);
-            Log.d("data3",to_date);
-            Log.d("data4",from_date);
             String postData = "selected_subject=" + subject + "&selected_division=" + division + "&from_date=" + from_date + "&to_date=" + to_date;
             webView.postUrl(url, postData.getBytes());
         } else if (class_name.equals("teacher_student_attendance_view")) {

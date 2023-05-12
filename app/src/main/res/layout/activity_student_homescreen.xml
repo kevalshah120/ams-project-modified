@@ -93,8 +93,8 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/float_refresh_Btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
             android:layout_above="@id/bottom_nav"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/_20sdp"
@@ -109,8 +109,8 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/float_add_leave_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
             android:layout_above="@id/bottom_nav"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/_20sdp"

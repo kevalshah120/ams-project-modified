@@ -27,6 +27,7 @@
                 android:id="@+id/staff_name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:textSize="@dimen/_13sdp"
                 android:enabled="false"
                 android:maxLength="25" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -44,6 +45,7 @@
                 android:id="@+id/leave_name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:textSize="@dimen/_13sdp"
                 android:enabled="false"
                 android:maxLength="25" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -62,6 +64,7 @@
                 android:id="@+id/from_date"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:textSize="@dimen/_13sdp"
                 android:enabled="false" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -79,6 +82,7 @@
                 android:id="@+id/to_date"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:textSize="@dimen/_13sdp"
                 android:enabled="false" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -98,9 +102,9 @@
                 android:layout_height="wrap_content"
                 android:enabled="false"
                 android:gravity="top"
+                android:textSize="@dimen/_13sdp"
                 android:lines="15"
-                android:maxLength="256"
-                android:textSize="@dimen/_14sdp" />
+                android:maxLength="256" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 </ScrollView>

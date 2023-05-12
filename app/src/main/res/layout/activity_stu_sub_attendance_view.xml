@@ -35,7 +35,7 @@
                 android:text="@string/present"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="@dimen/_15sdp" />
 
             <TextView
                 android:id="@+id/absent_tv"
@@ -49,7 +49,7 @@
                 android:text="@string/absent"
                 android:textAlignment="center"
                 android:textColor="#D82222"
-                android:textSize="16sp" />
+                android:textSize="@dimen/_15sdp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

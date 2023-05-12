@@ -41,7 +41,7 @@ public class teacher_attend_details extends AppCompatActivity {
     SeekBar expiry_time_slider;
     TextView expiry_time_tv;
     LinearLayout seekbar_layout;
-    RelativeLayout loc_check_layout;
+    LinearLayout loc_check_layout;
     Switch smart_attend_swi, loc_check_swi;
     boolean smart_attend_bol, loc_check_bol;
     ArrayList<Integer> div_selected_pos = new ArrayList<>();

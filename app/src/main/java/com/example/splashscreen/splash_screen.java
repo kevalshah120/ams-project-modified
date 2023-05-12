@@ -49,7 +49,6 @@ public class splash_screen extends AppCompatActivity {
         Handler handler = new Handler();
         logo = findViewById(R.id.logo);
         appname=findViewById(R.id.appname);
-//        YoYo.with(Techniques.StandUp).duration(2000).playOn(appname);
         logo.setAnimation(topanim);
         animatetext("Attendance Management System");
         handler.postDelayed(new Runnable() {

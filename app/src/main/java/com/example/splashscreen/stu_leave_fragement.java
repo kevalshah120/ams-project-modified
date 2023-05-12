@@ -3,7 +3,6 @@ package com.example.splashscreen;
 //https://youtu.be/4cFL7CMd5QY recyclerview video
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,8 +40,6 @@ import java.util.Map;
  * create an instance of this fragment.
  */
 public class stu_leave_fragement extends Fragment {
-    public static String Response = "yash";
-    private TextView b1, b2, b3, b4;
     List<leave_model_class> leave_data;
     LottieAnimationView LAV;
     ShimmerFrameLayout shimmerFrameLayout;
@@ -191,7 +188,6 @@ public class stu_leave_fragement extends Fragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("getLeaveDataForStudent",response);
                         leave_data = new ArrayList<>();
                         try {
                             JSONArray array = new JSONArray(response);

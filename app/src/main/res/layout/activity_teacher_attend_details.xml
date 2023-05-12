@@ -32,8 +32,8 @@
         android:textSize="@dimen/_16sdp"
         app:drawableEndCompat="@drawable/baseline_arrow_drop_down_24" />
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="@drawable/background"
@@ -45,20 +45,23 @@
             android:fontFamily="@font/muli"
             android:text="@string/smart_attendance"
             android:textSize="@dimen/_16sdp" />
-
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
         <Switch
             android:id="@+id/smart_attend_switch"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/_45sdp"
+            android:layout_gravity="center_vertical|end"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
             android:thumb="@drawable/bg_thumb"
             android:track="@drawable/bg_track"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/loc_check_layout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="@drawable/background"
@@ -70,16 +73,20 @@
             android:fontFamily="@font/muli"
             android:text="@string/location_check"
             android:textSize="@dimen/_16sdp" />
-
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
         <Switch
             android:id="@+id/location_check_switch"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/_45sdp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:layout_gravity="center_vertical|end"
             android:thumb="@drawable/bg_thumb"
             android:track="@drawable/bg_track"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
-    </RelativeLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/seekbar_layout"
