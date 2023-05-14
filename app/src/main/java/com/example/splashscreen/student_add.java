@@ -54,6 +54,13 @@ public class student_add extends AppCompatActivity {
             Sem = Semester.getText().toString();
             Div = Division.getText().toString();
             BatchYear = Batch.getText().toString();
+            if(Nm.contains("'") || Nm.contains("$") || Nm.contains("=") ||Div.contains("'") || Div.contains("$") ||Div.contains("="))
+            {
+                Toast.makeText(getApplicationContext(), "Special characters like  ' , $ , =  are not allowed",Toast.LENGTH_SHORT).show();
+                pgbar.setVisibility(View.INVISIBLE);
+                Save.setVisibility(View.VISIBLE);
+                return;
+            }
             int spaces = Nm.length() - Nm.replaceAll(" ", "").length();
             if(spaces < 1)
             {

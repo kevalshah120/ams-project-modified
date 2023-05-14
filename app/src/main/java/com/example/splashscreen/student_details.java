@@ -136,6 +136,13 @@ public class student_details extends AppCompatActivity {
                 division = div_ti.getText().toString();
                 batch = batch_ti.getText().toString();
                 parents_number = parent_mob_ti.getText().toString();
+                if(stu_name.contains("'") || stu_name.contains("$") || stu_name.contains("=") ||division.contains("'") || division.contains("$") ||division.contains("="))
+                {
+                    Toast.makeText(getApplicationContext(), "Special characters like  ' , $ , =  are not allowed",Toast.LENGTH_SHORT).show();
+                    pgbar.setVisibility(View.INVISIBLE);
+                    save_btn.setVisibility(View.VISIBLE);
+                    return;
+                }
                 boolean check = true;
                 int space = stu_name.length() - stu_name.replaceAll(" ", "").length();
                 if (space < 1) {

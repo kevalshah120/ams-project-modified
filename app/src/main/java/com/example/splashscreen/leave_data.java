@@ -3,6 +3,7 @@ package com.example.splashscreen;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -119,6 +120,13 @@ public class leave_data extends AppCompatActivity {
             String to_DATE = to_Date.getText().toString();
             String LeaveD = leave_desc.getText().toString();
             String S_id;
+            if(Leave_name.contains("'") || Leave_name.contains("$") || Leave_name.contains("=") ||LeaveD.contains("'") || LeaveD.contains("$") || LeaveD.contains("="))
+            {
+                Toast.makeText(getApplicationContext(), "Special characters like  ' , $ , =  are not allowed",Toast.LENGTH_SHORT).show();
+                pgbar.setVisibility(View.INVISIBLE);
+                submit.setVisibility(View.VISIBLE);
+                return;
+            }
             if (Arrays.asList(staff_name).indexOf(S_name) != -1) {
                 S_id = staff_id[Arrays.asList(staff_name).indexOf(S_name)];
             } else {
@@ -259,6 +267,8 @@ public class leave_data extends AppCompatActivity {
             public void onFocusChange(View view, boolean b) {
                 if (b) {
                     datepicker_fun(from_Date);
+                    from_Date.clearFocus();
+                    from_Date.setInputType(InputType.TYPE_NULL);
                 }
             }
         });
@@ -267,6 +277,8 @@ public class leave_data extends AppCompatActivity {
             public void onFocusChange(View view, boolean b) {
                 if (b) {
                     datepicker_fun(to_Date);
+                    to_Date.clearFocus();
+                    to_Date.setInputType(InputType.TYPE_NULL);
                 }
             }
         });
