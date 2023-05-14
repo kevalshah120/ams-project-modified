@@ -54,9 +54,9 @@ public class student_add extends AppCompatActivity {
             Sem = Semester.getText().toString();
             Div = Division.getText().toString();
             BatchYear = Batch.getText().toString();
-            if(Nm.contains("'") || Nm.contains("$") || Nm.contains("=") ||Div.contains("'") || Div.contains("$") ||Div.contains("="))
+            if(Nm.contains("'") || Nm.contains("$") ||  Nm.contains(";") || Nm.contains("=") ||Div.contains("'") || Div.contains(";") || Div.contains("$") ||Div.contains("="))
             {
-                Toast.makeText(getApplicationContext(), "Special characters like  ' , $ , =  are not allowed",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Special characters like  $ , ' , = , ; are not allowed",Toast.LENGTH_SHORT).show();
                 pgbar.setVisibility(View.INVISIBLE);
                 Save.setVisibility(View.VISIBLE);
                 return;
@@ -64,7 +64,6 @@ public class student_add extends AppCompatActivity {
             int spaces = Nm.length() - Nm.replaceAll(" ", "").length();
             if(spaces < 1)
             {
-                Log.d("1","1");
                 Name.setText("");
                 pgbar.setVisibility(View.INVISIBLE);
                 Save.setVisibility(View.VISIBLE);
@@ -72,7 +71,6 @@ public class student_add extends AppCompatActivity {
             }
             if(Enr.length() != 12)
             {
-                Log.d("1","2");
                 Enrollment.setText("");
                 pgbar.setVisibility(View.INVISIBLE);
                 Save.setVisibility(View.VISIBLE);
@@ -80,7 +78,6 @@ public class student_add extends AppCompatActivity {
             }
             if(Mb.length() != 10)
             {
-                Log.d("1","3");
                 Mobile.setText("");
                 pgbar.setVisibility(View.INVISIBLE);
                 Save.setVisibility(View.VISIBLE);
@@ -88,7 +85,6 @@ public class student_add extends AppCompatActivity {
             }
             if(ParentMb.length() != 10)
             {
-                Log.d("1","4");
                 ParentMobile.setText("");
                 pgbar.setVisibility(View.INVISIBLE);
                 Save.setVisibility(View.VISIBLE);
@@ -96,7 +92,6 @@ public class student_add extends AppCompatActivity {
             }
             if(Sem.length() > 1)
             {
-                Log.d("1","5");
                 Semester.setText("");
                 pgbar.setVisibility(View.INVISIBLE);
                 Save.setVisibility(View.VISIBLE);
@@ -104,7 +99,6 @@ public class student_add extends AppCompatActivity {
             }
             if(Div.length() != 2)
             {
-                Log.d("1",String.valueOf(Div.length()));
                 Division.setText("");
                 pgbar.setVisibility(View.INVISIBLE);
                 Save.setVisibility(View.VISIBLE);
@@ -112,7 +106,6 @@ public class student_add extends AppCompatActivity {
             }
             if(BatchYear.length() != 4)
             {
-                Log.d("1","7");
                 Batch.setText("");
                 pgbar.setVisibility(View.INVISIBLE);
                 Save.setVisibility(View.VISIBLE);

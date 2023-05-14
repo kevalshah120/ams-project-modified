@@ -34,7 +34,7 @@
             android:layout_below="@id/leave_name"
             android:layout_alignParentStart="true"
             android:fontFamily="@font/muli_bold"
-            android:maxLength="18"
+            android:maxLength="16"
             android:text="@string/student_name"
             android:textAllCaps="true"
             android:textColor="#200745"

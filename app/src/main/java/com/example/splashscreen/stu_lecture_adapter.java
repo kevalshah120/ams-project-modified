@@ -83,9 +83,9 @@ public class stu_lecture_adapter extends RecyclerView.Adapter<stu_lecture_adapte
                 pgbar.setVisibility(View.VISIBLE);
                 submit.setVisibility(View.INVISIBLE);
                 attend_code = attendance_code.getText().toString();
-                if(attendance_code.getText().toString().contains("'") || attendance_code.getText().toString().contains("$") || attendance_code.getText().toString().contains("="))
+                if(attend_code.contains("'") || attend_code.contains(";") || attend_code.contains("$") || attend_code.contains("="))
                 {
-                    Toast.makeText(context.getApplicationContext(), "Special characters like  ' , $ , =  are not allowed",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context.getApplicationContext(), "Special characters like  $ , ' , = , ; are not allowed",Toast.LENGTH_SHORT).show();
                     pgbar.setVisibility(View.INVISIBLE);
                     submit.setVisibility(View.VISIBLE);
                     return;

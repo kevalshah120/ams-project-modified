@@ -120,9 +120,9 @@ public class leave_data extends AppCompatActivity {
             String to_DATE = to_Date.getText().toString();
             String LeaveD = leave_desc.getText().toString();
             String S_id;
-            if(Leave_name.contains("'") || Leave_name.contains("$") || Leave_name.contains("=") ||LeaveD.contains("'") || LeaveD.contains("$") || LeaveD.contains("="))
+            if(Leave_name.contains("'") || Leave_name.contains("$") || Leave_name.contains(";") || Leave_name.contains("=") || LeaveD.contains("'") || LeaveD.contains(";") || LeaveD.contains("$") || LeaveD.contains("="))
             {
-                Toast.makeText(getApplicationContext(), "Special characters like  ' , $ , =  are not allowed",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Special characters like  $ , ' , = , ; are not allowed",Toast.LENGTH_SHORT).show();
                 pgbar.setVisibility(View.INVISIBLE);
                 submit.setVisibility(View.VISIBLE);
                 return;

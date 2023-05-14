@@ -59,9 +59,9 @@ public class teacher_login extends AppCompatActivity {
             ID = login_id.getText().toString();
 //            TEMP(class_name);
             PASS = password_field.getText().toString();
-            if(ID.contains("'") || ID.contains("$") || ID.contains("=") ||PASS.contains("'") || PASS.contains("$") || PASS.contains("="))
+            if(ID.contains("'") || ID.contains(";") || ID.contains("$") || ID.contains("=") ||PASS.contains("'") || PASS.contains(";") || PASS.contains("$") || PASS.contains("="))
             {
-                Toast.makeText(getApplicationContext(), "Special characters like  ' , $ , =  are not allowed",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Special characters like  $ , ' , = , ; are not allowed",Toast.LENGTH_SHORT).show();
                 pgbar.setVisibility(View.INVISIBLE);
                 login.setVisibility(View.VISIBLE);
                 return;

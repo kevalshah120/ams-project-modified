@@ -41,7 +41,10 @@ public class student_list_adapter extends RecyclerView.Adapter<student_list_adap
         View view = layoutInflater.inflate(R.layout.student_list_cv, parent, false);
         return new MyViewHolder(view);
     }
-
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         String stu_name = teacher_mark_attend_models.get(position).getStu_name();
