@@ -2,6 +2,7 @@ package com.example.splashscreen;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -34,6 +35,7 @@ public class teacher_homescreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_homescreen);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigationView);
         toolbar = findViewById(R.id.toolbar);
@@ -96,7 +98,7 @@ public class teacher_homescreen extends AppCompatActivity {
                                 SFT.setPass("");
                                 SFT.setLogin("");
                                 startActivity(new Intent(getApplicationContext(),login_screen.class));
-                                finish();
+                                finishAffinity();
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {

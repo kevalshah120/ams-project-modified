@@ -2,6 +2,7 @@ package com.example.splashscreen;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
@@ -52,6 +53,7 @@ public class leave_data extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leave_data);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         leave_name = findViewById(R.id.leave_name);
         from_Date = findViewById(R.id.from_date);
         to_Date = findViewById(R.id.to_date);

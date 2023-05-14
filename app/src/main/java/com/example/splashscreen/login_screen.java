@@ -1,6 +1,7 @@
 package com.example.splashscreen;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -12,6 +13,7 @@ public class login_screen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         b1 = findViewById(R.id.button1);
         b2 = findViewById(R.id.button2);
         b3 = findViewById(R.id.button3);
@@ -31,6 +33,9 @@ public class login_screen extends AppCompatActivity {
             finish();
         });
     }
+
+    @Override
     public void onBackPressed() {
+        super.onBackPressed();
     }
 }

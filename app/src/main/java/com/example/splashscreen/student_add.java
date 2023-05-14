@@ -1,8 +1,8 @@
 package com.example.splashscreen;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,6 +42,7 @@ public class student_add extends AppCompatActivity {
         Batch = findViewById(R.id.batch_ti);
         Save = findViewById(R.id.save_button);
         pgbar = findViewById(R.id.pgbar);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         Save.setOnClickListener(view -> {
             pgbar.setVisibility(View.VISIBLE);
             Save.setVisibility(View.INVISIBLE);

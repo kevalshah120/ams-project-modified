@@ -1,6 +1,7 @@
 package com.example.splashscreen;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -54,6 +55,7 @@ public class teacher_attend_details extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_teacher_attend_details);
         sub_name_tv = findViewById(R.id.sub_name_tv);
         div_tv = findViewById(R.id.div_tv);

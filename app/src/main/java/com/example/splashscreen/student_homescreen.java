@@ -6,6 +6,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Address;
@@ -97,6 +98,7 @@ public class student_homescreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_homescreen);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigationView);
         toolbar = findViewById(R.id.toolbar);
@@ -185,7 +187,7 @@ public class student_homescreen extends AppCompatActivity {
                                 SFS.setName("");
                                 SFS.setLocation("");
                                 startActivity(new Intent(getApplicationContext(),login_screen.class));
-                                finish();
+                                finishAffinity();
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {

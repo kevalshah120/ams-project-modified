@@ -3,6 +3,7 @@ package com.example.splashscreen;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
@@ -40,6 +41,7 @@ public class teacher_login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_login);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         final String class_name = getLocalClassName();
         final String mobile_no;
         login_id = findViewById(R.id.login_id);
@@ -164,6 +166,13 @@ public class teacher_login extends AppCompatActivity {
         i.putExtra("ID", ID);
         i.putExtra("PASS", PASS);
         startActivity(i);
+        finish();
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, login_screen.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
         finish();
     }
 }

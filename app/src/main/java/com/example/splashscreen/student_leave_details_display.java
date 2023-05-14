@@ -3,6 +3,7 @@ package com.example.splashscreen;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -13,6 +14,7 @@ public class student_leave_details_display extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_leave_details_display);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         prof_name = findViewById(R.id.staff_name);
         to_date = findViewById(R.id.to_date);
         from_date = findViewById(R.id.from_date);

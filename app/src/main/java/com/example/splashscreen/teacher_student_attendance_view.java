@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -56,6 +57,7 @@ public class teacher_student_attendance_view extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_student_attendance_view);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         from_Date = findViewById(R.id.from_date);
         to_Date = findViewById(R.id.to_date);
         subject = findViewById(R.id.sub_et);

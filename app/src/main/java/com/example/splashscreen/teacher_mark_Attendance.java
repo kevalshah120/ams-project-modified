@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.media.Image;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -66,6 +67,7 @@ public class teacher_mark_Attendance extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_mark_attendance);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         //--------------------------------------------------------------------------------------------------------------------------------------------
         //DECLARATION AND DEFINITION (START)
         Save = findViewById(R.id.attend_save_btn);

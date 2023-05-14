@@ -2,6 +2,7 @@ package com.example.splashscreen;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -54,6 +55,7 @@ public class teacher_class_attendance extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_class_attendance);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         sub_et = findViewById(R.id.sub_et);
         div_et = findViewById(R.id.div_et);
         from_Date = findViewById(R.id.from_date);
