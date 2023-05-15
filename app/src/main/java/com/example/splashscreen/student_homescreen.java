@@ -116,20 +116,22 @@ public class student_homescreen extends AppCompatActivity {
         float_add_btn.setVisibility(View.GONE);
         SFS = new sessionForS(getApplicationContext());
         Enrollment_No = SFS.getEnrollment();
-//        Name = SFS.getName();
-//        Log.d("kebal",Name);
-//        int Space = Name.length() - Name.replaceAll(" ", "").length();
-//        if(Space > 1)
-//        {
-//            int first = Name.indexOf(" ");
-//            int second = Name.indexOf(" ", first + 1);
-//            Name = Name.substring(first ,second);
-//        }
-//        else
-//        {
-//            Name = Name.substring(Name.indexOf(" "),Name.length()-1);
-//        }
-        toolbar_textview.setText("Hi "+Name);
+        Name = SFS.getName();
+        Log.d("kebal",Name);
+        int Space = Name.length() - Name.replaceAll(" ", "").length();
+        if(Space > 1)
+        {
+            int first = Name.indexOf(" ");
+            int second = Name.indexOf(" ", first + 1);
+            Name = Name.substring(first+1 ,second);
+            toolbar_textview.setText("Hi "+Name);
+        } else if (Space < 1) {
+            toolbar_textview.setText("Hi "+Name);
+        } else
+        {
+            Name = Name.substring(Name.indexOf(" ") + 1,Name.length());
+            toolbar_textview.setText("Hi "+Name);
+        }
         replaceFragment(new stu_home_fragement());
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         getLastLocation();
