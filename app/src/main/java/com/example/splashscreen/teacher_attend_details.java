@@ -81,26 +81,28 @@ public class teacher_attend_details extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             JSONArray array = new JSONArray(response);
-                            int AL = array.length(),j=0;
+                            int AL = array.length(),j=0,ii=0;
                             sub_name = new String[AL];
                             sub_code = new String[AL];
                             for (j = 0; j < AL; j++) {
                                 JSONObject object = array.getJSONObject(j);
                                 if(object.getString("lab").equals("0"))
                                 {
-                                    sub_name[j] = object.getString("sub_name");
-                                    sub_code[j] = object.getString("sub_code");
+                                    sub_name[ii] = object.getString("sub_name");
+                                    sub_code[ii] = object.getString("sub_code");
+                                    ii++;
                                 }
                                 else
                                 {
-                                    sub_name[j] = object.getString("sub_name");
-                                    sub_code[j] = object.getString("sub_code");
-                                    AL++;
-                                    j++;
+                                    sub_name[ii] = object.getString("sub_name");
+                                    sub_code[ii] = object.getString("sub_code");
+                                    ii++;
                                     sub_name = Arrays.copyOf(sub_name,sub_name.length+1);
                                     sub_code = Arrays.copyOf(sub_code,sub_code.length+1);
-                                    sub_name[j] = object.getString("sub_name")+" LAB";
-                                    sub_code[j]=object.getString("sub_code")+"*";
+                                    sub_name[ii] = object.getString("sub_name")+" LAB";
+                                    sub_code[ii]=object.getString("sub_code")+"*";
+                                    ii
+                                            ++;
                                 }
                             }
                         } catch (JSONException e) {
@@ -141,26 +143,27 @@ public class teacher_attend_details extends AppCompatActivity {
                             public void onResponse(String response) {
                                 try {
                                     JSONArray array = new JSONArray(response);
-                                    int AL = array.length(),j=0;
+                                    int AL = array.length(),j=0,ii=0;
                                     sub_name = new String[AL];
                                     sub_code = new String[AL];
                                     for (j = 0; j < AL; j++) {
                                         JSONObject object = array.getJSONObject(j);
                                         if(object.getString("lab").equals("0"))
                                         {
-                                            sub_name[j] = object.getString("sub_name");
-                                            sub_code[j] = object.getString("sub_code");
+                                            sub_name[ii] = object.getString("sub_name");
+                                            sub_code[ii] = object.getString("sub_code");
+                                            ii++;
                                         }
                                         else
                                         {
-                                            sub_name[j] = object.getString("sub_name");
-                                            sub_code[j] = object.getString("sub_code");
-                                            AL++;
-                                            j++;
+                                            sub_name[ii] = object.getString("sub_name");
+                                            sub_code[ii] = object.getString("sub_code");
+                                            ii++;
                                             sub_name = Arrays.copyOf(sub_name,sub_name.length+1);
                                             sub_code = Arrays.copyOf(sub_code,sub_code.length+1);
-                                            sub_name[j] = object.getString("sub_name")+" LAB";
-                                            sub_code[j]=object.getString("sub_code")+"*";
+                                            sub_name[ii] = object.getString("sub_name")+" LAB";
+                                            sub_code[ii]=object.getString("sub_code")+"*";
+                                            ii++;
                                         }
                                     }
                                     AlertDialog.Builder builder = new AlertDialog.Builder(teacher_attend_details.this);

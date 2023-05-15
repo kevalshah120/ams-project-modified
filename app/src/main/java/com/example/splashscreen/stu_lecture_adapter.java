@@ -93,8 +93,9 @@ public class stu_lecture_adapter extends RecyclerView.Adapter<stu_lecture_adapte
                 String URL = "https://stocky-baud.000webhostapp.com/markAttendanceWithOTP.php";
                 if(location.equals("1"))
                 {
+                    Toast.makeText(context, SFS.getLocation(), Toast.LENGTH_SHORT).show();
                     String currentLocation = SFS.getLocation();
-                    if(currentLocation.equals("wadhwan") ) {
+                    if(currentLocation.equals("Wadhwan") ) {
                         //QUEUE FOR REQUESTING DATA USING VOLLEY LIBRARY
                         RequestQueue queue = Volley.newRequestQueue(context.getApplicationContext());
                         //STRING REQUEST OBJECT INITIALIZATION

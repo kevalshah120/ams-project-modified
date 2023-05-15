@@ -81,22 +81,27 @@ public class teacher_class_attendance extends AppCompatActivity {
                             sub_et.setText("");
                             subject_list = null;
                             JSONArray array = new JSONArray(response);
-                            int AL = array.length(),j=0;
-                            subject_list = new String[AL];
-                            for (j = 0; j < AL; j++) {
-                                JSONObject object = array.getJSONObject(j);
-                                Log.d("HAHAHAHAHA",object.getString("sub_name"));
-                                if(object.getString("lab").equals("1"))
-                                {
-                                    subject_list[j] = object.getString("sub_name");
-                                    AL++;
-                                    j++;
-                                    subject_list = Arrays.copyOf(subject_list,subject_list.length+1);
-                                    subject_list[j] = object.getString("sub_name") + " LAB";
+                            if (!(array.length() == 0))
+                            {
+                                int AL = array.length(),j=0,i=0;
+                                subject_list = new String[AL];
+                                for (j = 0; j < AL; j++) {
+                                    JSONObject object = array.getJSONObject(j);
+                                    Log.d("HAHAHAHAHA", object.getString("sub_name"));
+                                    if (object.getString("lab").equals("1")) {
+                                        subject_list[i] = object.getString("sub_name");
+                                        i++;
+                                        subject_list = Arrays.copyOf(subject_list, subject_list.length + 1);
+                                        subject_list[i] = object.getString("sub_name") + " LAB";
+                                        i++;
+                                    } else {
+                                        subject_list[i] = object.getString("sub_name");
+                                        i++;
+                                    }
                                 }
-                                else {
-                                    subject_list[j] = object.getString("sub_name");
-                                }
+                            }
+                            else {
+                                Toast.makeText(teacher_class_attendance.this, "No Subject allocated", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
@@ -147,20 +152,19 @@ public class teacher_class_attendance extends AppCompatActivity {
                                         div_et.setEnabled(true);
                                         subject_list = null;
                                         JSONArray array = new JSONArray(response);
-                                        int AL = array.length(),j=0;
+                                        int AL = array.length(),j=0,i=0;
                                         subject_list = new String[AL];
                                         for (j = 0; j < AL; j++) {
                                             JSONObject object = array.getJSONObject(j);
-                                            if(object.getString("lab").equals("1"))
-                                            {
-                                                subject_list[j] = object.getString("sub_name");
-                                                AL++;
-                                                j++;
-                                                subject_list = Arrays.copyOf(subject_list,subject_list.length+1);
-                                                subject_list[j] = object.getString("sub_name") + " LAB";
-                                            }
-                                            else {
-                                                subject_list[j] = object.getString("sub_name");
+                                            if (object.getString("lab").equals("1")) {
+                                                subject_list[i] = object.getString("sub_name");
+                                                i++;
+                                                subject_list = Arrays.copyOf(subject_list, subject_list.length + 1);
+                                                subject_list[i] = object.getString("sub_name") + " LAB";
+                                                i++;
+                                            } else {
+                                                subject_list[i] = object.getString("sub_name");
+                                                i++;
                                             }
                                         }
                                     } catch (JSONException e) {

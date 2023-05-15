@@ -149,81 +149,81 @@ public class teacher_mark_Attendance extends AppCompatActivity {
                 }
             }.start();
         }
-        RG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                selectedID = RG.getCheckedRadioButtonId();
-                RadioButton rb = findViewById(selectedID);
-                if(rb.getText().toString().equals("All Absent"))
-                {
-                    RecyclerView recyclerView = findViewById(R.id.teacher_mark_attend_rv);
-                    RecyclerView.Adapter adapter = recyclerView.getAdapter();
-
-                    for (int position = 0; position < adapter.getItemCount(); position++) {
-                        RecyclerView.ViewHolder viewHolder = recyclerView.findViewHolderForAdapterPosition(position);
-
-                        if (viewHolder != null) {
-                            ImageButton button = viewHolder.itemView.findViewById(R.id.absent_icon);
-                            button.performClick();
-                        } else {
-                            recyclerView.scrollToPosition(position);
-                            recyclerView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-                            recyclerView.layout(0, 0, recyclerView.getMeasuredWidth(), recyclerView.getMeasuredHeight());
-                            recyclerView.getAdapter().onBindViewHolder(recyclerView.findViewHolderForAdapterPosition(position), position);
-
-                            viewHolder = recyclerView.findViewHolderForAdapterPosition(position);
-
-                            if (viewHolder != null) {
-                                ImageButton button = viewHolder.itemView.findViewById(R.id.absent_icon);
-                                button.performClick();
-                            }
-                        }
-                    }
-                }
-                else
-                {
+//        RG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+//                selectedID = RG.getCheckedRadioButtonId();
+//                RadioButton rb = findViewById(selectedID);
+//                if(rb.getText().toString().equals("All Absent"))
+//                {
 //                    RecyclerView recyclerView = findViewById(R.id.teacher_mark_attend_rv);
 //                    RecyclerView.Adapter adapter = recyclerView.getAdapter();
 //
 //                    for (int position = 0; position < adapter.getItemCount(); position++) {
 //                        RecyclerView.ViewHolder viewHolder = recyclerView.findViewHolderForAdapterPosition(position);
 //
-//                        if (viewHolder == null) {
-//                            // Create a new view holder for the position if it's not currently bound
-//                            viewHolder = adapter.createViewHolder(recyclerView, adapter.getItemViewType(position));
-//                            adapter.onBindViewHolder(viewHolder, position);
-//                        }
+//                        if (viewHolder != null) {
+//                            ImageButton button = viewHolder.itemView.findViewById(R.id.absent_icon);
+//                            button.performClick();
+//                        } else {
+//                            recyclerView.scrollToPosition(position);
+//                            recyclerView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+//                            recyclerView.layout(0, 0, recyclerView.getMeasuredWidth(), recyclerView.getMeasuredHeight());
+//                            recyclerView.getAdapter().onBindViewHolder(recyclerView.findViewHolderForAdapterPosition(position), position);
 //
-//                        ImageButton button = viewHolder.itemView.findViewById(R.id.present_icon);
-//                        button.performClick();
+//                            viewHolder = recyclerView.findViewHolderForAdapterPosition(position);
+//
+//                            if (viewHolder != null) {
+//                                ImageButton button = viewHolder.itemView.findViewById(R.id.absent_icon);
+//                                button.performClick();
+//                            }
+//                        }
 //                    }
-                    RecyclerView recyclerView = findViewById(R.id.teacher_mark_attend_rv);
-                    RecyclerView.Adapter adapter = recyclerView.getAdapter();
-
-                    for (int position = 0; position < adapter.getItemCount(); position++) {
-                        RecyclerView.ViewHolder viewHolder = recyclerView.findViewHolderForAdapterPosition(position);
-
-                        if (viewHolder != null) {
-                            ImageButton button = viewHolder.itemView.findViewById(R.id.present_icon);
-                            button.performClick();
-                        } else {
-                            recyclerView.scrollToPosition(position);
-                            recyclerView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-                            recyclerView.layout(0, 0, recyclerView.getMeasuredWidth(), recyclerView.getMeasuredHeight());
-                            recyclerView.getAdapter().onBindViewHolder(recyclerView.findViewHolderForAdapterPosition(position), position);
-
-                            viewHolder = recyclerView.findViewHolderForAdapterPosition(position);
-
-                            if (viewHolder != null) {
-                                ImageButton button = viewHolder.itemView.findViewById(R.id.present_icon);
-                                button.performClick();
-                            }
-                        }
-                    }
-
-                }
-            }
-        });
+//                }
+//                else
+//                {
+////                    RecyclerView recyclerView = findViewById(R.id.teacher_mark_attend_rv);
+////                    RecyclerView.Adapter adapter = recyclerView.getAdapter();
+////
+////                    for (int position = 0; position < adapter.getItemCount(); position++) {
+////                        RecyclerView.ViewHolder viewHolder = recyclerView.findViewHolderForAdapterPosition(position);
+////
+////                        if (viewHolder == null) {
+////                            // Create a new view holder for the position if it's not currently bound
+////                            viewHolder = adapter.createViewHolder(recyclerView, adapter.getItemViewType(position));
+////                            adapter.onBindViewHolder(viewHolder, position);
+////                        }
+////
+////                        ImageButton button = viewHolder.itemView.findViewById(R.id.present_icon);
+////                        button.performClick();
+////                    }
+//                    RecyclerView recyclerView = findViewById(R.id.teacher_mark_attend_rv);
+//                    RecyclerView.Adapter adapter = recyclerView.getAdapter();
+//
+//                    for (int position = 0; position < adapter.getItemCount(); position++) {
+//                        RecyclerView.ViewHolder viewHolder = recyclerView.findViewHolderForAdapterPosition(position);
+//
+//                        if (viewHolder != null) {
+//                            ImageButton button = viewHolder.itemView.findViewById(R.id.present_icon);
+//                            button.performClick();
+//                        } else {
+//                            recyclerView.scrollToPosition(position);
+//                            recyclerView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+//                            recyclerView.layout(0, 0, recyclerView.getMeasuredWidth(), recyclerView.getMeasuredHeight());
+//                            recyclerView.getAdapter().onBindViewHolder(recyclerView.findViewHolderForAdapterPosition(position), position);
+//
+//                            viewHolder = recyclerView.findViewHolderForAdapterPosition(position);
+//
+//                            if (viewHolder != null) {
+//                                ImageButton button = viewHolder.itemView.findViewById(R.id.present_icon);
+//                                button.performClick();
+//                            }
+//                        }
+//                    }
+//
+//                }
+//            }
+//        });
         //GUI RELATED CODE (END)
         //--------------------------------------------------------------------------------------------------------------------------------------------
         dataInitialize(); //THIS FUNCTION WILL GET ALL THE STUDENT DATA IN THE PAGE
