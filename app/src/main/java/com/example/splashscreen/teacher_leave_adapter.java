@@ -1,5 +1,6 @@
 package com.example.splashscreen;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -32,10 +33,12 @@ import java.util.Map;
 public class teacher_leave_adapter extends RecyclerView.Adapter<teacher_leave_adapter.MyViewHolder> {
     private List<teacher_leave_model> tea_leave_data;
     Context context;
+    Activity activity;
 
-    public teacher_leave_adapter(Context context, List<teacher_leave_model> tea_leave_data) {
+    public teacher_leave_adapter(Activity activity , Context context, List<teacher_leave_model> tea_leave_data) {
         this.context = context;
         this.tea_leave_data = tea_leave_data;
+        this.activity = activity;
     }
 
     @NonNull
@@ -88,6 +91,9 @@ public class teacher_leave_adapter extends RecyclerView.Adapter<teacher_leave_ad
                             String res = Jobj.getString("result");
                             if (res.equals("1")) {
                                 Toast.makeText(ct, "DONE", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(context,teacher_homescreen.class);
+                                activity.startActivity(intent);
+                                activity.finish();
                             } else {
                                 Toast.makeText(ct, res + lID , Toast.LENGTH_SHORT).show();
                             }

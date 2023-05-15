@@ -1,10 +1,14 @@
 package com.example.splashscreen;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,8 +35,17 @@ public class contact_faculty_adapter extends RecyclerView.Adapter<contact_facult
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         String prof_name = contact_faculty_data.get(position).getProf_name();
         String prof_num = contact_faculty_data.get(position).getProf_num();
-
         holder.setData(prof_name,prof_num);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = "https://api.whatsapp.com/send?phone="+prof_num;
+                Toast.makeText(context,prof_num,Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                holder.itemView.getContext().startActivity(i);
+            }
+        });
     }
 
     @Override

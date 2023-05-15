@@ -150,14 +150,13 @@ public class teacher_leave_frag extends Fragment {
                             }
                             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                             recyclerView.setHasFixedSize(true);
-                            teacher_leave_adapter teacher_leave_adapter = new teacher_leave_adapter(getContext(), tea_leave_data);
+                            teacher_leave_adapter teacher_leave_adapter = new teacher_leave_adapter(getActivity(),getContext(), tea_leave_data);
                             shimmerFrameLayout.stopShimmer();
                             shimmerFrameLayout.setVisibility(View.GONE);
                             recyclerView.setVisibility(View.VISIBLE);
                             recyclerView.setAdapter(teacher_leave_adapter);
                             teacher_leave_adapter.notifyDataSetChanged();
-                        } catch (
-                                JSONException e) {
+                        } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
                     }

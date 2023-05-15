@@ -34,7 +34,7 @@
     <string name="from_date">From Date</string>
     <string name="staff_name">Staff Name</string>
     <string name="submit">Submit</string>
-    <string name="leave_description">Leave Description</string>
+    <string name="leave_description">Leave Description (Note : Do not enter special characters like \' , ; , = , $ and also Emojis)</string>
     <string name="leave_application_name">Leave Application Name</string>
     <string name="sem_no">3SEM</string>
     <string name="student_name">keval shah</string>
