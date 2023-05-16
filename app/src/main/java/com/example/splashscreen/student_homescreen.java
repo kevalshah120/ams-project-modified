@@ -22,6 +22,7 @@ import android.renderscript.ScriptGroup;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -87,10 +88,11 @@ public class student_homescreen extends AppCompatActivity {
     CircleImageView profile_image;
     sessionForS SFS;
     String Name;
+    EditText Loc;
     FusedLocationProviderClient mFusedLocationClient;
     Handler handler = new Handler();
     Runnable runnable;
-    int delay = 10000;
+    int delay = 5000;
     Bitmap bitmap;
     String encodedImage,Enrollment_No;
     private static final int PERMISSION_ID = 44;
@@ -114,10 +116,10 @@ public class student_homescreen extends AppCompatActivity {
         SFS = new sessionForS(getApplication());
         bottomNavigationView.setSelectedItemId(R.id.home_menu);
         float_add_btn.setVisibility(View.GONE);
+        Loc = findViewById(R.id.ForLocation);
         SFS = new sessionForS(getApplicationContext());
         Enrollment_No = SFS.getEnrollment();
         Name = SFS.getName();
-        Log.d("kebal",Name);
         int Space = Name.length() - Name.replaceAll(" ", "").length();
         if(Space > 1)
         {
@@ -336,8 +338,8 @@ public class student_homescreen extends AppCompatActivity {
                                 List<Address> add = geocoder.getFromLocation(location.getLatitude(),location.getLongitude(),1);
                                 Address obj = add.get(0);
                                 String Locality = obj.getSubLocality();
-                                sessionForS SFS = new sessionForS(getApplication());
                                 SFS.setLocation(Locality);
+                                Loc.setText(Locality);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }

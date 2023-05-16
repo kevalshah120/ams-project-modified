@@ -181,20 +181,21 @@ public class teacher_student_attendance_view extends AppCompatActivity {
                             try {
                                 subject.setEnabled(true);
                                 JSONArray array = new JSONArray(response);
-                                int AL = array.length(),j=0;
+                                int AL = array.length(),j=0,ii=0;
                                 subject_list = new String[AL];
                                 for (j = 0; j < AL; j++) {
                                     JSONObject object = array.getJSONObject(j);
                                     if(object.getString("lab").equals("1"))
                                     {
-                                        subject_list[j] = object.getString("sub_name");
-                                        AL++;
-                                        j++;
+                                        subject_list[ii] = object.getString("sub_name");
+                                        ii++;
                                         subject_list = Arrays.copyOf(subject_list,subject_list.length+1);
-                                        subject_list[j] = object.getString("sub_name") + " LAB";
+                                        subject_list[ii] = object.getString("sub_name") + " LAB";
+                                        ii++;
                                     }
                                     else {
-                                        subject_list[j] = object.getString("sub_name");
+                                        subject_list[ii] = object.getString("sub_name");
+                                        ii++;
                                     }
                                 }
                             } catch (JSONException e) {
